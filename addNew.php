@@ -467,11 +467,11 @@ $row = mysqli_fetch_array($result);
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="Status">ESC:</label>
-                        <input type="number" class="form-control text-right" id="ESC" aria-describedby="emailHelp" placeholder="ESC discount">
+                        <input type="number" value="0" class="form-control text-right" id="ESC" aria-describedby="emailHelp" placeholder="ESC discount">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="Status">Voucher:</label>
-                        <input type="number" class="form-control text-right" id="voucher" aria-describedby="emailHelp" placeholder="Voucher discount">
+                        <input type="number" value="0" class="form-control text-right" id="voucher" aria-describedby="emailHelp" placeholder="Voucher discount">
                       </div>
                     </div>
 
@@ -497,12 +497,18 @@ $row = mysqli_fetch_array($result);
 
                     <div class="row">
                       <div class="form-group col-md-12">
-                      <button onclick="eval()" class="btn btn-primary btn-icon-split">
+                      <a href="#" onclick="eval()" class="btn btn-primary btn-icon-split">
                       <span class="icon text-white-50">
                         <i class="fas fa-calculator"></i>
                       </span>
-                      <span class="text">Evaluate</span></button>
+                      <span class="text">Evaluate</span></a>
                     </div>
+                    </div>
+                      <label><b>Total Payment:</b></label>
+                      <div class="row">
+                      <div class="form-group col-md-12" id="totalPayment">
+
+                      </div>
                     </div>
                   </form>
                                   
@@ -539,18 +545,33 @@ $row = mysqli_fetch_array($result);
               var voucher = $("#voucher").val();
               var h_student = $("#h_student").val();
               var sibling = $("#sibling").val();
-
-              var l_module = $("#l_module").html();
-              alert(l_module);
+              var yrLevel = $("#level").val();
+              
 
               if (h_student == "Gold"){
                 h_student = 0.9;
               }else if (h_student == "Silver"){
                 h_student = 0.95;
+              }else{
+                h_student = 1;
+              }
+              if (sibling == "Yes"){
+                sibling = 0.95;
+              }else{
+                sibling = 1;
               }
 
-              var total = parseFloat(ESC) + parseFloat(voucher);
-              
+              var totalDiscount = parseFloat(ESC) + parseFloat(voucher);
+              //alert(sibling);
+              $.ajax({
+                url: "gettotal.php",
+                method: "post",
+                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel},
+                success:function(data){
+                  //alert(data);
+                  $("#totalPayment").html(data);
+                }
+              })
             }
           </script>
 <!------------------------------------------------------------------------------------------->

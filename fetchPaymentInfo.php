@@ -20,9 +20,9 @@ echo '
       <td align="center"><b>Learning Module </b></td>
     </tr>
     <tr>
-      <td align="right id="tuition">&#8369; '.number_format($row["tuition_fees"],2).'</td>
-      <td align="right id="others">&#8369; '.number_format($row["other_school_fees"],2).'</td>
-      <td align="right id="l_module">&#8369; '.number_format($row["learning_module"],2).'</td>
+      <td align="right" id="tuition">&#8369; '.number_format($row["tuition_fees"],2).'</td>
+      <td align="right" id="others">&#8369; '.number_format($row["other_school_fees"],2).'</td>
+      <td align="right" id="l_module">&#8369; '.number_format($row["learning_module"],2).'</td>
     </tr>
     <tr>
     <th colspan="3"></th>
