@@ -8,7 +8,7 @@ $query = "SELECT * FROM payment_information WHERE level = '$yrLevel'";
 $result = mysqli_query($mysqli,$query);
 $row = mysqli_fetch_assoc($result);
 
-$total = $row["tuition_fees"] + $row["other_school_fees"] + $row["learning_module"];
+$total = $row["tuition_fees"] + $row["other_school_fees"];
 
 echo '
 
@@ -29,8 +29,9 @@ echo '
     </tr>
     <tr>
       <td colspan="2" align="right"><b>Total Annual Fee</b></td>
-      <td align="right" id="total"><b>&#8369; '.number_format($total,2).'</b></td>
+      <td align="right" id=""><b>&#8369; '.number_format($total,2).'</b></td>
     </tr>
+    <input type="text" id="Subtotal" value="'.$total.'" hidden/>
   </thead>
 </table>
 ';

@@ -413,20 +413,26 @@ $row = mysqli_fetch_array($result);
                   <form>
                     <label><b>Student Information:</b></label>
                     <div class="row">
+                      <div class="form-group col-md-3">
+                        <label for="exampleInputEmail1">Student ID:</label>
+                        <input type="text" class="form-control" id="student_id" aria-describedby="emailHelp" placeholder="">
+                      </div>
+                    </div>
+                    <div class="row">
                       <div class="form-group col-md-6">
                         <label for="exampleInputEmail1">First Name:</label>
-                        <input type="email" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="Enter First name">
+                        <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="Enter First name">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="exampleInputEmail1">Last Name:</label>
-                        <input type="email" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Enter Last name">
+                        <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Enter Last name">
                       </div>
                     </div>
 
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="Status">Status:</label>
-                        <select type="email" class="form-control" id="status">
+                        <select type="text" class="form-control" id="status">
                           <option disabled selected>Status</option>
                           <option>Regular</option>
                           <option>Online Class</option>
@@ -477,7 +483,7 @@ $row = mysqli_fetch_array($result);
 
                     <label><b>Special Discount:</b></label>
                     <div class="row">
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="Status">Honor Student:</label>
                         <select class="form-control" id="h_student">
                           <option disabled selected>None</option>
@@ -485,13 +491,27 @@ $row = mysqli_fetch_array($result);
                           <option>Silver</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-6">
+                      <div class="form-group col-md-4">
                         <label for="Status">Sibling:</label>
                         <select class="form-control" id="sibling">
                           <option disabled selected>None</option>
                           <option>Yes</option>
                           <option>No</option>
                         </select>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label for="Status">Payment Method:</label>
+                        <select onchange="pay()" class="form-control" id="payment">
+                          <option>Cash</option>
+                          <option>Installment</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div id="payInfo" class="row" style="display: none">
+                      <div class="form-group col-md-12">
+                        <label for="Status">Down Payment:</label>
+                        <input onclick="amount()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount">
                       </div>
                     </div>
 
@@ -524,7 +544,24 @@ $row = mysqli_fetch_array($result);
               </div>
             </div>
           </div>
-
+          <!--payment stats-->
+          <script type="text/javascript">
+            function pay(){
+              var payM = $("#payment").val();
+              if(payM == "Cash"){
+                var payInfo = document.getElementById('payInfo');
+                $("#downPayment").val("0");
+                payInfo.style.display = "none";
+              }else{
+                var payInfo = document.getElementById('payInfo');
+                payInfo.style.display = "block";
+                $("#downPayment").val("12000");
+              }
+            }
+            function amount(){
+              $("#downPayment").val("");
+            }
+          </script>
           <script type="text/javascript">
             function yrLevel(){
               var yrLevel = $("#level").val();
@@ -546,6 +583,8 @@ $row = mysqli_fetch_array($result);
               var h_student = $("#h_student").val();
               var sibling = $("#sibling").val();
               var yrLevel = $("#level").val();
+              var payment = $("#payment").val();
+              var downPayment = $("#downPayment").val();
               
 
               if (h_student == "Gold"){
@@ -560,13 +599,18 @@ $row = mysqli_fetch_array($result);
               }else{
                 sibling = 1;
               }
+              if (payment == "Cash"){
+                payment = 0.95;
+              }else {
+                payment = 1;
+              }
 
               var totalDiscount = parseFloat(ESC) + parseFloat(voucher);
               //alert(sibling);
               $.ajax({
                 url: "gettotal.php",
                 method: "post",
-                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel},
+                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel,"downPayment":downPayment,"payment":payment},
                 success:function(data){
                   //alert(data);
                   $("#totalPayment").html(data);
@@ -575,6 +619,8 @@ $row = mysqli_fetch_array($result);
             }
           </script>
 <!------------------------------------------------------------------------------------------->
+
+
           <!--modal for viweing-->
           <div class="modal fade" id="viewstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -612,12 +658,6 @@ $row = mysqli_fetch_array($result);
             <div class="form-group col-md-12">
               <h1 class="h3 mb-2 text-gray-800">Statement of Account</h1>
               <div class="float-right">
-                <a href="#" class=" btn btn-danger btn-icon-split btn-lg" data-toggle="modal" data-target="#addPVCSstudent" >
-                  <span class="icon text-white-50">
-                    <i class="fas fa-users"></i>
-                  </span>
-                  <span class="text">Old Student</span>
-                </a>
                 <a href="#" class=" btn btn-success btn-icon-split btn-lg" data-toggle="modal" data-target="#addPVCSstudent" >
                   <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
@@ -717,32 +757,80 @@ $row = mysqli_fetch_array($result);
 <script type="text/javascript">
   function addStudent(){
     //alert("hi");
+    var student_id = $("#student_id").val();
     var fname = $("#fname").val();
     var lname = $("#lname").val();
-    var ylevel = $("#ylevel").val();
-    $.ajax({
-      url: "addNewStudent.php",
-      method: "POST",
-      data:{"fname":fname,"lname":lname,"ylevel":ylevel},
-      success:function(data){
-        alert(data);
-        load_data();
-        var fname = $("#fname").val("");
-        var lname = $("#lname").val("");
-        var ylevel = $("#ylevel").val("");
-        $('#addPVCSstudent').modal('hide');
+    var status = $("#status").val();
+    var level = $("#level").val();
+    var ESC = $("#ESC").val();
+    var voucher = $("#voucher").val();
+    var payment_m = $("#payment").val();
+    var downPayment = $("#downPayment").val();
 
+    
+
+    var h_student = document.getElementById("h_student_p").innerHTML;
+    var sibling = document.getElementById("sibling_p").innerHTML;
+    var subtotal = document.getElementById("Subtotal").value;
+    var total = document.getElementById("total_value").value;
+    var monthly = document.getElementById("monthly").value;
+
+    //alert(total);
+    if(payment_m =="Installment"){
+          $.ajax({
+          url: "addNewStudent_paymentInfo.php",
+          method: "POST",
+          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly},
+            success:function(data){
+            alert(data);
+            $("#student_id").val("");
+            $("#fname").val("");
+            $("#lname").val("");
+            $("#status").val("");
+            $("#level").val("");
+            $("#ESC").val("");
+            $("#voucher").val("");
+            $("#h_student").val("");
+            $("#sibling").val("");
+            $("#payment").val("");
+            $("#downPayment").val("");
+            $('#addPVCSstudent').modal('exit');
+            load_data();
+          }
+        })
+      }else{
+          $.ajax({
+          url: "addNewStudent_paymentInfo_cash.php",
+          method: "POST",
+          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"subtotal":subtotal,"total":total},
+            success:function(data){
+            alert(data);
+            $("#student_id").val("");
+            $("#fname").val("");
+            $("#lname").val("");
+            $("#status").val("");
+            $("#level").val("");
+            $("#ESC").val("");
+            $("#voucher").val("");
+            $("#h_student").val("");
+            $("#sibling").val("");
+            $("#payment").val("");
+            $("#downPayment").val("");
+            $('#addPVCSstudent').modal('hide');
+            load_data();
+          }
+        })
       }
-    })
+    
   }
 </script>
+
 
 <!--Fetching data from database-->
 <script type="text/javascript">
     function load_data()
     {
-
-       $.ajax({
+      $.ajax({
         url: "fetchStudentList.php",
         method: "POST",
         success:function(data){

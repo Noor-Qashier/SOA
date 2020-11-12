@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 $student_id = $_GET["id"];
-$student = "SELECT * FROM students_list WHERE student_id = '$student_id'";
+$student = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
 ?>
@@ -399,15 +399,15 @@ $row = mysqli_fetch_array($result);
           </div>
 
       <!-- Content Row -->
-
+      <div class="row">
       <form class="col-8">
           <div class="form-group">
           <h4 style="text-align:center;background-color:#EAECEE;padding-top:20px;padding-bottom:20px;"><b>STATEMENT OF ACCOUNT</b></h4>
           </div>
 
           <div class="form-group">
-          <h4 id="name" style="text-transform: uppercase; font-weight:bold;"><?php echo $row["firstname"]." ".$row["lastname"] ?></h4>
-              <h6>SCHOOL ID: PVCS20-<?php echo $row["student_id"].' | Level: '.$row["year_level"] ?></h6>
+          <h4 id="name" style="text-transform: uppercase; font-weight:bold;"><?php echo $row["fname"]." ".$row["lname"] ?></h4>
+              <h6>SCHOOL ID: <?php echo $row["student_id"].' | Level: '.$row["level"] ?></h6>
               <input id="stud_id" value="<?php echo $row["student_id"]?>" type="" name="" hidden/>
           </div>
 
@@ -538,6 +538,110 @@ $row = mysqli_fetch_array($result);
           </div>
       </form>
             <!-- /.container-fluid -->
+
+      <form class="col-4">
+          <div class="form-group">
+          <h4 style="text-align:center;background-color:#36b9cc;color:white;padding-top:20px;padding-bottom:20px;"><b>PAYMENT INFORMATION</b></h4>
+          </div>
+
+          <div class="form-group">
+          <table class="table table-bordered" style="background-color:#36b9cc;color:white;" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th colspan="3" >PAYMENT:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tuition fees:</td>
+                  <td id="tuition_fees" width="150" align="right">&#8369; <?php echo number_format($row["tuition_fees"],2)?></td>
+                </tr>
+                <tr>
+                  <td>Other School Fees:</td>
+                  <td id="other_school_fees" width="150" align="right">&#8369; <?php echo number_format($row["other_school_fees"],2)?></td>
+                </tr>
+                <tr>
+                  <td>Learning Module:</td>
+                  <td id="learning_module" width="150" align="right">&#8369; <?php echo number_format($row["learning_module"],2)?></td>
+                </tr>
+                <tr>
+                  <td align="right"><b>Total:</b></td>
+                  <td id="subtotal" width="276" align="right" style="cursor: pointer; font-weight:bold">&#8369; <?php echo number_format($row["subtotal"],2)?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group">
+          <table class="table table-bordered" style="background-color:#36b9cc;color:white;" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th colspan="3" >DISCOUNT:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ESC:</td>
+                  <td id="ESC" width="150" align="right">&#8369; <?php echo number_format($row["ESC"],2)?></td>
+                </tr>
+                <tr>
+                  <td>Voucher:</td>
+                  <td id="voucher" width="150" align="right">&#8369; <?php echo number_format($row["voucher"],2)?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-group">
+          <table class="table table-bordered" style="background-color:#36b9cc;color:white;" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th style="background-color:#36b9cc;color:white;" colspan="4">SPECIAL DISCOUNT:</th>
+                </tr>
+                <tr>
+                  <td>Honor Student:</td>
+                  <td id="ESC" width="150" align="right"><?php echo $row["h_student"]?></td>
+                </tr>
+                <tr>
+                  <td>Sibling:</td>
+                  <td id="voucher" width="150" align="right"><?php echo $row["sibling"]?></td>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <div class="form-group">
+          <table class="table table-bordered" style="background-color:#36b9cc;color:white;" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+            
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" align="right"><b>DOWN PAYMENT:</b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["downPayment"],2)?></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="right"><b>MONTHLY:</b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["monthly"],2)?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-group">
+          <table class="table table-bordered" style="background-color:#36b9cc;color:white;" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+            
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" align="right"><b>GRAND TOTAL:</b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["total"],2)?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </form>
+    </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
