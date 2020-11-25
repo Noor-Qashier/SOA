@@ -399,16 +399,32 @@ $row = mysqli_fetch_array($result);
           </div>
 
       <!-- Content Row -->
+
+      
       <div class="row">
       <form class="col-8">
           <div class="form-group">
-          <h4 style="text-align:center;background-color:#EAECEE;padding-top:20px;padding-bottom:20px;"><b>STATEMENT OF ACCOUNT</b></h4>
+          <h4 style="text-align:center;background-color:#EAECEE;padding-top:20px;padding-bottom:20px;"><b>STATEMENT OF ACCOUNT</b><br><small>
+            <select style="color:gray;border-color:transparent;background-color:transparent;" id="for_the_month">
+              <option>January</option>
+              <option>February</option>
+              <option>March</option>
+              <option>April</option>
+              <option>May</option>
+              <option>June</option>
+              <option>July</option>
+              <option>August</option>
+              <option>September</option>
+              <option>October</option>
+              <option>November</option>
+              <option>December</option>
+            </select></small></h4>
           </div>
-
           <div class="form-group">
           <h4 id="name" style="text-transform: uppercase; font-weight:bold;"><?php echo $row["fname"]." ".$row["lname"] ?></h4>
               <h6>SCHOOL ID: <?php echo $row["student_id"].' | Level: '.$row["level"] ?></h6>
               <input id="stud_id" value="<?php echo $row["student_id"]?>" type="" name="" hidden/>
+              <input id="stud_name" value="<?php echo $row["student_id"].' | Level: '.$row["level"] ?>" type="" name="" hidden/>
           </div>
 
           <div class="form-inline" style="float: right;">
@@ -420,25 +436,13 @@ $row = mysqli_fetch_array($result);
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th colspan="3" >PAST DUES:</th>
+                  
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Tuition fee:</td>
-                  <td id="tuition_fee_pd" width="150" contenteditable="true" align="right"></td>
-                </tr>
-                <tr>
-                  <td>Books:</td>
-                  <td id="books_pd" width="150" contenteditable="true" align="right"></td>
-                </tr>
-                <tr>
-                  <td>Others:</td>
-                  <td id="others_pd" width="150" contenteditable="true" align="right"></td>
-                </tr>
-                <tr>
-                  <td align="right"><b>Total Past dues:</b></td>
-                  <td onclick="totalPastDues(this)" id="total_past_dues" width="276" align="right" style="cursor: pointer; font-weight:bold"></td>
+                  <th colspan="3" >PAST DUE ACCOUNT</th>
+                  <td id="total_past_due" width="150" contenteditable="true" align="right"></td>
                 </tr>
               </tbody>
             </table>
@@ -447,17 +451,14 @@ $row = mysqli_fetch_array($result);
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th colspan="3" >CURRENT DUES:</th>
+                  <th colspan="3" >CURRENT DUE ACCOUNT:</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Turition fee:</td>
-                  <td id="tuition_fee_cd" width="150" contenteditable="true" align="right"></td>
-                </tr>
-                <tr>
-                  <td>Books:</td>
-                  <td id="books_cd" width="150" contenteditable="true" align="right"></td>
+                  <td>Tuition fee/Learning Module:</td>
+                  <td id="" width="150" align="right">&#8369; <?php echo number_format($row["monthly"],2)?></td>
+                  <input type="hidden" id="tuition_fee_cd" value="<?php echo $row["monthly"]?>">
                 </tr>
                 <tr>
                   <td>Remediation/Tutorial:</td>
@@ -465,15 +466,18 @@ $row = mysqli_fetch_array($result);
                 </tr>
                 <tr>
                   <td>Surcharge due to Late Payment:</td>
-                  <td id="due_late_cd" width="150" contenteditable="true" align="right"></td>
+                  <td id="" width="150" align="right"><select id="surcharge_cd" style="text-align: right;" class="form-control">
+                    <option>0.00</option>
+                    <option>100.00</option>
+                  </select></td>
                 </tr>
                 <tr>
-                  <td>Others:</td>
-                  <td id="others_cd" width="150" contenteditable="true" align="right"></td>
+                  <td id="other_description" contenteditable="true">Others: </td>
+                  <td id="others_amount" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
-                  <td align="right"><b>Total Current dues:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalCurrentDues(this)" id="total_current_dues" width="300" align="right"></td>
+                  <td align="right"><b>Total Current Due:</b></td>
+                  <td style="cursor: pointer; font-weight:bold;background-color: #9FE2BF;" onclick="totalCurrentDues()" id="total_current_dues" width="300" align="right"></td>
                 </tr>
               </tbody>
             </table>
@@ -483,14 +487,10 @@ $row = mysqli_fetch_array($result);
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <td style="background-color:#FCDCB0" colspan="4">LAST DUE: 
-                    </td>
-                </tr>
-                <tr>
                   <th width="150">DUE ON:</th>
                   <th><input id="due_on" style="border:0;background-color: transparent;" class="form-control" type="date" name=""></th>
                   <td width="300" align="right"><b>Total Due:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" contenteditable="true" align="right"></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" align="right"></td>
                 </tr>
               </thead>
             </table>
@@ -510,7 +510,7 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <td colspan="4" align="right"><b>Balance After Payment:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" contenteditable="true" align="right"></td>
+                  <td style="cursor: pointer; font-weight:bold;background-color: #40E0D0" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right"></td>
                 </tr>
               </tbody>
             </table>
@@ -685,6 +685,9 @@ $row = mysqli_fetch_array($result);
     </div>
   </div>
 
+
+
+</script>
 <!--save payment-->
 <script type="text/javascript">
     function totalPastDues(){
@@ -699,58 +702,87 @@ $row = mysqli_fetch_array($result);
   }
 
     function totalCurrentDues(){
-    var tuition_fee_cd = $("#tuition_fee_cd").html();
-    var books_cd = $("#books_cd").html();
+    var tuition_fee_cd = $("#tuition_fee_cd").val();
     var tutorial_cd = $("#tutorial_cd").html();
-    var due_late_cd = $("#due_late_cd").html();
-    var others_cd = $("#others_cd").html();
+    var surcharge_cd = $("#surcharge_cd").val();
+    var others_amount = $("#others_amount").html();
+    
 
-    var totalCurrentDues = parseFloat(tuition_fee_cd)+parseFloat(books_cd)+parseFloat(tutorial_cd)+parseFloat(due_late_cd)+parseFloat(others_cd);
+
+    if(tuition_fee_cd == ""){
+      tuition_fee_cd = 0;
+    }
+    if(tutorial_cd == ""){
+      tutorial_cd = 0;
+    }
+    if(surcharge_cd == 0){
+      surcharge_cd = 0;
+    }
+    if(others_amount == 0){
+      others_amount = 0;
+    }
+    var totalCurrentDues = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
+    //alert(surcharge_cd);
     $("#total_current_dues").html(totalCurrentDues);
-     $("#total_past_dues").html(totalCurrentDues);
+    //alert(totalCurrentDues);
   }
     function totalDues() {
-    var total_due = $("#total_due").html();
-    $("#balance_after_payment").html(total_due);
+    var past_due = $("#total_past_due").html();
+    var current_due = $("#total_current_dues").html();
+    var amount_paid = $("#amount_paid").html();
+    if(past_due == ""){
+      past_due = 0;
+    }
+    if(current_due == ""){
+      current_due = 0;
+    }
+    var total_dues = parseFloat(past_due)+parseFloat(current_due);
+
+    var balance_after_payment = parseFloat(total_dues)-parseFloat(amount_paid);
+
+    //alert(total_dues);
+    $("#total_due").html(total_dues);
+    $("#balance_after_payment").html(balance_after_payment);
 
     }
 </script>
 <script type="text/javascript">
   function savePayment(){
-    var stud_id = $("#stud_id").val()
+    var for_the_month = $("#for_the_month").val()
+    var stud_id = $("#stud_id").val();
+    var stud_name = $("#stud_name").val();
     var as_of = $("#as_of").val();
-    var tuition_fee_pd = $("#tuition_fee_pd").html();
-    var books_pd = $("#books_pd").html();
-    var others_pd = $("#others_pd").html();
-    var total_past_dues = $("#total_past_dues").html();
-    var tuition_fee_cd = $("#tuition_fee_cd").html();
-    var books_cd = $("#books_cd").html();
+    var total_past_due = $("#total_past_due").html();
+    var tuition_fee_cd = $("#tuition_fee_cd").val();
     var tutorial_cd = $("#tutorial_cd").html();
-    var due_late_cd = $("#due_late_cd").html();
-    var others_cd = $("#others_cd").html();
+    var surcharge_cd = $("#surcharge_cd").val();
+    var other_description = $("#other_description").html();
+    var others_amount = $("#others_amount").html();
     var total_current_dues = $("#total_current_dues").html();
-    var due_on = $("#due_on").val();
+    var due_on = $("#due_on").html();
     var total_due = $("#total_due").html();
     var or_number = $("#or_number").html();
     var amount_paid = $("#amount_paid").html();
     var balance_after_payment = $("#balance_after_payment").html();
+
+    alert(tutorial_cd);
+
 
     //alert(total_current_dues);
     $.ajax({
       url: "savePayment.php",
       method: "POST",
       data:{
+        "for_the_month":for_the_month,
         "stud_id":stud_id,
+        "stud_name":stud_name,
         "as_of":as_of,
-        "tuition_fee_pd":tuition_fee_pd,
-        "books_pd":books_pd,
-        "others_pd":others_pd,
-        "total_past_dues":total_past_dues,
+        "total_past_due":total_past_due,
         "tuition_fee_cd":tuition_fee_cd,
-        "books_cd":books_cd,
         "tutorial_cd":tutorial_cd,
-        "due_late_cd":due_late_cd,
-        "others_cd":others_cd,
+        "surcharge_cd":surcharge_cd,
+        "other_description":other_description,
+        "others_amount":others_amount,
         "total_current_dues":total_current_dues,
         "due_on":due_on,
         "total_due":total_due,
@@ -759,7 +791,7 @@ $row = mysqli_fetch_array($result);
         "balance_after_payment":balance_after_payment},
       success:function(data){
         alert(data);
-        window.location="addNew.php";
+        //window.location="addNew.php";
       }
     })
 

@@ -2,9 +2,13 @@
 include 'config.php';
 $student_id = $_POST['student_id'];
 
-$query = "SELECT * FROM students_list WHERE student_id = '$student_id'";
+$query = "SELECT * FROM monthly_payment WHERE student_id = '$student_id'";
 $result = mysqli_query($mysqli,$query);
 $row = mysqli_fetch_assoc($result);
+
+$query2 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
+$result2 = mysqli_query($mysqli,$query2);
+$row2 = mysqli_fetch_assoc($result2);
 
 $dueDate = $row["due_on"];
 $DUE_ON = date("M d Y", strtotime($dueDate));
@@ -19,8 +23,8 @@ echo '
 </div>
 
 <div class="form-group">
-<h5 id="name" style="text-transform: uppercase; font-weight:bold;">'.$row["firstname"]." ".$row["lastname"].'</h5>
-		<h6>SCHOOL ID: PVCS20-'.$row["student_id"].' | Level: '.$row["year_level"].'</h6>
+<h5 id="name" style="text-transform: uppercase; font-weight:bold;">'.$row["student_name"].'</h5>
+		<h6>SCHOOL ID:'.$row["student_id"].' | Level: '.$row2["level"].'</h6>
 	 
 </div>
 
@@ -28,7 +32,7 @@ echo '
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	  <thead>
 	  	<tr>
-	  		<td align="right"><b>Statement As Of: </b></td>
+	  		<td align="right"><b>For the month of: </b></td>
 	  		<td width="150" align="right"><b>'.$stateDate.'</b></td>
 	  	</tr>
 	  </thead>
@@ -37,26 +41,11 @@ echo '
 <div class="form-group">
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	  <thead>
-	  	<tr>
-	  		<th colspan="3" >PAST DUES:</th>
-	  	</tr>
 	  </thead>
 	  <tbody>
 	  	<tr>
-	  		<td>Turition fee:</td>
-	  		<td width="150" align="right">&#8369; '.$row["tuition_fee_pd"].'</td>
-	  	</tr>
-	  	<tr>
-	  		<td>Books:</td>
-	  		<td width="150" align="right">&#8369; '.$row["books_pd"].'</td>
-	  	</tr>
-	  	<tr>
-	  		<td>Others:</td>
-	  		<td width="150" align="right">&#8369; '.$row["others_pd"].'</td>
-	  	</tr>
-	  	<tr>
-	  		<td align="right"><b>Total Past dues:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.$row["total_past_dues"].'</b></td>
+	  		<td>PAST DUE ACCOUNT:</td>
+	  		<td width="150" align="right">&#8369; '.$row["past_due_amount"].'</td>
 	  	</tr>
 </div>
 <div class="form-group">
@@ -68,24 +57,20 @@ echo '
 	  </thead>
 	  <tbody>
 	  	<tr>
-	  		<td>Turition fee:</td>
-	  		<td width="150" align="right">&#8369; '.$row["tuition_fee_cd"].'</td>
-	  	</tr>
-	  	<tr>
-	  		<td>Books:</td>
-	  		<td width="150" align="right">&#8369; '.$row["books_cd"].'</td>
+	  		<td>Tuition fee:</td>
+	  		<td width="150" align="right">&#8369; '.$row["tuition_fee_lmodule"].'</td>
 	  	</tr>
 	  	<tr>
 	  		<td>Remediation/Tutorial:</td>
-	  		<td width="150" align="right">&#8369; '.$row["tutorial_cd"].'</td>
+	  		<td width="150" align="right">&#8369; '.$row["tutorial"].'</td>
 	  	</tr>
 	  	<tr>
 	  		<td>Surcharge due to Late Payment:</td>
-	  		<td width="150" align="right">&#8369; '.$row["surcharge_due_to_late_payment_cd"].'</td>
+	  		<td width="150" align="right">&#8369; '.$row["surcharge"].'</td>
 	  	</tr>
 	  	<tr>
-	  		<td>Others:</td>
-	  		<td width="150" align="right">&#8369; '.$row["others_cd"].'</td>
+	  		<td>'.$row["other_description"].'</td>
+	  		<td width="150" align="right">&#8369; '.$row["other_amount"].'</td>
 	  	</tr>
 	  	<tr>
 	  		<td align="right"><b>Total Current dues:</b></td>
@@ -111,7 +96,7 @@ echo '
 	  	<tr>
 	  		<th width="150">PAYMENTS:</th>
 	  		<th width="70"> OR #</th>
-	  		<td width="195" align="right">'.$row["or_number"].'</td>
+	  		<td width="195" align="right">'.$row["or_no"].'</td>
 	  		<td align="right"><b>Amount Paid:</b></td>
 	  		<td width="150" align="right"><b>&#8369; '.$row["amount_paid"].'</b></td>
 	  	</tr>

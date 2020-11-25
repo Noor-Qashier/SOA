@@ -26,7 +26,25 @@ $subtotalPayment = $tuition_payment + $other_school_fees + $l_module;
 $totalClientPay = $downPayment + $payModule;
 $totalPayment = $subtotalPayment - $totalClientPay;
 
-$monthly = $totalPayment/10;
+
+
+//total discount
+$sibling_dic = $tuition*$sibling;
+$cash_discount = $tuition*$payment;
+$honor_discount = $tuition*$h_student;
+
+$honor_dis = $tuition - $honor_discount;
+$sibling_discount = $tuition - $sibling_dic;
+$payment_discount = $tuition - $cash_discount;
+
+$total_discount = $honor_dis+$sibling_discount+$payment_discount;
+$total_fees = $tuition+$other_school_fees+$l_module;
+
+$net_annual_fee = $total_fees-$total_discount-$totalDiscount;
+
+$new_net_amual_fee = $net_annual_fee - $downPayment - $payModule;
+
+$monthly = $new_net_amual_fee/10;
 
 //echo $finalTuition;
 $h_student_percentage;
@@ -56,18 +74,18 @@ echo '
       <td align="center"><b>ESC/Voucher </b></td>
     </tr>
     <tr>
-      <td align="right" id="h_student_p">'.$h_student_percentage.'</td>
-      <td align="right" id="sibling_p">'.$sibling_percentage.'</td>
-      <td align="right" id="payment_m">'.$payment_percentage.'</td>
+      <td align="right" id="h_student_p">'.$h_student_percentage.' ('.$honor_dis.') </td>
+      <td align="right" id="sibling_p">'.$sibling_percentage.' ('.$sibling_discount.')</td>
+      <td align="right" id="payment_m">'.$payment_percentage.' ('.$payment_discount.')</td>
       <td align="right" id="l_module"> - &#8369; '.number_format($totalDiscount,2).'</td>
     </tr>
     <tr>
     <th colspan="4"></th>
     </tr>
     <tr>
-      <td colspan="3" align="right"><b>Final Annual Fee</b></td>
-      <td align="right" id="total"><b>&#8369; '.number_format($totalPayment,2).'</b></td>
-      <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
+      <td colspan="3" align="right"><b>Net Annual Fee</b></td>
+      <td align="right" id="total"><b>&#8369; '.number_format($net_annual_fee,2).'</b></td>
+      <input type="text" id="total_value" value="'.$net_annual_fee.'" hidden/>
     </tr>
   </thead>
 </table>
@@ -84,27 +102,27 @@ echo '
       <td align="center"><b>ESC/Voucher </b></td>
     </tr>
     <tr>
-      <td align="center" id="h_student_p">'.$h_student_percentage.'</td>
-      <td align="center" id="sibling_p">'.$sibling_percentage.'</td>
-      <td align="center" id="payment_m">'.$payment_percentage.'</td>
-      <td align="center" id="l_module"> - &#8369; '.number_format($totalDiscount,2).'</td>
+      <td align="right" id="h_student_p">'.$h_student_percentage.' ('.$honor_dis.') </td>
+      <td align="right" id="sibling_p">'.$sibling_percentage.' ('.$sibling_discount.')</td>
+      <td align="right" id="payment_m">'.$payment_percentage.' ('.$payment_discount.')</td>
+      <td align="right" id="l_module"> - &#8369; '.number_format($totalDiscount,2).'</td>
     </tr>
   </thead>
 </table>
 <table class="table table-bordered" width="100%" cellspacing="0">
   <thead>
     <tr>
-      <td align="right" style="background-color:#8FE7FF;"><b>Total Anual Fee</b></td>
+      <td align="right" style="background-color:#8FE7FF;"><b>Net Anual Fee</b></td>
 
-      <td align="right" style="background-color:#FDA1AE;"><b>Down Payment</b></td>
+      <td align="right" style="background-color:#FDA1AE;"><b>Down Payment Fees</b></td>
 
-      <td align="right"style="background-color:#F4B7B7;"><b>Learning Module </b></td>
+      <td align="right"style="background-color:#F4B7B7;"><b>Payment Learning Module </b></td>
 
       <td align="right"style="background-color:#95FFB4;"><b>Monthly </b></td>
     </tr>
     <tr>
-      <td align="right" id="total" style="background-color:#8FE7FF;"><b>&#8369; '.number_format($subtotalPayment,2).'</b></td>
-      <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
+      <td align="right" id="total" style="background-color:#8FE7FF;"><b>&#8369; '.number_format($net_annual_fee,2).'</b></td>
+      <input type="text" id="total_value" value="'.$net_annual_fee .'" hidden/>
 
       <td align="right" id="total" style="background-color:#FDA1AE;"><b>&#8369; '.number_format($downPayment,2).'</b></td>
       <input type="text" id="downPayment" value="'.$downPayment.'" hidden/>
@@ -121,8 +139,8 @@ echo '
 
     <tr>
       <td colspan="3" align="right" style="background-color:#FFBC75;"><b>Ending Balance:</b></td>
-      <td align="right" id="total" style="background-color:#FFBC75;"><b>&#8369; '.number_format($totalPayment,2).'</b></td>
-      <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
+      <td align="right" id="total" style="background-color:#FFBC75;"><b>&#8369; '.number_format($new_net_amual_fee,2).'</b></td>
+      <input type="text" id="new_total_value" value="'.$new_net_amual_fee.'" hidden/>
     </tr>
   </thead>
 </table>

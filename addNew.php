@@ -473,11 +473,18 @@ $row = mysqli_fetch_array($result);
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="Status">ESC:</label>
-                        <input type="number" value="0" class="form-control text-right" id="ESC" aria-describedby="emailHelp" placeholder="ESC discount">
+                        <select type="email"class="form-control" id="ESC">
+                          <option selected>0</option>
+                          <option>11000</option>
+                        </select>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="Status">Voucher:</label>
-                        <input type="number" value="0" class="form-control text-right" id="voucher" aria-describedby="emailHelp" placeholder="Voucher discount">
+                        <select type="email"class="form-control" id="voucher">
+                          <option selected>0</option>
+                          <option>16000</option>
+                          <option>20000</option>
+                        </select>
                       </div>
                     </div>
 
@@ -486,7 +493,7 @@ $row = mysqli_fetch_array($result);
                       <div class="form-group col-md-4">
                         <label for="Status">Honor Student:</label>
                         <select class="form-control" id="h_student">
-                          <option disabled selected>None</option>
+                          <option selected>None</option>
                           <option>Gold</option>
                           <option>Silver</option>
                         </select>
@@ -530,7 +537,7 @@ $row = mysqli_fetch_array($result);
                       <span class="text">Evaluate</span></a>
                     </div>
                     </div>
-                      <label><b>Total Payment:</b></label>
+                      <label><b>Discounts:</b></label>
                       <div class="row">
                       <div class="form-group col-md-12" id="totalPayment">
 
@@ -795,7 +802,7 @@ $row = mysqli_fetch_array($result);
     var h_student = document.getElementById("h_student_p").innerHTML;
     var sibling = document.getElementById("sibling_p").innerHTML;
     var subtotal = document.getElementById("Subtotal").value;
-    var total = document.getElementById("total_value").value;
+    var total = document.getElementById("new_total_value").value;
     var monthly = document.getElementById("monthly").value;
 
     //alert(total);
