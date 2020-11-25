@@ -6,6 +6,7 @@ $h_student = $_POST['h_student'];
 $sibling = $_POST['sibling'];
 $payment = $_POST['payment'];
 $downPayment = $_POST['downPayment'];
+$payModule = $_POST['payModule'];
 
 
 
@@ -21,8 +22,9 @@ $Dtuition = $tuition - $totalDiscount;
 $discountedTuition = $Dtuition*$h_student;
 $finalTuition = $discountedTuition*$sibling;
 $tuition_payment = $finalTuition*$payment;
-$subtotalPayment = $tuition_payment + $other_school_fees;
-$totalPayment = $subtotalPayment - $downPayment;
+$subtotalPayment = $tuition_payment + $other_school_fees + $l_module;
+$totalClientPay = $downPayment + $payModule;
+$totalPayment = $subtotalPayment - $totalClientPay;
 
 $monthly = $totalPayment/10;
 
@@ -87,30 +89,39 @@ echo '
       <td align="center" id="payment_m">'.$payment_percentage.'</td>
       <td align="center" id="l_module"> - &#8369; '.number_format($totalDiscount,2).'</td>
     </tr>
+  </thead>
+</table>
+<table class="table table-bordered" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <td align="right" style="background-color:#8FE7FF;"><b>Total Anual Fee</b></td>
+
+      <td align="right" style="background-color:#FDA1AE;"><b>Down Payment</b></td>
+
+      <td align="right"style="background-color:#F4B7B7;"><b>Learning Module </b></td>
+
+      <td align="right"style="background-color:#95FFB4;"><b>Monthly </b></td>
+    </tr>
+    <tr>
+      <td align="right" id="total" style="background-color:#8FE7FF;"><b>&#8369; '.number_format($subtotalPayment,2).'</b></td>
+      <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
+
+      <td align="right" id="total" style="background-color:#FDA1AE;"><b>&#8369; '.number_format($downPayment,2).'</b></td>
+      <input type="text" id="downPayment" value="'.$downPayment.'" hidden/>
+
+      <td align="right" id="total"style="background-color:#F4B7B7;"><b>&#8369; '.number_format($payModule,2).'</b></td>
+      <input type="text" id="payModule" value="'.$payModule.'" hidden/>
+
+      <td align="right" id="monthly"style="background-color:#95FFB4;"><b>&#8369; '.number_format($monthly,2).'</b></td>
+      <input type="text" id="monthly" value="'.$monthly.'" hidden/>
+    </tr>
     <tr>
     <th colspan="4"></th>
     </tr>
-    <tr>
-      <td colspan="3" align="right"><b>Total Anual Fee:</b></td>
-      <td align="right" id="total"><b>&#8369; '.number_format($subtotalPayment,2).'</b></td>
-      <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
-    </tr>
 
     <tr>
-      <td colspan="3" align="right"><b>Down Payment:</b></td>
-      <td align="right" id="total"><b>&#8369; '.number_format($downPayment,2).'</b></td>
-      <input type="text" id="downPayment" value="'.$downPayment.'" hidden/>
-    </tr>
-
-    <tr>
-      <td colspan="3" align="right"><b>monthly:</b></td>
-      <td align="right" id="monthly"><b>&#8369; '.number_format($monthly,2).'</b></td>
-      <input type="text" id="monthly" value="'.$monthly.'" hidden/>
-    </tr>
-
-    <tr>
-      <td colspan="3" align="right"><b>Ending Balance:</b></td>
-      <td align="right" id="total"><b>&#8369; '.number_format($totalPayment,2).'</b></td>
+      <td colspan="3" align="right" style="background-color:#FFBC75;"><b>Ending Balance:</b></td>
+      <td align="right" id="total" style="background-color:#FFBC75;"><b>&#8369; '.number_format($totalPayment,2).'</b></td>
       <input type="text" id="total_value" value="'.$totalPayment.'" hidden/>
     </tr>
   </thead>

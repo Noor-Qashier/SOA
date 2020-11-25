@@ -426,19 +426,19 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <td>Tuition fee:</td>
-                  <td id="tuition_fee_pd" width="150" contenteditable="true" align="right"><?php echo $row["tuition_fee_pd"]?></td>
+                  <td id="tuition_fee_pd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Books:</td>
-                  <td id="books_pd" width="150" contenteditable="true" align="right"><?php echo $row["books_pd"]?></td>
+                  <td id="books_pd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Others:</td>
-                  <td id="others_pd" width="150" contenteditable="true" align="right"><?php echo $row["others_pd"]?></td>
+                  <td id="others_pd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td align="right"><b>Total Past dues:</b></td>
-                  <td onclick="totalPastDues(this)" id="total_past_dues" width="276" align="right" style="cursor: pointer; font-weight:bold"><?php echo $row["total_past_dues"]?></td>
+                  <td onclick="totalPastDues(this)" id="total_past_dues" width="276" align="right" style="cursor: pointer; font-weight:bold"></td>
                 </tr>
               </tbody>
             </table>
@@ -453,27 +453,27 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <td>Turition fee:</td>
-                  <td id="tuition_fee_cd" width="150" contenteditable="true" align="right"><?php echo $row["tuition_fee_cd"]?></td>
+                  <td id="tuition_fee_cd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Books:</td>
-                  <td id="books_cd" width="150" contenteditable="true" align="right"><?php echo $row["books_cd"]?></td>
+                  <td id="books_cd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Remediation/Tutorial:</td>
-                  <td id="tutorial_cd" width="150" contenteditable="true" align="right"><?php echo $row["tutorial_cd"]?></td>
+                  <td id="tutorial_cd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Surcharge due to Late Payment:</td>
-                  <td id="due_late_cd" width="150" contenteditable="true" align="right"><?php echo $row["surcharge_due_to_late_payment_cd"]?></td>
+                  <td id="due_late_cd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td>Others:</td>
-                  <td id="others_cd" width="150" contenteditable="true" align="right"><?php echo $row["others_cd"]?></td>
+                  <td id="others_cd" width="150" contenteditable="true" align="right"></td>
                 </tr>
                 <tr>
                   <td align="right"><b>Total Current dues:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalCurrentDues(this)" id="total_current_dues" width="300" align="right"><?php echo $row["total_current_due"]?></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalCurrentDues(this)" id="total_current_dues" width="300" align="right"></td>
                 </tr>
               </tbody>
             </table>
@@ -484,16 +484,13 @@ $row = mysqli_fetch_array($result);
               <thead>
                 <tr>
                   <td style="background-color:#FCDCB0" colspan="4">LAST DUE: 
-                    <?php
-                    $date = $row["due_on"];
-                    $newDate = date("M d Y", strtotime($date));
-                    echo $newDate?></td>
+                    </td>
                 </tr>
                 <tr>
                   <th width="150">DUE ON:</th>
                   <th><input id="due_on" style="border:0;background-color: transparent;" class="form-control" type="date" name=""></th>
                   <td width="300" align="right"><b>Total Due:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" contenteditable="true" align="right"><?php echo $row["total_due"]?></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" contenteditable="true" align="right"></td>
                 </tr>
               </thead>
             </table>
@@ -505,15 +502,15 @@ $row = mysqli_fetch_array($result);
                 <tr>
                   <th width="150">PAYMENTS:</th>
                   <th width="70"> OR #</th>
-                  <td id="or_number" width="205" contenteditable="true" align="right"><?php echo $row["or_number"]?></td>
+                  <td id="or_number" width="205" contenteditable="true" align="right"></td>
                   <td align="right"><b>Amount Paid:</b></td>
-                  <td style=" font-weight:bold" id="amount_paid" width="200" contenteditable="true" align="right"><?php echo $row["amount_paid"]?></td>
+                  <td style=" font-weight:bold" id="amount_paid" width="200" contenteditable="true" align="right"></td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td colspan="4" align="right"><b>Balance After Payment:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" contenteditable="true" align="right"><?php echo $row["balance_after_payment"]?></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" contenteditable="true" align="right"></td>
                 </tr>
               </tbody>
             </table>
@@ -617,7 +614,11 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <td colspan="4" align="right"><b>DOWN PAYMENT:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["downPayment"],2)?></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="" width="150" align="right">&#8369; <?php echo number_format($row["downPayment"],2)?></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="right"><b>LEARNING MODULE:</b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="" width="150" align="right">&#8369; <?php echo number_format($row["payModule"],2)?></td>
                 </tr>
                 <tr>
                   <td colspan="4" align="right"><b>MONTHLY:</b></td>

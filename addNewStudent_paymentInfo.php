@@ -15,6 +15,7 @@ $subtotal = $_POST['subtotal'];
 $total = $_POST['total'];
 $monthly = $_POST['monthly'];
 $downPayment = $_POST['downPayment'];
+$payModule = $_POST['payModule'];
 $date_of_entry = date('Y-m-d');
 
 $getPaymentInfo = "SELECT * FROM payment_information WHERE level = '$level'";
@@ -40,6 +41,7 @@ subtotal,
 total,
 monthly,
 downPayment,
+payModule,
 date_of_entry) VALUES (
 '$student_id',
 '$fname',
@@ -58,6 +60,7 @@ date_of_entry) VALUES (
 '$total',
 '$monthly',
 '$downPayment',
+'$payModule',
 '$date_of_entry')";
 
 	if(mysqli_query($mysqli, $sql))

@@ -8,7 +8,7 @@ $query = "SELECT * FROM payment_information WHERE level = '$yrLevel'";
 $result = mysqli_query($mysqli,$query);
 $row = mysqli_fetch_assoc($result);
 
-$total = $row["tuition_fees"] + $row["other_school_fees"];
+$total = $row["tuition_fees"] + $row["other_school_fees"] + $row["learning_module"];
 
 echo '
 
