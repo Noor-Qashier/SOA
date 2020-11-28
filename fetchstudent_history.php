@@ -1,14 +1,10 @@
-<?php
+fetchstudent_history.php<?php
 include 'config.php';
-$student_id = $_POST['student_id'];
+$num_rec = $_POST['num_rec'];
 
-$query = "SELECT * FROM monthly_payment WHERE student_id = '$student_id'";
+$query = "SELECT * FROM monthly_payment_history WHERE num_rec = '$num_rec'";
 $result = mysqli_query($mysqli,$query);
 $row = mysqli_fetch_assoc($result);
-
-$query2 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
-$result2 = mysqli_query($mysqli,$query2);
-$row2 = mysqli_fetch_assoc($result2);
 
 $dueDate = $row["due_on"];
 $DUE_ON = date("M d Y", strtotime($dueDate));
@@ -24,7 +20,7 @@ echo '
 
 <div class="form-group">
 <h5 id="name" style="text-transform: uppercase; font-weight:bold;">'.$row["student_name"].'</h5>
-		<h6>SCHOOL ID:'.$row["student_id"].' | Level: '.$row2["level"].'</h6>
+		<h6>SCHOOL ID:'.$row["student_id"].' | Level: '.$row["level"].'</h6>
 	 
 </div>
 

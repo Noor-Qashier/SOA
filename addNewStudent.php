@@ -10,7 +10,7 @@ $sql = "INSERT INTO students_list (firstname,lastname,year_level) VALUES ('$fnam
 
 	if(mysqli_query($mysqli, $sql))
 	{
-		$output.= "successfuuly added";
+		$output.= "successfully added";
 	}	
 	else 
 	{

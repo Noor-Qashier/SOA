@@ -14,7 +14,9 @@
 <?php
 include 'connect.php';
 
-$query = "SELECT * FROM student_payment_information";
+$student_id = $_POST['student_id'];
+
+$query = "SELECT * FROM monthly_payment_history WHERE student_id = '$student_id'";
 
 $statement = $mysqli->prepare($query);
 
@@ -28,9 +30,11 @@ $output = '
 	  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	  <thead>
 	  	<tr>
-	  		<th >Student ID</th>
-	  		<th >Name</th>
-	  		<th >Year Level</th>
+	  		<th>Student ID</th>
+	  		<th>Name</th>
+	  		<th>Year Level</th>
+        <th>Month of</th>
+        <th>Statement as of</th>
 	  		<th>Action</th>
 	  	</tr>
 	  </thead>
@@ -40,33 +44,20 @@ if($total_row > 0)
 {
 	foreach ($result as $row) 
 	{
-		$output .= '
+    $dateString = $row["statement_as_of"];
+    $statement_as_of_date = date("M d Y", strtotime($dateString));
+    		$output .= '
 			<tr>
 				<td>'.$row["student_id"].'</td>
-				<td>'.$row["fname"]." ".$row["lname"].'</td>
+				<td>'.$row["student_name"].'</td>
 				<td>'.$row["level"].'</td>
+        <td>'.$row["for_the_month"].'</td>
+        <td>'.$statement_as_of_date.'</td>
 				<td align="right">
 
-				<button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:gray;"></i>
-                </button>
-                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+			
 
-                      <a href="history.php?id='.$row["student_id"].'" class="dropdown-item" href="#" id="'.$row["student_id"].'">History <i class="fa fa-history float-right" aria-hidden="true"></i></a></a>
-
-                      <a onclick="delete()" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a>
-
-                      <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
-
-                </div>
-
-				<a href="addPayment.php?id='.$row["student_id"].'" onclick="addPayment()" class="btn btn-info btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                <span class="text">Add Payment</span></a>
-
-                <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
+                <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["num_rec"].'">
                   <span class="icon text-white-50">
                     <i class="fas fa-eye"></i>
                   </span>
@@ -88,9 +79,11 @@ $output .='
 </tbody>
 <tfoot>
 <tr>
-<th >Student ID</th>
-<th >Name</th>
-<th >Year Level</th>
+<th>Student ID</th>
+<th>Name</th>
+<th>Year Level</th>
+<th>Month of</th>
+<th>Statement as of</th>
 <th>Action</th>
 </tr>
 <tfoot>

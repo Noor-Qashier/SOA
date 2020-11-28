@@ -1,5 +1,6 @@
 <?php
 include 'config.php';
+$student_id = $_GET["id"];
 $student = "SELECT * FROM students_list";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
@@ -741,14 +742,16 @@ $row = mysqli_fetch_array($result);
       </div>
     </div>
   </div>
-
+<input type="hidden" id="student_id_ex" value="<?php echo $student_id ?>" name="">
   <!--Fetching data from database-->
 <script type="text/javascript">
     function load_data()
     {
+      var student_id = $("#student_id_ex").val();
       $.ajax({
-        url: "fetchStudentList.php",
+        url: "fetchHistory.php",
         method: "POST",
+        data: {"student_id":student_id},
         success:function(data){
           $("#student_data").html(data);
           //alert(data);
@@ -761,13 +764,13 @@ $row = mysqli_fetch_array($result);
 <!--view student info-->
 <script type="text/javascript">
   function view(button){
-    var student_id = button.id;
+    var num_rec = button.id;
     //alert(student_id);
 
     $.ajax({
-      url: "fetchstudent.php",
+      url: "fetchstudent_history.php",
       method: "POST",
-      data:{"student_id":student_id},
+      data:{"num_rec":num_rec},
       success:function(data){
       $("#student_info").html(data);
       $('#stud_id').val(student_id);

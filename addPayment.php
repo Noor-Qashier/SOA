@@ -4,6 +4,10 @@ $student_id = $_GET["id"];
 $student = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
+
+$monthly = "SELECT * FROM monthly_payment WHERE student_id = '$student_id'";
+$result_monthly = mysqli_query($mysqli,$monthly);
+$row_montly = mysqli_fetch_array($result_monthly);
 ?>
 
 <!DOCTYPE html>
@@ -405,7 +409,7 @@ $row = mysqli_fetch_array($result);
       <form class="col-8">
           <div class="form-group">
           <h4 style="text-align:center;background-color:#EAECEE;padding-top:20px;padding-bottom:20px;"><b>STATEMENT OF ACCOUNT</b><br><small>
-            <select style="color:gray;border-color:transparent;background-color:transparent;" id="for_the_month">
+            <select onchange="date_for_the_month()" style="color:gray;border-color:transparent;background-color:transparent;" id="for_the_month">
               <option>January</option>
               <option>February</option>
               <option>March</option>
@@ -424,12 +428,13 @@ $row = mysqli_fetch_array($result);
           <h4 id="name" style="text-transform: uppercase; font-weight:bold;"><?php echo $row["fname"]." ".$row["lname"] ?></h4>
               <h6>SCHOOL ID: <?php echo $row["student_id"].' | Level: '.$row["level"] ?></h6>
               <input id="stud_id" value="<?php echo $row["student_id"]?>" type="" name="" hidden/>
-              <input id="stud_name" value="<?php echo $row["student_id"].' | Level: '.$row["level"] ?>" type="" name="" hidden/>
+              <input id="stud_name" value="<?php echo $row["fname"].' '.$row["lname"] ?>" type="" name="" hidden/>
+              <input id="level" value="<?php echo $row["level"]?>" type="" name="" hidden/>
           </div>
-
+          <p><?php echo $row_montly['statement_as_of']?></p>
           <div class="form-inline" style="float: right;">
                   <label for="as_of"><b>STATEMENT AS OF:</b></label> 
-                  <input id="as_of" style=";background-color: transparent; margin-left: 10px;margin-bottom: 10px;" class="form-control" type="date" name=""></td>
+                  <input id="as_of" style=";background-color: transparent; margin-left: 10px;margin-bottom: 10px;" class="form-control" value="<?php echo $row_montly['statement_as_of']?>"type="date" name=""></td>
           </div>
 
           <div class="form-group">
@@ -442,7 +447,7 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <th colspan="3" >PAST DUE ACCOUNT</th>
-                  <td id="total_past_due" width="150" contenteditable="true" align="right"></td>
+                  <td id="total_past_due" width="150" contenteditable="true" align="right"><?php echo $row_montly['past_due_amount']?></td>
                 </tr>
               </tbody>
             </table>
@@ -457,27 +462,33 @@ $row = mysqli_fetch_array($result);
               <tbody>
                 <tr>
                   <td>Tuition fee/Learning Module:</td>
-                  <td id="" width="150" align="right">&#8369; <?php echo number_format($row["monthly"],2)?></td>
+                  <td id="" width="150" align="right"><?php echo $row["monthly"]?></td>
                   <input type="hidden" id="tuition_fee_cd" value="<?php echo $row["monthly"]?>">
                 </tr>
                 <tr>
                   <td>Remediation/Tutorial:</td>
-                  <td id="tutorial_cd" width="150" contenteditable="true" align="right"></td>
+                  <td id="tutorial_cd" width="150" contenteditable="true" align="right"> <?php echo $row_montly['tutorial']?></td>
                 </tr>
                 <tr>
                   <td>Surcharge due to Late Payment:</td>
                   <td id="" width="150" align="right"><select id="surcharge_cd" style="text-align: right;" class="form-control">
+                    <option selected> <?php echo $row_montly['surcharge']?></option>
                     <option>0.00</option>
                     <option>100.00</option>
                   </select></td>
                 </tr>
                 <tr>
-                  <td id="other_description" contenteditable="true">Others: </td>
-                  <td id="others_amount" width="150" contenteditable="true" align="right"></td>
+                  <th style="background-color:#F0F0F0" colspan="2">OTHERS:</th>
+                </tr>
+                <tr>
+                  <td style="background-color:#F0F0F0" id="other_description" contenteditable="true"><?php echo $row_montly['other_description']?></td>
+                  <td style="background-color:#F0F0F0" id="others_amount" width="150" contenteditable="true" align="right"> 
+                    <?php echo $row_montly['other_amount']?>
+                  </td>
                 </tr>
                 <tr>
                   <td align="right"><b>Total Current Due:</b></td>
-                  <td style="cursor: pointer; font-weight:bold;background-color: #9FE2BF;" onclick="totalCurrentDues()" id="total_current_dues" width="300" align="right"></td>
+                  <td style="cursor: pointer; font-weight:bold;background-color: #9FE2BF;" onclick="totalCurrentDues()" id="total_current_dues" width="300" align="right"><?php echo $row_montly['total_current_due']?></td>
                 </tr>
               </tbody>
             </table>
@@ -488,9 +499,9 @@ $row = mysqli_fetch_array($result);
               <thead>
                 <tr>
                   <th width="150">DUE ON:</th>
-                  <th><input id="due_on" style="border:0;background-color: transparent;" class="form-control" type="date" name=""></th>
+                  <th><input id="due_on" style="border:0;background-color: transparent;" class="form-control" type="date" value="<?php echo $row_montly['due_on']?>" name=""></th>
                   <td width="300" align="right"><b>Total Due:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" align="right"></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_due" width="300" align="right"><?php echo $row_montly['total_due']?></td>
                 </tr>
               </thead>
             </table>
@@ -502,15 +513,24 @@ $row = mysqli_fetch_array($result);
                 <tr>
                   <th width="150">PAYMENTS:</th>
                   <th width="70"> OR #</th>
-                  <td id="or_number" width="205" contenteditable="true" align="right"></td>
+                  <td id="or_number" width="205" contenteditable="true" align="right"><?php echo $row_montly['or_no']?></td>
                   <td align="right"><b>Amount Paid:</b></td>
-                  <td style=" font-weight:bold" id="amount_paid" width="200" contenteditable="true" align="right"></td>
+                  <td style=" font-weight:bold" id="amount_paid" width="200" contenteditable="true" align="right"><?php echo $row_montly['amount_paid']?></td>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td colspan="4" align="right"><b>Balance After Payment:</b></td>
-                  <td style="cursor: pointer; font-weight:bold;background-color: #40E0D0" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right"></td>
+                  <td style="cursor: pointer; font-weight:bold;background-color: #40E0D0" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right"><?php echo $row_montly['balance_after_payment']?></td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    <a style="color:white;"onclick="fullPayment(this)" id="<?php echo $row["student_id"]?>" class="btn btn-warning btn-lg btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-dollar-sign"></i>
+                    </span>
+                    <span class="text">Apply Full Payment</span></a>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -538,7 +558,7 @@ $row = mysqli_fetch_array($result);
 
       <form class="col-4">
           <div class="form-group">
-          <h4 style="text-align:center;background-color:#36b9cc;color:white;padding-top:20px;padding-bottom:20px;"><b>PAYMENT INFORMATION</b></h4>
+          <h4 style="text-align:center;background-color:#36b9cc;color:white;padding-top:20px;padding-bottom:20px;"><b>INITIAL PAYMENT</b></h4>
           </div>
 
           <div class="form-group">
@@ -685,8 +705,59 @@ $row = mysqli_fetch_array($result);
     </div>
   </div>
 
+<!------------------------------------------------------------------------------------------->
 
 
+          <!--modal for viweing-->
+          <div class="modal fade" id="fullPayment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <img src="img/header.png" style="margin-left:4%;">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <input type="" id="stud_id" name="" hidden>
+                    <div id="student_info">
+                    
+                    </div>
+                  </form>
+                                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <a href="#" onclick="addPayment()" class="btn btn-success btn-icon-split">
+                  <span class="icon text-white-50">
+                    <i class="fas fa-save"></i>
+                  </span>
+                  <span class="text">Add Payment</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end modal viewing-->
+
+
+<script type="text/javascript">
+  function fullPayment(button){
+    var id = button.id;
+    var lev = $("#level").val();
+
+    $.ajax({
+      url: "fetchWholePayment.php",
+      method: "POST",
+      data:{"id":id,"level":level},
+      success:function(data){
+      $("#student_info").html(data);
+      $("#viewstudent").modal("show");
+      }
+    })
+    alert(id);
+    $("#fullPayment").modal("show");
+  }
 </script>
 <!--save payment-->
 <script type="text/javascript">
@@ -715,12 +786,13 @@ $row = mysqli_fetch_array($result);
     if(tutorial_cd == ""){
       tutorial_cd = 0;
     }
-    if(surcharge_cd == 0){
+    if(surcharge_cd == ""){
       surcharge_cd = 0;
     }
-    if(others_amount == 0){
+    if(others_amount == ""){
       others_amount = 0;
     }
+    //alert(tutorial_cd);
     var totalCurrentDues = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     //alert(surcharge_cd);
     $("#total_current_dues").html(totalCurrentDues);
@@ -730,12 +802,16 @@ $row = mysqli_fetch_array($result);
     var past_due = $("#total_past_due").html();
     var current_due = $("#total_current_dues").html();
     var amount_paid = $("#amount_paid").html();
+    if(amount_paid == ""){
+      amount_paid = 0;
+    }
     if(past_due == ""){
       past_due = 0;
     }
     if(current_due == ""){
       current_due = 0;
     }
+    //alert(past_due);
     var total_dues = parseFloat(past_due)+parseFloat(current_due);
 
     var balance_after_payment = parseFloat(total_dues)-parseFloat(amount_paid);
@@ -747,10 +823,37 @@ $row = mysqli_fetch_array($result);
     }
 </script>
 <script type="text/javascript">
+  function date_for_the_month(){
+    
+    var new_past_due = $("#balance_after_payment").html();
+    $("#total_past_due").html(new_past_due);
+    //alert("dawd");
+     //$("#for_the_month").val("")
+    //$("#stud_id").val("");
+    //$("#stud_name").val();
+    $("#as_of").val("");
+    
+    //$("#tuition_fee_cd").val("");
+    $("#tutorial_cd").html("");
+    //$("#surcharge_cd").val("");
+    $("#other_description").html("");
+    $("#others_amount").html("");
+    $("#total_current_dues").html("");
+    $("#due_on").html("");
+    $("#total_due").html("");
+    $("#or_number").html("");
+    $("#amount_paid").html("");
+    $("#balance_after_payment").html("");
+
+    
+  }
+</script>
+<script type="text/javascript">
   function savePayment(){
     var for_the_month = $("#for_the_month").val()
     var stud_id = $("#stud_id").val();
     var stud_name = $("#stud_name").val();
+    var level = $("#level").val();
     var as_of = $("#as_of").val();
     var total_past_due = $("#total_past_due").html();
     var tuition_fee_cd = $("#tuition_fee_cd").val();
@@ -759,13 +862,14 @@ $row = mysqli_fetch_array($result);
     var other_description = $("#other_description").html();
     var others_amount = $("#others_amount").html();
     var total_current_dues = $("#total_current_dues").html();
-    var due_on = $("#due_on").html();
+    var due_on = $("#due_on").val();
     var total_due = $("#total_due").html();
     var or_number = $("#or_number").html();
     var amount_paid = $("#amount_paid").html();
     var balance_after_payment = $("#balance_after_payment").html();
 
-    alert(tutorial_cd);
+
+   // alert(tutorial_cd);
 
 
     //alert(total_current_dues);
@@ -776,6 +880,7 @@ $row = mysqli_fetch_array($result);
         "for_the_month":for_the_month,
         "stud_id":stud_id,
         "stud_name":stud_name,
+        "level":level,
         "as_of":as_of,
         "total_past_due":total_past_due,
         "tuition_fee_cd":tuition_fee_cd,
