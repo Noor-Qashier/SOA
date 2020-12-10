@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-$student = "SELECT * FROM students_list";
+$student = "SELECT * FROM full_payment";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
 ?>
@@ -747,7 +747,7 @@ $row = mysqli_fetch_array($result);
     function load_data()
     {
       $.ajax({
-        url: "fetchStudentList.php",
+        url: "fatchStudentPaid.php",
         method: "POST",
         success:function(data){
           $("#student_data").html(data);

@@ -26,7 +26,32 @@ $new_for_the_month = $for_the_month.' '.$date;
 $query = "SELECT * FROM monthly_payment WHERE student_id = '$stud_id'";
 $result = mysqli_query($mysqli,$query);
 
+$evalTotal = "SELECT * FROM student_payment_information WHERE student_id = '$stud_id'";
+$resultTotal = mysqli_query($mysqli,$evalTotal);
+$rowTotal = mysqli_fetch_assoc($resultTotal);
+
+if($tutorial_cd ==""){
+	$tutorial_cd = 0;
+}
+if($surcharge_cd ==""){
+	$surcharge_cd = 0;
+}
+if($others_amount ==""){
+	$others_amount = 0;
+}
+
+echo $tutorial_cd.' '.$surcharge_cd.' '.$others_amount;
+//
+$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
+$newTotal = $calTotal - $amount_paid;
+
+//echo $calTotal.' '.$newTotal;
+
 if (mysqli_num_rows($result)==0) {
+
+	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
+
 	$insert_new = "INSERT INTO monthly_payment 
 	(for_the_month,
 	student_id,
@@ -138,7 +163,7 @@ if (mysqli_num_rows($result)==0) {
 	'$amount_paid',
 	'$balance_after_payment')";
 
-	if(mysqli_query($mysqli, $insert_new) && mysqli_query($mysqli, $insert_history) && mysqli_query($mysqli, $insert_client))
+	if(mysqli_query($mysqli, $insert_new) && mysqli_query($mysqli, $insert_history) && mysqli_query($mysqli, $insert_client) && mysqli_query($mysqli, $updateNewTotal))
 	{
 		echo "successfully added";
 	}	
@@ -148,6 +173,9 @@ if (mysqli_num_rows($result)==0) {
 		echo "failed";
 	}
 }else{
+
+	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
+
 	$update = "UPDATE monthly_payment SET
 	for_the_month = '$new_for_the_month',
 	student_id = '$stud_id',
@@ -227,7 +255,7 @@ if (mysqli_num_rows($result)==0) {
 
 	WHERE student_id = '$stud_id';";
 
-	if(mysqli_query($mysqli, $update) && mysqli_query($mysqli, $insert_history) && mysqli_query($mysqli, $insert_client))
+	if(mysqli_query($mysqli, $update) && mysqli_query($mysqli, $insert_history) && mysqli_query($mysqli, $insert_client) && mysqli_query($mysqli, $updateNewTotal))
 		{
 			echo mysqli_error($mysqli);
 			echo "Updated";
