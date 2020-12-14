@@ -16,10 +16,13 @@ $DUE_ON = date("M d Y", strtotime($dueDate));
 $StatementDate = $row["statement_as_of"];
 $stateDate = date("M d Y", strtotime($StatementDate));
 
+$dateForTheMonth = $row["for_the_month"];
+$newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
+
 
 echo '
 <div class="form-group">
-<h5 style="text-align:center;background-color:#EAECEE;padding-top:10px;padding-bottom:10px;">STATEMENT OF ACCOUNT<small><p>'.$row['for_the_month'].'</p></small></h5>
+<h5 style="text-align:center;background-color:#EAECEE;padding-top:10px;padding-bottom:10px;">STATEMENT OF ACCOUNT<small><p>'.$newDateForTheMonth.'</p></small></h5>
 </div>
 
 <div class="form-group">

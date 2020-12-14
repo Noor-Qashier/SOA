@@ -21,7 +21,6 @@ $balance_after_payment = $_POST["balance_after_payment"];
 $date = date('Y');
 
 
-$new_for_the_month = $for_the_month.' '.$date;
 
 $query = "SELECT * FROM monthly_payment WHERE student_id = '$stud_id'";
 $result = mysqli_query($mysqli,$query);
@@ -39,8 +38,11 @@ if($surcharge_cd ==""){
 if($others_amount ==""){
 	$others_amount = 0;
 }
+if($amount_paid == ""){
+	$amount_paid = 0;
+}
 
-echo $tutorial_cd.' '.$surcharge_cd.' '.$others_amount;
+//echo $tutorial_cd.' '.$surcharge_cd.' '.$others_amount;
 //
 $additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
 $calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
@@ -71,7 +73,7 @@ if (mysqli_num_rows($result)==0) {
 	amount_paid,
 	balance_after_payment)
 	VALUES
-	('$new_for_the_month',
+	('$for_the_month',
 	'$stud_id',
 	'$stud_name',
 	'$level',
@@ -108,7 +110,7 @@ if (mysqli_num_rows($result)==0) {
 	amount_paid,
 	balance_after_payment)
 	VALUES
-	('$new_for_the_month',
+	('$for_the_month',
 	'$stud_id',
 	'$stud_name',
 	'$level',
@@ -145,7 +147,7 @@ if (mysqli_num_rows($result)==0) {
 	amount_paid,
 	balance_after_payment)
 	VALUES
-	('$new_for_the_month',
+	('$for_the_month',
 	'$stud_id',
 	'$stud_name',
 	'$level',
@@ -177,7 +179,7 @@ if (mysqli_num_rows($result)==0) {
 	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
 
 	$update = "UPDATE monthly_payment SET
-	for_the_month = '$new_for_the_month',
+	for_the_month = '$for_the_month',
 	student_id = '$stud_id',
 	student_name = '$stud_name',
 	level = '$level',
@@ -216,7 +218,7 @@ if (mysqli_num_rows($result)==0) {
 	amount_paid,
 	balance_after_payment)
 	VALUES
-	('$new_for_the_month',
+	('$for_the_month',
 	'$stud_id',
 	'$stud_name',
 	'$level',
@@ -235,7 +237,7 @@ if (mysqli_num_rows($result)==0) {
 	'$balance_after_payment')";
 
 	$insert_client = "UPDATE monthly_payment_client SET
-	for_the_month = '$new_for_the_month',
+	for_the_month = '$for_the_month',
 	student_id = '$stud_id',
 	student_name = '$stud_name',
 	level = '$level',

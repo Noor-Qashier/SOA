@@ -634,7 +634,16 @@ $row = mysqli_fetch_array($result);
             }
           </script>
 <!------------------------------------------------------------------------------------------->
-
+          <script type="text/javascript">
+            function printContent(el){
+            var restorepage = document.body.innerHTML;
+            var print_content = document.getElementById(el).innerHTML;
+            document.body.innerHTML = print_content;
+            window.print();
+            document.body.innerHTML = restorepage;
+            window.location="addNew.php";
+            }
+          </script>
 
           <!--modal for viweing-->
           <div class="modal fade" id="viewstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -648,11 +657,14 @@ $row = mysqli_fetch_array($result);
                 </div>
                 <div class="modal-body">
                   <form>
+                    <div id="printcontent">
                     <input type="" id="stud_id" name="" hidden>
                     <div id="student_info">
                     
                     </div>
+                    </div>
                   </form>
+                  <button type="button" onclick="printContent('printcontent')" id class="btn btn-danger">Print Report</button>
                                   
                 </div>
                 <div class="modal-footer">

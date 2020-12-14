@@ -409,20 +409,8 @@ $row_montly = mysqli_fetch_array($result_monthly);
       <form class="col-8">
           <div class="form-group">
           <h4 style="text-align:center;background-color:#EAECEE;padding-top:20px;padding-bottom:20px;"><b>STATEMENT OF ACCOUNT</b><br><small>
-            <select onchange="date_for_the_month()" style="color:gray;border-color:transparent;background-color:transparent;" id="for_the_month">
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </select></small></h4>
+            <input id="for_the_month" value="<?php echo $row_montly['for_the_month']?>" type="month"  style="color:gray;border-color:white;border-radius: 5px;background-color:transparent;" onchange="date_for_the_month()" name="">
+            </small></h4>
           </div>
           <div class="form-group">
           <h4 id="name" style="text-transform: uppercase; font-weight:bold;"><?php echo $row["fname"]." ".$row["lname"] ?></h4>
@@ -479,15 +467,15 @@ $row_montly = mysqli_fetch_array($result_monthly);
                   <div class="row">
                           <div class="form-group col-md-4">
                             <label>Others:</label>
-                            <input type="text" class="form-control" id="other_description" value="<?php echo $row_montly['surcharge']?>" placeholder="Description" required>
+                            <input type="text" class="form-control" id="other_description" value="<?php echo $row_montly['other_description']?>" placeholder="Description" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Amount:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="others_amount" value="<?php echo $row_montly['surcharge']?>" placeholder="Enter Amount" required>
+                            <input style="text-align: right;" type="number" class="form-control" id="others_amount" value="<?php echo $row_montly['other_amount']?>" placeholder="Enter Amount" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Total Current Due:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="total_current_dues" value="<?php echo $row_montly['other_description']?>"disabled required> 
+                            <input style="text-align: right;" type="number" class="form-control" id="total_current_dues" value="<?php echo $row_montly['total_current_dues']?>"disabled required> 
                           </div>
                   </div>
                 </td>
@@ -534,11 +522,11 @@ $row_montly = mysqli_fetch_array($result_monthly);
                       </div>
                       <div class="form-group col-md-4">
                         <label>Amount Paid:</label>
-                        <input style="text-align: right;" id="total_due" class="form-control" onclick="totalDues(this)" type="number" value="<?php echo $row_montly['amount_paid']?>" name="" >
+                        <input style="text-align: right;" id="amount_paid" class="form-control" type="number" value="<?php echo $row_montly['amount_paid']?>" name="" >
                       </div>
                       <div class="form-group col-md-4">
                         <label>Balance After Payment:</label>
-                        <input style="text-align: right;" onclick="totalDues(this)" id="balance_after_payment" class="form-control" type="number" value="<?php echo $row_montly['or_no']?>" name=""disabled>
+                        <input style="text-align: right;"  id="balance_after_payment" class="form-control" type="number" value="<?php echo $row_montly['balance_after_payment']?>" name=""disabled>
                       </div>
                     </div>
                     <div class="row">
@@ -548,7 +536,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
                       </div>
                       <div class="form-group col-md-6">
                         <label><b>Evaluate?</b></label>
-                        <input onclick="totalDues(this)" id="<?php echo $row["student_id"]?>" class="form-control btn-warning btn-lg" type="button" value="CLICK HERE">
+                        <input onclick="totalDues('<?php echo $row["student_id"]?>')" id="<?php echo $row["student_id"]?>" class="form-control btn-warning btn-lg" type="button" value="CLICK HERE">
                       </div>
                     </div>
                    </td>
@@ -707,7 +695,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="4" align="right"><b>GRAND TOTAL:</b></td>
+                  <td colspan="4" align="right"><b>ENDING ANNUAL BALANCE:</b></td>
                   <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["total_wd_add_pay"],2)?></td>
                 </tr>
               </tbody>
@@ -832,7 +820,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
 <script type="text/javascript">
   function fullPayment(button){
     var id = button.id;
-    var bal_after_payment = $("#balance_after_payment").html();
+    var bal_after_payment = $("#balance_after_payment").val();
     //alert(lev);
     $.ajax({
       url: 'fetchWholePayment.php',
@@ -850,9 +838,9 @@ $row_montly = mysqli_fetch_array($result_monthly);
 <script type="text/javascript">
     function totalPastDues(){
     //alert("wadeaw");
-    var tuition_fee_pd = $("#tuition_fee_pd").html();
-    var books_pd = $("#books_pd").html();
-    var others_pd = $("#others_pd").html();
+    var tuition_fee_pd = $("#tuition_fee_pd").val();
+    var books_pd = $("#books_pd").val();
+    var others_pd = $("#others_pd").val();
 
     var totalPastDues = parseFloat(tuition_fee_pd)+parseFloat(books_pd)+parseFloat(others_pd);
 
@@ -861,9 +849,9 @@ $row_montly = mysqli_fetch_array($result_monthly);
 
     function totalCurrentDues(){
     var tuition_fee_cd = $("#tuition_fee_cd").val();
-    var tutorial_cd = $("#tutorial_cd").html();
+    var tutorial_cd = $("#tutorial_cd").val();
     var surcharge_cd = $("#surcharge_cd").val();
-    var others_amount = $("#others_amount").html();
+    var others_amount = $("#others_amount").val();
     
 
 
@@ -886,9 +874,40 @@ $row_montly = mysqli_fetch_array($result_monthly);
     //alert(totalCurrentDues);
   }
     function totalDues() {
+    var tuition_fee_cd = $("#tuition_fee_cd").val();
+    var tutorial_cd = $("#tutorial_cd").val();
+    var surcharge_cd = $("#surcharge_cd").val();
+    var others_amount = $("#others_amount").val();
+    
+
+
+    if(tuition_fee_cd == ""){
+      tuition_fee_cd = 0;
+    }
+    else if(tutorial_cd == ""){
+      tutorial_cd = 0;
+    }
+    else if(surcharge_cd == ""){
+      surcharge_cd = 0;
+    }
+    else if(others_amount == ""){
+      others_amount = 0;
+    }
+    else{
+      
+    }
+    //alert(tutorial_cd);
+    var totalCurrentDues = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
+    //alert(surcharge_cd);
+    $("#total_current_dues").val(totalCurrentDues);
+    //alert(totalCurrentDues);
+
+
+    //alert(totalCurrentDues);
     var past_due = $("#total_past_due").html();
-    var current_due = $("#total_current_dues").html();
-    var amount_paid = $("#amount_paid").html();
+    var current_due = $("#total_current_dues").val();
+    var amount_paid = $("#amount_paid").val();
+
     if(amount_paid == ""){
       amount_paid = 0;
     }
@@ -904,39 +923,42 @@ $row_montly = mysqli_fetch_array($result_monthly);
     var balance_after_payment = parseFloat(total_dues)-parseFloat(amount_paid);
 
     //alert(total_dues);
-    $("#total_due").html(total_dues);
-    $("#balance_after_payment").html(balance_after_payment);
+    $("#total_due").val(total_dues);
+    $("#balance_after_payment").val(balance_after_payment);
 
     }
 </script>
 <script type="text/javascript">
   function date_for_the_month(){
     
-    var new_past_due = $("#balance_after_payment").html();
+    var new_past_due = $("#balance_after_payment").val();
     $("#total_past_due").html(new_past_due);
+    var date_for_the_month = $("#for_the_month").val();
+    $("#due_on").val(date_for_the_month);
     //alert("dawd");
      //$("#for_the_month").val("")
     //$("#stud_id").val("");
     //$("#stud_name").val();
     $("#as_of").val("");
     
-    $("#tuition_fee_cd").val("0");
-    $("#tutorial_cd").html("0");
+    //$("#tuition_fee_cd").val("0");
+    $("#tutorial_cd").val("0");
     $("#surcharge_cd").val("0");
-    $("#other_description").html("");
-    $("#others_amount").html("0");
-    $("#total_current_dues").html("0");
-    $("#due_on").html("");
-    $("#total_due").html("0");
-    $("#or_number").html("");
-    $("#amount_paid").html("0");
-    $("#balance_after_payment").html("0");
+    $("#other_description").val("");
+    $("#others_amount").val("0");
+    $("#total_current_dues").val("0");
+    //$("#due_on").val("");
+    $("#total_due").val("0");
+    $("#or_number").val("");
+    $("#amount_paid").val("0");
+    $("#balance_after_payment").val("0");
 
     
   }
 </script>
 <script type="text/javascript">
   function savePayment(){
+
     var for_the_month = $("#for_the_month").val()
     var stud_id = $("#stud_id").val();
     var stud_name = $("#stud_name").val();
@@ -944,19 +966,19 @@ $row_montly = mysqli_fetch_array($result_monthly);
     var as_of = $("#as_of").val();
     var total_past_due = $("#total_past_due").html();
     var tuition_fee_cd = $("#tuition_fee_cd").val();
-    var tutorial_cd = $("#tutorial_cd").html();
+    var tutorial_cd = $("#tutorial_cd").val();
     var surcharge_cd = $("#surcharge_cd").val();
-    var other_description = $("#other_description").html();
-    var others_amount = $("#others_amount").html();
-    var total_current_dues = $("#total_current_dues").html();
+    var other_description = $("#other_description").val();
+    var others_amount = $("#others_amount").val();
+    var total_current_dues = $("#total_current_dues").val();
     var due_on = $("#due_on").val();
-    var total_due = $("#total_due").html();
-    var or_number = $("#or_number").html();
-    var amount_paid = $("#amount_paid").html();
-    var balance_after_payment = $("#balance_after_payment").html();
+    var total_due = $("#total_due").val();
+    var or_number = $("#or_number").val();
+    var amount_paid = $("#amount_paid").val();
+    var balance_after_payment = $("#balance_after_payment").val();
 
 
-   // alert(tutorial_cd);
+   //alert(for_the_month);
 
 
     //alert(total_current_dues);

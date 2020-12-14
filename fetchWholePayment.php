@@ -59,9 +59,11 @@ if($total_row > 0)
 {
   foreach ($result as $row) 
   {
+    $dateForTheMonth = $row["due_on"];
+    $newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
     $output .= '
       <tr>
-        <td>'.$row['for_the_month'].'</td>
+        <td>'.$newDateForTheMonth.'</td>
         <td align="right">&#8369; '.number_format($row['amount_paid'],2).'</td>
       </tr>
     ';
