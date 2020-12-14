@@ -47,25 +47,6 @@ if($total_row > 0)
 				<td>'.$row["level"].'</td>
 				<td align="right">
 
-				<button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:gray;"></i>
-                </button>
-                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-
-                      <a href="history.php?id='.$row["student_id"].'" class="dropdown-item" href="#" id="'.$row["student_id"].'">History <i class="fa fa-history float-right" aria-hidden="true"></i></a></a>
-
-                      <a onclick="delete()" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a>
-
-                      <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
-
-                </div>
-
-				<a href="addPayment.php?id='.$row["student_id"].'" onclick="addPayment()" class="btn btn-info btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                <span class="text">Add Payment</span></a>
-
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
                   <span class="icon text-white-50">
                     <i class="fas fa-eye"></i>

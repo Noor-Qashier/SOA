@@ -457,25 +457,25 @@ $row_montly = mysqli_fetch_array($result_monthly);
                           </div>
                           <div class="form-group col-md-4">
                             <label>Remediation/Tutorial:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="tutorial_cd" value="<?php echo $row_montly["tutorial"]?>" placeholder="Enter Amount" required>
+                            <input style="text-align: right;" type="number" class="form-control" id="tutorial_cd" placeholder="Enter Amount" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Surcharge:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="surcharge_cd" value="<?php echo $row_montly['surcharge']?>" placeholder="Due to late payment" required>
+                            <input style="text-align: right;" type="number" class="form-control" id="surcharge_cd" placeholder="Due to late payment" required>
                           </div>
                   </div>
                   <div class="row">
                           <div class="form-group col-md-4">
                             <label>Others:</label>
-                            <input type="text" class="form-control" id="other_description" value="<?php echo $row_montly['other_description']?>" placeholder="Description" required>
+                            <input type="text" class="form-control" id="other_description"  placeholder="Description" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Amount:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="others_amount" value="<?php echo $row_montly['other_amount']?>" placeholder="Enter Amount" required>
+                            <input style="text-align: right;" type="number" class="form-control" id="others_amount" placeholder="Enter Amount" required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Total Current Due:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="total_current_dues" value="<?php echo $row_montly['total_current_dues']?>"disabled required> 
+                            <input style="text-align: right;" type="number" class="form-control" id="total_current_dues" value="<?php echo $row_montly['total_current_due']?>"disabled required> 
                           </div>
                   </div>
                 </td>
@@ -670,17 +670,35 @@ $row_montly = mysqli_fetch_array($result_monthly);
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="4" align="right"><b>ADDITIONL FEE:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="aditional_payment" width="150" align="right">&#8369; <?php echo number_format($row["additional_payment"],2)?></td>
-                </tr>
-                <tr>
-                  <td colspan="4" align="right"><b>Amount paid as of <?php 
+                  <td colspan="5"><b>Additional fee as of <?php 
                   $asOf = $row_montly["for_the_month"];
-                  $forTheMonth = date("M d Y", strtotime($asOf));
+                  $forTheMonth = date("F d, Y", strtotime($asOf));
 
                   echo $forTheMonth;
-                  ?>
-                    
+                  ?> </b></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="right"><b>Tutorial
+                  </b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_add" width="150" align="right">&#8369; <?php echo number_format($row_montly["tutorial"],2)?></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="right"><b>Surcharge
+                  </b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_add" width="150" align="right">&#8369; <?php echo number_format($row_montly["surcharge"],2)?></td>
+                </tr>
+                <tr>
+                  <td colspan="4" align="right"><b>Other
+                  </b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_add" width="150" align="right">&#8369; <?php echo number_format($row_montly["other_amount"],2)?></td>
+                </tr>
+                <tr style="background-color: #3d3d3d">
+                  <td colspan="4" align="right"><b>Total:
+                  </b></td>
+                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_add" width="150" align="right">&#8369; <?php echo number_format($row["additional_payment"],2)?></td>
+                </tr>
+                <tr style="background-color: #3d3d3d">
+                  <td colspan="4" align="right"><b>Amount paid
                   </b></td>
                   <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="total_add" width="150" align="right">&#8369; <?php echo number_format($row_montly["amount_paid"],2)?></td>
                 </tr>
@@ -694,7 +712,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
             
               </thead>
               <tbody>
-                <tr>
+                <tr style="background-color: #3d3d3d">
                   <td colspan="4" align="right"><b>ENDING ANNUAL BALANCE:</b></td>
                   <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["total_wd_add_pay"],2)?></td>
                 </tr>
@@ -878,28 +896,32 @@ $row_montly = mysqli_fetch_array($result_monthly);
     var tutorial_cd = $("#tutorial_cd").val();
     var surcharge_cd = $("#surcharge_cd").val();
     var others_amount = $("#others_amount").val();
-    
 
 
     if(tuition_fee_cd == ""){
-      tuition_fee_cd = 0;
+      var current_due = $("#total_current_dues").val();
+    }else{
+      var current_due = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     }
-    else if(tutorial_cd == ""){
-      tutorial_cd = 0;
+    if(tutorial_cd == ""){
+      var current_due = $("#total_current_dues").val();
+    }else{
+      var current_due = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     }
-    else if(surcharge_cd == ""){
-      surcharge_cd = 0;
+    if(surcharge_cd == ""){
+      var current_due = $("#total_current_dues").val();
+    }else{
+      var current_due = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     }
-    else if(others_amount == ""){
-      others_amount = 0;
+    if(others_amount == ""){
+      var current_due = $("#total_current_dues").val();
+    }else{
+      var current_due = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     }
-    else{
-      
-    }
+   
     //alert(tutorial_cd);
-    var totalCurrentDues = parseFloat(tuition_fee_cd)+parseFloat(tutorial_cd)+parseFloat(surcharge_cd)+parseFloat(others_amount);
     //alert(surcharge_cd);
-    $("#total_current_dues").val(totalCurrentDues);
+    $("#total_current_dues").val(current_due);
     //alert(totalCurrentDues);
 
 
@@ -922,7 +944,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
 
     var balance_after_payment = parseFloat(total_dues)-parseFloat(amount_paid);
 
-    //alert(total_dues);
+    //alert(current_due);
     $("#total_due").val(total_dues);
     $("#balance_after_payment").val(balance_after_payment);
 

@@ -24,6 +24,7 @@ $date = date('Y');
 
 $query = "SELECT * FROM monthly_payment WHERE student_id = '$stud_id'";
 $result = mysqli_query($mysqli,$query);
+$row = mysqli_fetch_assoc($result);
 
 $evalTotal = "SELECT * FROM student_payment_information WHERE student_id = '$stud_id'";
 $resultTotal = mysqli_query($mysqli,$evalTotal);
@@ -52,6 +53,8 @@ $newTotal = $calTotal - $amount_paid;
 
 if (mysqli_num_rows($result)==0) {
 
+
+//echo $tutorial_cd;
 	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
 
 	$insert_new = "INSERT INTO monthly_payment 
@@ -176,6 +179,24 @@ if (mysqli_num_rows($result)==0) {
 	}
 }else{
 
+	if($tutorial_cd ==""){
+	$tutorial_cd = $row['tutorial'];
+	}
+	if($surcharge_cd ==""){
+		$surcharge_cd = $row['surcharge'];
+	}
+	if($others_amount ==""){
+		$others_amount = $row['other_amount'];
+	}
+	if($amount_paid == ""){
+		$amount_paid = $row['amount_paid'];
+	}
+	if($other_description == "" ){
+		$other_description = $row['other_description'];
+	}
+
+	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+	
 	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
 
 	$update = "UPDATE monthly_payment SET

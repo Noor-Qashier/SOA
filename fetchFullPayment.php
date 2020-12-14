@@ -1,13 +1,17 @@
 <?php
 include 'config.php';
-$bal_after_payment = $_POST['bal_after_payment'];
-$student_id = $_POST['id'];
+//$bal_after_payment = $_POST['bal_after_payment'];
+$student_id = $_POST['student_id'];
 
 
 
 $query1 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result1 = mysqli_query($mysqli,$query1);
 $row1 = mysqli_fetch_assoc($result1);
+
+$query2 = "SELECT * FROM full_payment WHERE student_id = '$student_id'";
+$result2 = mysqli_query($mysqli,$query2);
+$row2 = mysqli_fetch_assoc($result2);
 
 $query_history = "SELECT * FROM monthly_payment_history WHERE student_id = '$student_id' ORDER BY statement_as_of DESC";
 $result_history = mysqli_query($mysqli,$query_history);
@@ -25,7 +29,10 @@ $amount_of_pay = $row_history['amount_paid'];
 $balance_after_payment = $row_history['balance_after_payment'];
 
 $total_paid = $row_sum['total_paid'];
-$total_balance = $row1['total_wd_add_pay'];
+//$total_balance = $bal_after_payment+$row1['total_wd_add_pay'];
+
+$dateEntry = $row2["date_of_entry"];
+$newDateEntry = date("F d, Y", strtotime($dateEntry));
 
 include 'connect.php';
 
@@ -42,6 +49,11 @@ $total_row = $statement->rowCount();
 $output = '
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
+    <h4 style="text-align:center;">FULL PAYMENT INFORMATION<br><small>'.$newDateEntry.'</small></h4>
+    <tr>
+        <td align="right"><b>Status:</b><span id="addAmount" style="color:red;"></span></td>
+        <td style="background-color:#8ef5b2;" align="right" ><b>'.$row2['payment_status'].'</b></td>
+      </tr>
     <tr>
       <th colspan="2">'.$name.' | Grade: '.$row1['level'].'</th>
     </tr>
@@ -87,26 +99,17 @@ $output .='
 <tfoot>
 <tr><th colspan="2"></th></tr>
 <tr>
-<td align="right"><b>Balance as of this month:</b></td>
-<td align="right"><b>&#8369; '.number_format($bal_after_payment,2).'</b>
-<input type="hidden" id="bal_after_payment" value="'.$bal_after_payment.'">
+
+
 <input type="hidden" id="student_id_paid" value="'.$student_id.'"></td>
 </tr>
-
       <tr>
-        <td align="right"><b>Running Annual Balance:</b></td>
-        <td align="right" ><b>&#8369; '.number_format($row1['total_wd_add_pay'],2).'</b>
-        <input type="hidden" id="annual_balance" value="'.$row1['total_wd_add_pay'].'"></td>
+        <td align="right"><b>Total Annual Balanced:</b></td>
+        <td align="right" ><b>&#8369; '.number_format($row2['total_annual_balance'],2).'</b>
       </tr>
       <tr>
-        <td align="right"><b>Less Payment:</b><span id="addAmount" style="color:red;"></span></td>
-        <td><input style="text-align: right;" type="number" class="form-control" onchange="addAmount()" id="amount_full_pay"></td>
-      </tr>
-
-      <tr>
-        <td align="right"><b>Net Annual Balance:</b></td>
-        <td id="total_bal" align="right" ><b>&#8369; '.number_format($total_balance,2).'</b>
-        <input type="hidden" id="total_balance" value="'.$total_balance.'"></td>
+        <td align="right"><b>Amount:</b><span id="addAmount" style="color:red;"></span></td>
+        <td align="right" ><b>&#8369; '.number_format($row2['payment_amount'],2).'</b></td>
       </tr>
 <tfoot>
 </table>
@@ -114,13 +117,3 @@ $output .='
 
 echo $output;
 ?>
-<script type="text/javascript">
-  function addAmount(){
-    var amount = $("#amount_full_pay").val();
-    var annual_balance = $("#annual_balance").val();
-
-    var net = parseFloat(annual_balance)-parseFloat(amount);
-    //alert(net);
-    $("#total_bal").html("<b>&#8369; "net"</b>");
-  }
-</script>

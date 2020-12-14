@@ -72,7 +72,7 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="addNew.php">
           <i style="font-size:40px;" class="fas fa-fw fa-users"></i>
           <span style="font-size:15px;font-weight:bolder"> STUDENTS</span>
@@ -89,7 +89,7 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="paid.php">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
           <span style="font-size:15px;font-weight:bolder">PAID</span>
@@ -634,7 +634,7 @@ $row = mysqli_fetch_array($result);
             }
           </script>
 <!------------------------------------------------------------------------------------------->
-
+          
 
           <!--modal for viweing-->
           <div class="modal fade" id="viewstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -648,12 +648,14 @@ $row = mysqli_fetch_array($result);
                 </div>
                 <div class="modal-body">
                   <form>
+                    <div id="printcontent">
                     <input type="" id="stud_id" name="" hidden>
                     <div id="student_info">
                     
                     </div>
+                  </div>
                   </form>
-                                  
+                  <button type="button" onclick="printContent('printcontent')" id class="btn btn-danger">Print Report</button>       
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -666,6 +668,16 @@ $row = mysqli_fetch_array($result);
               </div>
             </div>
           </div>
+          <script type="text/javascript">
+            function printContent(el){
+            var restorepage = document.body.innerHTML;
+            var print_content = document.getElementById(el).innerHTML;
+            document.body.innerHTML = print_content;
+            window.print();
+            document.body.innerHTML = restorepage;
+            window.location="paid.php";
+            }
+          </script>
           <!--end modal viewing-->
 
           <!--button for adding new and old studnet-->
@@ -765,7 +777,7 @@ $row = mysqli_fetch_array($result);
     //alert(student_id);
 
     $.ajax({
-      url: "fetchstudent.php",
+      url: "fetchFullPayment.php",
       method: "POST",
       data:{"student_id":student_id},
       success:function(data){
