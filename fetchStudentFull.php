@@ -14,7 +14,7 @@
 <?php
 include 'connect.php';
 
-$query = "SELECT * FROM full_payment";
+$query = "SELECT * FROM student_payment_information WHERE remark = 'Full Payment'";
 
 $statement = $mysqli->prepare($query);
 
@@ -47,7 +47,7 @@ if($total_row > 0)
 				<td>'.$row["level"].'</td>
 				<td align="right">
 
-        <button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-ellipsis-v" aria-hidden="true" style="color:gray;"></i>
                 </button>
                 <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">

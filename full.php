@@ -1,6 +1,6 @@
 <?php
 include 'config.php';
-$student = "SELECT * FROM students_list";
+$student = "SELECT * FROM full_payment";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
 ?>
@@ -72,7 +72,7 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="addNew.php">
           <i style="font-size:40px;" class="fas fa-fw fa-users"></i>
           <span style="font-size:15px;font-weight:bolder"> STUDENTS</span>
@@ -104,7 +104,7 @@ $row = mysqli_fetch_array($result);
       </li>
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="full.php">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
@@ -433,10 +433,10 @@ $row = mysqli_fetch_array($result);
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="Status">Status:</label>
-                        <select onchange="yrLevel()" type="text" class="form-control" id="status">
+                        <select type="text" class="form-control" id="status">
                           <option disabled selected>Status</option>
                           <option>Regular</option>
-                          <option>Alternative Distance Learning</option>
+                          <option>Online Class</option>
                           <option>Online Distance Learning</option>
                         </select>
                       </div>
@@ -543,7 +543,7 @@ $row = mysqli_fetch_array($result);
                       <div class="form-group col-md-12" id="totalPayment">
 
                       </div>
-                      </div>
+                    </div>
                   </form>
                                   
                 </div>
@@ -579,13 +579,11 @@ $row = mysqli_fetch_array($result);
           <script type="text/javascript">
             function yrLevel(){
               var yrLevel = $("#level").val();
-              var class_status = $("#status").val();
-              //alert(class_status);
 
                 $.ajax({
                 url: "fetchPaymentInfo.php",
                 method: "POST",
-                data:{"yrLevel":yrLevel,"class_status":class_status},
+                data:{"yrLevel":yrLevel},
                 success:function(data){
                   $("#payment_info").html(data);
                 }
@@ -602,14 +600,32 @@ $row = mysqli_fetch_array($result);
               var payment = $("#payment").val();
               var downPayment = $("#downPayment").val();
               var payModule = $("#payModule").val();
-              var class_status = $("#status").val();
+              
+              
+              if (h_student == "Gold"){
+                h_student = 0.9;
+              }else if (h_student == "Silver"){
+                h_student = 0.95;
+              }else{
+                h_student = 1;
+              }
+              if (sibling == "Yes"){
+                sibling = 0.95;
+              }else{
+                sibling = 1;
+              }
+              if (payment == "Cash"){
+                payment = 0.95;
+              }else {
+                payment = 1;
+              }
 
               var totalDiscount = parseFloat(ESC) + parseFloat(voucher);
               //alert(sibling);
               $.ajax({
                 url: "gettotal.php",
                 method: "post",
-                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel,"downPayment":downPayment,"payment":payment,"payModule":payModule,"class_status":class_status},
+                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel,"downPayment":downPayment,"payment":payment,"payModule":payModule},
                 success:function(data){
                   //alert(data);
                   $("#totalPayment").html(data);
@@ -618,16 +634,7 @@ $row = mysqli_fetch_array($result);
             }
           </script>
 <!------------------------------------------------------------------------------------------->
-          <script type="text/javascript">
-            function printContent(el){
-            var restorepage = document.body.innerHTML;
-            var print_content = document.getElementById(el).innerHTML;
-            document.body.innerHTML = print_content;
-            window.print();
-            document.body.innerHTML = restorepage;
-            window.location="addNew.php";
-            }
-          </script>
+          
 
           <!--modal for viweing-->
           <div class="modal fade" id="viewstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -646,10 +653,9 @@ $row = mysqli_fetch_array($result);
                     <div id="student_info">
                     
                     </div>
-                    </div>
+                  </div>
                   </form>
-                  <button type="button" onclick="printContent('printcontent')" id class="btn btn-danger">Print Report</button>
-                                  
+                  <button type="button" onclick="printContent('printcontent')" id class="btn btn-danger">Print Report</button>       
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -662,6 +668,16 @@ $row = mysqli_fetch_array($result);
               </div>
             </div>
           </div>
+          <script type="text/javascript">
+            function printContent(el){
+            var restorepage = document.body.innerHTML;
+            var print_content = document.getElementById(el).innerHTML;
+            document.body.innerHTML = print_content;
+            window.print();
+            document.body.innerHTML = restorepage;
+            window.location="paid.php";
+            }
+          </script>
           <!--end modal viewing-->
 
           <!--button for adding new and old studnet-->
@@ -743,7 +759,7 @@ $row = mysqli_fetch_array($result);
     function load_data()
     {
       $.ajax({
-        url: "fetchStudentList.php",
+        url: "fetchStudentFull.php",
         method: "POST",
         success:function(data){
           $("#student_data").html(data);
@@ -761,7 +777,7 @@ $row = mysqli_fetch_array($result);
     //alert(student_id);
 
     $.ajax({
-      url: "fetchstudent.php",
+      url: "fetchFullPaid.php",
       method: "POST",
       data:{"student_id":student_id},
       success:function(data){
@@ -793,32 +809,42 @@ $row = mysqli_fetch_array($result);
     var payment_m = $("#payment").val();
     var payModule = $("#payModule").val();
     var downPayment = $("#downPayment").val();
-    var or_no = $("#or_no").val();
-    var amountPay = $("#amountPay").val();
 
     
 
-    var h_student = $("#h_student_p").html();
-    var sibling = $("#sibling_p").html();
-    var subtotal = $("#Subtotal").val();
-    var total = $("#new_total_value").val();
-    var monthly = $("#monthly").val();
-    //var or_no = document.getElementById("or_no").value;
-    //var amountPay = document.getElementById("amountPay").value;
+    var h_student = document.getElementById("h_student_p").innerHTML;
+    var sibling = document.getElementById("sibling_p").innerHTML;
+    var subtotal = document.getElementById("Subtotal").value;
+    var total = document.getElementById("new_total_value").value;
+    var monthly = document.getElementById("monthly").value;
 
-    //alert(monthly);
-    
+    //alert(total);
+    if(payment_m =="Installment"){
+          $.ajax({
+          url: "addNewStudent_paymentInfo.php",
+          method: "POST",
+          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule},
+            success:function(data){
+            alert(data);
+            window.location="addNew.php";
+          }
+        })
+      }else{
+          $.ajax({
+          url: "addNewStudent_paymentInfo_cash.php",
+          method: "POST",
+          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"subtotal":subtotal,"total":total},
+            success:function(data){
+            
+            $("#addPVCSstudent").modal("hide");
+            swal("Successfully Added!", "Student successfully recorded", "success");
+            load_data();
 
-      $.ajax({
-      url: "addNewStudent_paymentInfo.php",
-      method: "POST",
-      data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule,"or_no":or_no,"amountPay":amountPay},
-        success:function(data){
-        alert(data);
-        window.location="addNew.php";
+          }
+        })
       }
-    })
-  }  
+    
+  }
 </script>
 
 

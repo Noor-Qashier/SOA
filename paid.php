@@ -105,7 +105,7 @@ $row = mysqli_fetch_array($result);
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="full.php">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
       </li> 

@@ -971,7 +971,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
     $("#total_current_dues").val("0");
     //$("#due_on").val("");
     $("#total_due").val("0");
-    $("#or_number").val("");
+    //$("#or_number").val("");
     $("#amount_paid").val("0");
     $("#balance_after_payment").val("0");
 
