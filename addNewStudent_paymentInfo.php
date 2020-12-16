@@ -18,8 +18,9 @@ include('config.php');
 	$amountPay = $_POST['amountPay'];
 	$date_of_entry = date('Y-m-d');
 	$monthly = $_POST['monthly'];
+	$payModule1 = $_POST['payModule1'];
 
-	$amountPayTotal = $amountPay+$payModule;
+	//$amountPayTotal = $amountPay+$payModule;
 	//echo $monthly;
 
 if($status == "Regular"){
@@ -73,15 +74,15 @@ if($status == "Regular"){
 	'$total',
 	'$monthly',
 	'$downPayment',
-	'$payModule',
+	'$payModule1',
 	'$or_no',
-	'$amountPayTotal',
+	'$amountPay',
 	'$date_of_entry',
 	'Full Payment')";
 
 		if(mysqli_query($mysqli, $sql))
 		{
-			$output.= "successfuuly added";
+			$output.= "successfully added";
 		}	
 		else 
 		{
@@ -138,13 +139,13 @@ if($status == "Regular"){
 		'$downPayment',
 		'$payModule',
 		'$or_no',
-		'$amountPayTotal',
+		'$amountPay',
 		'$date_of_entry',
 		'Monthly')";
 
 			if(mysqli_query($mysqli, $sql))
 			{
-				$output.= "successfuuly added";
+				$output.= "successfully added";
 			}	
 			else 
 			{
@@ -202,22 +203,22 @@ if($status == "Regular"){
 	'$total',
 	'$monthly',
 	'$downPayment',
-	'$payModule',
+	'$payModule1',
 	'$or_no',
-	'$amountPayTotal',
+	'$amountPay',
 	'$date_of_entry',
 	'Full Payment')";
 
 		if(mysqli_query($mysqli, $sql))
 		{
-			$output.= "successfuuly added";
+			$output.= "successfully added";
 		}	
 		else 
 		{
 			$output.= mysqli_error($mysqli);
 			$output.= "failed";
 		}
-}else{
+}else if($payment_m == "Partial (For ADL Only)") {
 
 	$getPaymentInfo = "SELECT * FROM payment_information_ODL WHERE level = '$level'";
 	$result = mysqli_query($mysqli,$getPaymentInfo);
@@ -266,17 +267,76 @@ if($status == "Regular"){
 	'$downPayment',
 	'$payModule',
 	'$date_of_entry',
-	'Monthly')";
+	'Partial')";
 
 		if(mysqli_query($mysqli, $sql))
 		{
-			$output.= "successfuuly added";
+			$output.= "successfully added";
 		}	
 		else 
 		{
 			$output.= mysqli_error($mysqli);
 			$output.= "failed";
 		}
+	}else{
+			$getPaymentInfo = "SELECT * FROM payment_information_ODL WHERE level = '$level'";
+			$result = mysqli_query($mysqli,$getPaymentInfo);
+			$row = mysqli_fetch_assoc($result);
+
+			$output ="";
+			$sql = "INSERT INTO student_payment_information (
+			student_id,
+			fname,
+			lname,
+			tuition_fees,
+			other_school_fees,
+			learning_module,
+			status,
+			level,
+			ESC,
+			voucher,
+			h_student,
+			sibling,
+			payment_m,
+			subtotal,
+			total,
+			total_wd_add_pay,
+			monthly,
+			downPayment,
+			payModule,
+			date_of_entry,
+			remark) VALUES (
+			'$student_id',
+			'$fname',
+			'$lname',
+			'".$row['tuition_fees']."',
+			'".$row['other_school_fees']."',
+			'".$row['learning_module']."',
+			'$status',
+			'$level',
+			'$ESC',
+			'$voucher',
+			'$h_student',
+			'$sibling',
+			'$payment_m',
+			'$subtotal',
+			'$total',
+			'$total',
+			'$monthly',
+			'$downPayment',
+			'$payModule1',
+			'$date_of_entry',
+			'Monthly')";
+
+				if(mysqli_query($mysqli, $sql))
+				{
+					$output.= "successfully added";
+				}	
+				else 
+				{
+					$output.= mysqli_error($mysqli);
+					$output.= "failed";
+				}
 	}
 }
 

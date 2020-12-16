@@ -49,13 +49,20 @@ $additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
 $calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
 $newTotal = $calTotal - $amount_paid;
 
+$remark;
+if($balance_after_payment == 0){
+	$remark = "Paid";
+}else{
+	$remark = "Monthly";
+}
+
 //echo $calTotal.' '.$newTotal;
 
 if (mysqli_num_rows($result)==0) {
 
 
 //echo $tutorial_cd;
-	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
+	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment', remark = '$remark' WHERE student_id = '$stud_id';";
 
 	$insert_new = "INSERT INTO monthly_payment 
 	(for_the_month,
@@ -197,7 +204,7 @@ if (mysqli_num_rows($result)==0) {
 
 	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
 	
-	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment' WHERE student_id = '$stud_id';";
+	$updateNewTotal = "UPDATE student_payment_information SET total_wd_add_pay = '$newTotal', additional_payment = '$additionalPayment', remark = '$remark' WHERE student_id = '$stud_id';";
 
 	$update = "UPDATE monthly_payment SET
 	for_the_month = '$for_the_month',

@@ -18,7 +18,7 @@ $sum_result = mysqli_query($mysqli,$sumAllPay);
 $row_sum = mysqli_fetch_assoc($sum_result);
 
 
-$name = $row_history['student_name'];
+$name = $row1['fname'].' '.$row1['lname'];
 $total_bal = $row1['total_wd_add_pay'];
 $date_of_pay = $row_history['for_the_month'];
 $amount_of_pay = $row_history['amount_paid'];

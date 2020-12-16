@@ -89,18 +89,26 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="partial.php">
+          <i style="font-size:40px;" class="fas fa-comments-dollar"></i></i>
+          <span style="font-size:15px;font-weight:bolder">PARTIAL</span></a>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="balance.php">
+          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
+          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
+      </li>
+
       <li class="nav-item">
         <a class="nav-link" href="paid.php">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
           <span style="font-size:15px;font-weight:bolder">PAID</span>
         </a>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
-          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
@@ -510,23 +518,15 @@ $row = mysqli_fetch_array($result);
                       <div class="form-group col-md-4">
                         <label for="Status">Payment Method:</label>
                         <select onchange="pay()" class="form-control" id="payment">
+                          <option selected>Payment method</option>
+                          <option>Partial (For ADL Only)</option>
                           <option>Cash</option>
                           <option>Installment</option>
                         </select>
                       </div>
                     </div>
 
-                    <div id="payInfo" class="row" style="display: none">
-                    <table class="table" width="100%" cellspacing="0">
-                      <thead>
-                        <tr>
-                          <td align=""><label for="Status">Down Payment:</label>
-                        <input onclick="amount()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount"></td>
-                          <td align=""><label for="Status">Learning Module:</label>
-                        <input type="number" class="form-control text-right" value="0" id="payModule" aria-describedby="emailHelp" placeholder="Amount"></td>
-                        </tr>
-                      </thead>
-                    </table>
+                    <div id="payInfo" class="row">
                     </div>
 
                     <div class="row">
@@ -562,15 +562,14 @@ $row = mysqli_fetch_array($result);
           <script type="text/javascript">
             function pay(){
               var payM = $("#payment").val();
-              if(payM == "Cash"){
-                var payInfo = document.getElementById('payInfo');
-                $("#downPayment").val("0");
-                payInfo.style.display = "none";
-              }else{
-                var payInfo = document.getElementById('payInfo');
-                payInfo.style.display = "block";
-                $("#downPayment").val("12000");
-              }
+              $.ajax({
+                url: 'payIntallment.php',
+                method: 'post',
+                data:{"payM":payM},
+                success:function(data){
+                  $("#payInfo").html(data);
+                }
+              })
             }
             function amount(){
               $("#downPayment").val("");
@@ -605,7 +604,7 @@ $row = mysqli_fetch_array($result);
               var class_status = $("#status").val();
 
               var totalDiscount = parseFloat(ESC) + parseFloat(voucher);
-              //alert(sibling);
+              //alert(payment);
               $.ajax({
                 url: "gettotal.php",
                 method: "post",
@@ -795,6 +794,7 @@ $row = mysqli_fetch_array($result);
     var downPayment = $("#downPayment").val();
     var or_no = $("#or_no").val();
     var amountPay = $("#amountPay").val();
+    var payModule1 = $("#payModule1").val();
 
     
 
@@ -806,13 +806,14 @@ $row = mysqli_fetch_array($result);
     //var or_no = document.getElementById("or_no").value;
     //var amountPay = document.getElementById("amountPay").value;
 
-    //alert(monthly);
+    //alert(payModule);
+    //alert(payModule1);
     
 
       $.ajax({
       url: "addNewStudent_paymentInfo.php",
       method: "POST",
-      data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule,"or_no":or_no,"amountPay":amountPay},
+      data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule,"or_no":or_no,"amountPay":amountPay,"payModule1":payModule1},
         success:function(data){
         alert(data);
         window.location="addNew.php";

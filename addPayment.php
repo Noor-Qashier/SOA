@@ -94,23 +94,30 @@ $row_montly = mysqli_fetch_array($result_monthly);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="paid.html">
+        <a class="nav-link" href="partial.php">
+          <i style="font-size:40px;" class="fas fa-comments-dollar"></i></i>
+          <span style="font-size:15px;font-weight:bolder">PARTIAL</span></a>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="balance.php">
+          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
+          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="paid.php">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
           <span style="font-size:15px;font-weight:bolder">PAID</span>
         </a>
       </li>
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
-          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
-      </li>
-
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="full.php">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
       </li> 
@@ -453,7 +460,11 @@ $row_montly = mysqli_fetch_array($result_monthly);
                   <div class="row">
                           <div class="form-group col-md-4">
                             <label>Tuition fee/Learning Module:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="tuition_fee_cd" value="<?php echo $row["monthly"]?>" disabled required>
+                            <input style="text-align: right;" type="number" class="form-control" id="tuition_fee_cd" value="<?php if($row["monthly"] == 0){
+                              echo $row["total_wd_add_pay"];
+                            }else{
+                              echo $row["monthly"];
+                            }?>" disabled required>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Remediation/Tutorial:</label>
@@ -974,8 +985,6 @@ $row_montly = mysqli_fetch_array($result_monthly);
     //$("#or_number").val("");
     $("#amount_paid").val("0");
     $("#balance_after_payment").val("0");
-
-    
   }
 </script>
 <script type="text/javascript">
@@ -1001,7 +1010,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
 
 
    //alert(for_the_month);
-
+   
 
     //alert(total_current_dues);
     $.ajax({

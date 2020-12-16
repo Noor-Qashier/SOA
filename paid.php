@@ -89,6 +89,20 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="partial.php">
+          <i style="font-size:40px;" class="fas fa-comments-dollar"></i></i>
+          <span style="font-size:15px;font-weight:bolder">PARTIAL</span></a>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="balance.php">
+          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
+          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
+      </li>
+
       <li class="nav-item active">
         <a class="nav-link" href="paid.php">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
@@ -96,19 +110,12 @@ $row = mysqli_fetch_array($result);
         </a>
       </li>
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
-          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
-      </li>
-
       <!-- Nav Item - Tables -->
       <li class="nav-item">
         <a class="nav-link" href="full.php">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
-      </li> 
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
