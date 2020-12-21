@@ -1,4 +1,4 @@
-fetchstudent_history.php<?php
+<?php
 include 'config.php';
 $num_rec = $_POST['num_rec'];
 

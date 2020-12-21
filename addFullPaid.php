@@ -5,7 +5,7 @@ $annual_balance = $_POST['annual_balance'];
 $total_anual_bal = $_POST['total_anual_bal'];
 $total_amount_paid = $_POST['total_amount_paid'];
 $student_id = $_POST['student_id'];
-
+ 
 
 $query1 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result1 = mysqli_query($mysqli,$query1);

@@ -31,6 +31,7 @@ $output = '
 	  		<th >Student ID</th>
 	  		<th >Name</th>
 	  		<th >Year Level</th>
+        <th >Remark</th>
 	  		<th>Action</th>
 	  	</tr>
 	  </thead>
@@ -45,6 +46,7 @@ if($total_row > 0)
 				<td>'.$row["student_id"].'</td>
 				<td>'.$row["fname"]." ".$row["lname"].'</td>
 				<td>'.$row["level"].'</td>
+        <td>'.$row["remark"].'</td>
 				<td align="right">
 
 				<button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,12 +61,6 @@ if($total_row > 0)
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
 
                 </div>
-
-				<a href="addPayment.php?id='.$row["student_id"].'" onclick="addPayment()" class="btn btn-info btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                <span class="text">Add Payment</span></a>
 
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
                   <span class="icon text-white-50">
@@ -91,6 +87,7 @@ $output .='
 <th >Student ID</th>
 <th >Name</th>
 <th >Year Level</th>
+<th >Remark</th>
 <th>Action</th>
 </tr>
 <tfoot>

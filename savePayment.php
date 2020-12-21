@@ -1,6 +1,7 @@
 <?php
 include('config.php');
 
+$rem = $_POST['remark'];
 $for_the_month = $_POST["for_the_month"];
 $stud_id = $_POST["stud_id"];	
 $stud_name = $_POST["stud_name"];
@@ -30,6 +31,14 @@ $evalTotal = "SELECT * FROM student_payment_information WHERE student_id = '$stu
 $resultTotal = mysqli_query($mysqli,$evalTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 
+$remark;
+if($rowTotal['total_wd_add_pay'] <= 0 || $rem == "Paid"){
+	$remark = "Paid";
+}else{
+	$remark = "Monthly";
+}
+
+
 if($tutorial_cd ==""){
 	$tutorial_cd = 0;
 }
@@ -42,19 +51,12 @@ if($others_amount ==""){
 if($amount_paid == ""){
 	$amount_paid = 0;
 }
-
 //echo $tutorial_cd.' '.$surcharge_cd.' '.$others_amount;
 //
 $additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
 $calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
 $newTotal = $calTotal - $amount_paid;
 
-$remark;
-if($balance_after_payment == 0){
-	$remark = "Paid";
-}else{
-	$remark = "Monthly";
-}
 
 //echo $calTotal.' '.$newTotal;
 

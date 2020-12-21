@@ -14,7 +14,7 @@
 <?php
 include 'connect.php';
 
-$query = "SELECT * FROM full_payment";
+$query = "SELECT * FROM student_payment_information WHERE remark = 'Paid' ";
 
 $statement = $mysqli->prepare($query);
 

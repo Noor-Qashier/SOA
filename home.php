@@ -5,14 +5,11 @@ if(!isset($_SESSION['userName'])){
   header("location:index.php");
 }
 
-$student = "SELECT * FROM full_payment";
-$result = mysqli_query($mysqli,$student);
-$row = mysqli_fetch_array($result);
+//echo $_SESSION['userName'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-<!--Jhana Marie-->
+
 <head>
 
   <meta charset="utf-8">
@@ -21,28 +18,18 @@ $row = mysqli_fetch_array($result);
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
-  <!--toastr-->
-  <link href="css/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
+  <title>SOA | PVCS </title> 
 
-  <!-- Custom fonts for this template -->
+  <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
+  <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-  <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
-<style type="text/css">
-  #dataTable_length{
-    display: none !important;
-  }
-</style>
-
-<body id="page-top" onload="load_data()">
+<body id="page-top">
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -62,8 +49,8 @@ $row = mysqli_fetch_array($result);
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="index.php">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
           <i style="font-size:40px;" class="fas fa-fw fa-home"></i>
           <span style="font-size:15px;">HOME</span></a>
       </li>
@@ -75,7 +62,6 @@ $row = mysqli_fetch_array($result);
       <div class="sidebar-heading">
         Information
       </div>
-
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link" href="addNew.php">
@@ -84,6 +70,7 @@ $row = mysqli_fetch_array($result);
         </a>
       </li>
 
+      <!-- Nav Item - Utilitie-->
 
       <!-- Divider -->
       <hr class="sidebar-divider">
@@ -94,33 +81,26 @@ $row = mysqli_fetch_array($result);
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="partial.php">
-          <i style="font-size:40px;" class="fas fa-comments-dollar"></i></i>
-          <span style="font-size:15px;font-weight:bolder">PARTIAL</span></a>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="balance.php">
-          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
-          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" href="paid.php">
+        <a class="nav-link" href="paid.html">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
           <span style="font-size:15px;font-weight:bolder">PAID</span>
         </a>
       </li>
 
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
+          <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
+      </li>
+
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="full.php">
+        <a class="nav-link" href="tables.html">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
-      </li>
+      </li> 
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -143,11 +123,9 @@ $row = mysqli_fetch_array($result);
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
-          <form class="form-inline">
-            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-              <i class="fa fa-bars"></i>
-            </button>
-          </form>
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
 
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -324,9 +302,14 @@ $row = mysqli_fetch_array($result);
         </nav>
         <!-- End of Topbar -->
 
-
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+          </div>
 
           <!-- Content Row -->
           <div class="row">
@@ -409,328 +392,224 @@ $row = mysqli_fetch_array($result);
             </div>
           </div>
 
-
           <!-- Content Row -->
-<!------------------------------------------------------------------------------------->
-          <!-- Modal for adding student -->
-          <div class="modal fade" id="addPVCSstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Add new Student</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <label><b>Student Information:</b></label>
-                    <div class="row">
-                      <div class="form-group col-md-3">
-                        <label for="exampleInputEmail1">Student ID:</label>
-                        <input type="text" class="form-control" id="student_id" aria-describedby="emailHelp" placeholder="">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1">First Name:</label>
-                        <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="Enter First name">
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1">Last Name:</label>
-                        <input type="text" class="form-control" id="lname" aria-describedby="emailHelp" placeholder="Enter Last name">
-                      </div>
-                    </div>
 
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="Status">Status:</label>
-                        <select type="text" class="form-control" id="status">
-                          <option disabled selected>Status</option>
-                          <option>Regular</option>
-                          <option>Online Class</option>
-                          <option>Online Distance Learning</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1">Level:</label>
-                        <select onchange="yrLevel()" type="email" class="form-control" id="level">
-                          <option disabled selected>Year Level</option>
-                          <option>PS</option>
-                          <option>PR</option>
-                          <option>K</option>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                          <option>6</option>
-                          <option>7</option>
-                          <option>8</option>
-                          <option>9</option>
-                          <option>10</option>
-                          <option>11-GAS</option>
-                          <option>11-ABM</option>
-                          <option>12</option>
-                        </select>
-                      </div>
-                    </div>
-                    <label><b>Payment Information:</b></label>
-                    <div class="row">
-                      <div class="form-group col-md-12" id="payment_info">
+          <div class="row">
 
-                      </div>
-                    </div>
-
-                    <label><b>Discount:</b></label>
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <label for="Status">ESC:</label>
-                        <select type="email"class="form-control" id="ESC">
-                          <option selected>0</option>
-                          <option>11000</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-6">
-                        <label for="Status">Voucher:</label>
-                        <select type="email"class="form-control" id="voucher">
-                          <option selected>0</option>
-                          <option>16000</option>
-                          <option>20000</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <label><b>Special Discount:</b></label>
-                    <div class="row">
-                      <div class="form-group col-md-4">
-                        <label for="Status">Honor Student:</label>
-                        <select class="form-control" id="h_student">
-                          <option selected>None</option>
-                          <option>Gold</option>
-                          <option>Silver</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="Status">Sibling:</label>
-                        <select class="form-control" id="sibling">
-                          <option disabled selected>None</option>
-                          <option>Yes</option>
-                          <option>No</option>
-                        </select>
-                      </div>
-                      <div class="form-group col-md-4">
-                        <label for="Status">Payment Method:</label>
-                        <select onchange="pay()" class="form-control" id="payment">
-                          <option>Cash</option>
-                          <option>Installment</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div id="payInfo" class="row" style="display: none">
-                    <table class="table" width="100%" cellspacing="0">
-                      <thead>
-                        <tr>
-                          <td align=""><label for="Status">Down Payment:</label>
-                        <input onclick="amount()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount"></td>
-                          <td align=""><label for="Status">Learning Module:</label>
-                        <input type="number" class="form-control text-right" value="0" id="payModule" aria-describedby="emailHelp" placeholder="Amount"></td>
-                        </tr>
-                      </thead>
-                    </table>
-                    </div>
-
-                    <div class="row">
-                      <div class="form-group col-md-12">
-                      <a href="#" onclick="eval()" class="btn btn-primary btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-calculator"></i>
-                      </span>
-                      <span class="text">Evaluate</span></a>
-                    </div>
-                    </div>
-                      <label><b>Discounts:</b></label>
-                      <div class="row">
-                      <div class="form-group col-md-12" id="totalPayment">
-
-                      </div>
-                    </div>
-                  </form>
-                                  
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <a href="#" onclick="addStudent()" class="btn btn-success btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-save"></i>
-                  </span>
-                  <span class="text">Save</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--payment stats-->
-          <script type="text/javascript">
-            function pay(){
-              var payM = $("#payment").val();
-              if(payM == "Cash"){
-                var payInfo = document.getElementById('payInfo');
-                $("#downPayment").val("0");
-                payInfo.style.display = "none";
-              }else{
-                var payInfo = document.getElementById('payInfo');
-                payInfo.style.display = "block";
-                $("#downPayment").val("12000");
-              }
-            }
-            function amount(){
-              $("#downPayment").val("");
-            }
-          </script>
-          <script type="text/javascript">
-            function yrLevel(){
-              var yrLevel = $("#level").val();
-
-                $.ajax({
-                url: "fetchPaymentInfo.php",
-                method: "POST",
-                data:{"yrLevel":yrLevel},
-                success:function(data){
-                  $("#payment_info").html(data);
-                }
-              })
-            }
-          </script>
-          <script type="text/javascript">
-            function eval(){
-              var ESC = $("#ESC").val();
-              var voucher = $("#voucher").val();
-              var h_student = $("#h_student").val();
-              var sibling = $("#sibling").val();
-              var yrLevel = $("#level").val();
-              var payment = $("#payment").val();
-              var downPayment = $("#downPayment").val();
-              var payModule = $("#payModule").val();
-              
-              
-              if (h_student == "Gold"){
-                h_student = 0.9;
-              }else if (h_student == "Silver"){
-                h_student = 0.95;
-              }else{
-                h_student = 1;
-              }
-              if (sibling == "Yes"){
-                sibling = 0.95;
-              }else{
-                sibling = 1;
-              }
-              if (payment == "Cash"){
-                payment = 0.95;
-              }else {
-                payment = 1;
-              }
-
-              var totalDiscount = parseFloat(ESC) + parseFloat(voucher);
-              //alert(sibling);
-              $.ajax({
-                url: "gettotal.php",
-                method: "post",
-                data:{"totalDiscount":totalDiscount,"h_student":h_student,"sibling":sibling,"yrLevel":yrLevel,"downPayment":downPayment,"payment":payment,"payModule":payModule},
-                success:function(data){
-                  //alert(data);
-                  $("#totalPayment").html(data);
-                }
-              })
-            }
-          </script>
-<!------------------------------------------------------------------------------------------->
-          
-
-          <!--modal for viweing-->
-          <div class="modal fade" id="viewstudent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <img src="img/header.png" style="margin-left:4%;">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div id="printcontent">
-                    <input type="" id="stud_id" name="" hidden>
-                    <div id="student_info">
-                    
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
                     </div>
                   </div>
-                  </form>
-                  <button type="button" onclick="printContent('printcontent')" id class="btn btn-danger">Print Report</button>       
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <a href="#" onclick="addPayment()" class="btn btn-success btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-save"></i>
-                  </span>
-                  <span class="text">Add Payment</span></a>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                  <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-primary"></i> Direct
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-success"></i> Social
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-info"></i> Referral
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <script type="text/javascript">
-            function printContent(el){
-            var restorepage = document.body.innerHTML;
-            var print_content = document.getElementById(el).innerHTML;
-            document.body.innerHTML = print_content;
-            window.print();
-            document.body.innerHTML = restorepage;
-            window.location="paid.php";
-            }
-          </script>
-          <!--end modal viewing-->
 
-          <!--button for adding new and old studnet-->
+          <!-- Content Row -->
           <div class="row">
-            <div class="form-group col-md-12">
-              <h1 class="h3 mb-2 text-gray-800">Statement of Account</h1>
-              <div class="float-right">
-                <a href="#" class=" btn btn-success btn-icon-split btn-lg" data-toggle="modal" data-target="#addPVCSstudent" >
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                  <span class="text">New Student</span>
-                </a>
+
+            <!-- Content Column -->
+            <div class="col-lg-6 mb-4">
+
+              <!-- Project Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                </div>
+                <div class="card-body">
+                  <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
+                  <div class="progress mb-4">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Color System -->
+              <div class="row">
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-primary text-white shadow">
+                    <div class="card-body">
+                      Primary
+                      <div class="text-white-50 small">#4e73df</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-success text-white shadow">
+                    <div class="card-body">
+                      Success
+                      <div class="text-white-50 small">#1cc88a</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                      Info
+                      <div class="text-white-50 small">#36b9cc</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                      Warning
+                      <div class="text-white-50 small">#f6c23e</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-danger text-white shadow">
+                    <div class="card-body">
+                      Danger
+                      <div class="text-white-50 small">#e74a3b</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-secondary text-white shadow">
+                    <div class="card-body">
+                      Secondary
+                      <div class="text-white-50 small">#858796</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-light text-black shadow">
+                    <div class="card-body">
+                      Light
+                      <div class="text-black-50 small">#f8f9fc</div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-lg-6 mb-4">
+                <div class="card bg-dark text-white shadow">
+                  <div class="card-body">
+                      Dark
+                      <div class="text-white-50 small">#5a5c69</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- Page Heading -->
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
 
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary pull-right">Student's List</h6>
             </div>
 
-            <div class="card-body">
-            <div class="table-responsive">
-            <div id="student_data">
+            <div class="col-lg-6 mb-4">
+
+              <!-- Illustrations -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                </div>
+                <div class="card-body">
+                  <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">
+                  </div>
+                  <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
+                  <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
+                </div>
+              </div>
+
+              <!-- Approach -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                </div>
+                <div class="card-body">
+                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
+                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
+                </div>
+              </div>
+
             </div>
-            </div>
-          </div>
           </div>
 
         </div>
         <!-- /.container-fluid -->
+
+      </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>NOOR &copy; PVCS 2020</span>
+            <span>Copyright &copy; Your Website 2020</span>
           </div>
         </div>
       </footer>
@@ -766,102 +645,6 @@ $row = mysqli_fetch_array($result);
     </div>
   </div>
 
-  <!--Fetching data from database-->
-<script type="text/javascript">
-    function load_data()
-    {
-      $.ajax({
-        url: "fatchStudentPaid.php",
-        method: "POST",
-        success:function(data){
-          $("#student_data").html(data);
-          //alert(data);
-        }
-      }) 
-    } 
-</script>
-
-
-<!--view student info-->
-<script type="text/javascript">
-  function view(button){
-    var student_id = button.id;
-    //alert(student_id);
-
-    $.ajax({
-      url: "fetchFullPayment.php",
-      method: "POST",
-      data:{"student_id":student_id},
-      success:function(data){
-      $("#student_info").html(data);
-      $('#stud_id').val(student_id);
-      $("#viewstudent").modal("show");
-      }
-    })
-  }
-  function addPayment(){
-    var student_id = $('#stud_id').val();
-    //alert(student_id);
-    window.location.href = "addPayment.php?id="+student_id;
-  }
-</script>
-<!--end student info-->
-
-<!--add new studene-->
-<script type="text/javascript">
-  function addStudent(){
-    //alert("hi");
-    var student_id = $("#student_id").val();
-    var fname = $("#fname").val();
-    var lname = $("#lname").val();
-    var status = $("#status").val();
-    var level = $("#level").val();
-    var ESC = $("#ESC").val();
-    var voucher = $("#voucher").val();
-    var payment_m = $("#payment").val();
-    var payModule = $("#payModule").val();
-    var downPayment = $("#downPayment").val();
-
-    
-
-    var h_student = document.getElementById("h_student_p").innerHTML;
-    var sibling = document.getElementById("sibling_p").innerHTML;
-    var subtotal = document.getElementById("Subtotal").value;
-    var total = document.getElementById("new_total_value").value;
-    var monthly = document.getElementById("monthly").value;
-
-    //alert(total);
-    if(payment_m =="Installment"){
-          $.ajax({
-          url: "addNewStudent_paymentInfo.php",
-          method: "POST",
-          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule},
-            success:function(data){
-            alert(data);
-            window.location="addNew.php";
-          }
-        })
-      }else{
-          $.ajax({
-          url: "addNewStudent_paymentInfo_cash.php",
-          method: "POST",
-          data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"subtotal":subtotal,"total":total},
-            success:function(data){
-            
-            $("#addPVCSstudent").modal("hide");
-            swal("Successfully Added!", "Student successfully recorded", "success");
-            load_data();
-
-          }
-        })
-      }
-    
-  }
-</script>
-
-
-
-
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -873,17 +656,11 @@ $row = mysqli_fetch_array($result);
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
-
-
-  <!--toastr-->
-  <script src="css/toastr-master/toastr.js"></script>
-
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 

@@ -9,6 +9,10 @@ $query1 = "SELECT * FROM student_payment_information WHERE student_id = '$studen
 $result1 = mysqli_query($mysqli,$query1);
 $row1 = mysqli_fetch_assoc($result1);
 
+$query2 = "SELECT * FROM monthly_payment WHERE student_id = '$student_id'";
+$result2 = mysqli_query($mysqli,$query2);
+$row2 = mysqli_fetch_assoc($result2);
+
 $query_history = "SELECT * FROM monthly_payment_history WHERE student_id = '$student_id' ORDER BY statement_as_of DESC";
 $result_history = mysqli_query($mysqli,$query_history);
 $row_history = mysqli_fetch_assoc($result_history);
@@ -25,8 +29,14 @@ $amount_of_pay = $row_history['amount_paid'];
 $balance_after_payment = $row_history['balance_after_payment'];
 
 $total_paid = $row_sum['total_paid'];
-$total_balance = $row1['total_wd_add_pay'];
+$total_balance;
 
+if($bal_after_payment < 0){
+  $total_balance = $row1['total_wd_add_pay']+$row2['balance_after_payment'];
+}else{
+  $total_balance = $row1['total_wd_add_pay'];
+}
+echo $row2['balance_after_payment'];
 include 'connect.php';
 
 $query = "SELECT * FROM  monthly_payment_history WHERE student_id = '$student_id' AND amount_paid != 0";
@@ -88,7 +98,7 @@ $output .='
 <tr><th colspan="2"></th></tr>
 <tr>
 <td align="right"><b>Balance as of this month:</b></td>
-<td align="right"><b>&#8369; '.number_format($bal_after_payment,2).'</b>
+<td align="right"><b>&#8369; '.number_format($row2['balance_after_payment'],2).'</b>
 <input type="hidden" id="bal_after_payment" value="'.$bal_after_payment.'">
 <input type="hidden" id="student_id_paid" value="'.$student_id.'"></td>
 </tr>
@@ -97,10 +107,6 @@ $output .='
         <td align="right"><b>Running Annual Balance:</b></td>
         <td align="right" ><b>&#8369; '.number_format($row1['total_wd_add_pay'],2).'</b>
         <input type="hidden" id="annual_balance" value="'.$row1['total_wd_add_pay'].'"></td>
-      </tr>
-      <tr>
-        <td align="right"><b>Less Payment:</b><span id="addAmount" style="color:red;"></span></td>
-        <td><input style="text-align: right;" type="number" class="form-control" onchange="addAmount()" id="amount_full_pay"></td>
       </tr>
 
       <tr>

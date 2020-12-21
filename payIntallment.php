@@ -9,6 +9,8 @@ echo '
 <table class="table" width="100%" cellspacing="0">
   <thead>
     <tr>
+    <td align=""><label for="Status">OR Number</label>
+      <input onclick="amount()" type="number" class="form-control text-right" value="0" id="or_no" aria-describedby="emailHelp" placeholder="OR Number"></td>
       <td align=""><label for="Status">Down Payment:</label>
     <input onclick="amount()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount"></td>
       <td align=""><label for="Status">Learning Module:</label>

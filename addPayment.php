@@ -1,5 +1,10 @@
 <?php
 include 'config.php';
+session_start();
+if(!isset($_SESSION['userName'])){
+  header("location:index.php");
+}
+
 $student_id = $_GET["id"];
 $student = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result = mysqli_query($mysqli,$student);
@@ -294,7 +299,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['userName'];?></span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -547,7 +552,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
                       </div>
                       <div class="form-group col-md-6">
                         <label><b>Evaluate?</b></label>
-                        <input onclick="totalDues('<?php echo $row["student_id"]?>')" id="<?php echo $row["student_id"]?>" class="form-control btn-warning btn-lg" type="button" value="CLICK HERE">
+                        <button onclick="totalDues('<?php echo $row["student_id"]?>')" id="fullClick" class="form-control btn-warning btn-lg fullClick" type="button" value="CLICK HERE">CLICK HERE</button>
                       </div>
                     </div>
                    </td>
@@ -725,7 +730,8 @@ $row_montly = mysqli_fetch_array($result_monthly);
               <tbody>
                 <tr style="background-color: #3d3d3d">
                   <td colspan="4" align="right"><b>ENDING ANNUAL BALANCE:</b></td>
-                  <td style="cursor: pointer; font-weight:bold" onclick="totalDues(this)" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["total_wd_add_pay"],2)?></td>
+                  <td style="font-weight:bold" id="balance_after_payment" width="150" align="right">&#8369; <?php echo number_format($row["total_wd_add_pay"],2)?></td>
+                   <input id="total_balance_after_payment" class="form-control" type="hidden" value="<?php echo $row['total_wd_add_pay']?>" name="">
                 </tr>
               </tbody>
             </table>
@@ -760,7 +766,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel" >Ready to Leave?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -768,7 +774,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="logout.php?logout">Logout</a>
         </div>
       </div>
     </div>
@@ -803,30 +809,30 @@ $row_montly = mysqli_fetch_array($result_monthly);
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 
-                  <a href="#" onclick="addPaid()" class="btn btn-danger btn-icon-split">
+                  <a href="#" onclick="addPaid()" data-dismiss="modal" class="btn btn-danger btn-icon-split">
                   <span class="icon text-white-50">
                     <i class="fas fa-save"></i>
                   </span>
-                  <span class="text">Save & Remove</span></a>
+                  <span class="text">Apply</span></a>
                 </div>
               </div>
             </div>
           </div>
           <!--end modal viewing-->
 
-
+<input type="text" value="" id="remark" name="">
 <script type="text/javascript">
   function addPaid(){
-    var checkContent = $("#amount_full_pay").html();
-    var bal_as_of_this_month = $("#bal_after_payment").val();
+    //var checkContent = $("#amount_full_pay").val();
+    /*var bal_as_of_this_month = $("#bal_after_payment").val();
     var annual_balance = $("#annual_balance").val();
     var total_anual_bal = $("#total_balance").val();
     var total_amount_paid = $("#amount_full_pay").html();
     var student_id = $("#stud_id").val();
     //alert(annual_balance);
     
-    if(checkContent == ""){
-      $("#addAmount").html(" (No Amount Paid!)");
+    if(total_amount_paid == ""){
+      $("#addAmount").html("Enter amount");
     }else{
     
         $.ajax({
@@ -839,7 +845,48 @@ $row_montly = mysqli_fetch_array($result_monthly);
         }
       })
   
+    }*/
+    
+    $("#as_of").val("");
+    //$("#total_past_due").html("0");
+    //$("#tuition_fee_cd").val("0");
+    $("#tutorial_cd").val("0");
+    $("#surcharge_cd").val("0");
+    $("#other_description").val("");
+    $("#others_amount").val("0");
+    $("#total_current_dues").val("0");
+    //$("#due_on").val("");
+    $("#total_due").val("0");
+    //$("#or_number").val("");
+    $("#amount_paid").val("0");
+    var nowBalance = $("#total_past_due").html();
+    var bal = $("#balance_after_payment").val();
+    var totalBal = $("#total_balance_after_payment").val();
+    var studId = $("#stud_id").val();
+
+    alert(nowBalance);
+    var totalAllBal;
+    if(bal <= 0){
+      totalAllBal = parseFloat(totalBal)+parseFloat(nowBalance);
+    }else{
+
     }
+    $("#remark").val("Paid");
+    $("#tuition_fee_cd").val(totalAllBal);
+    $("#amount_paid").val(totalAllBal);
+    $("#balance_after_payment").val(0);
+    //alert(studId);
+    
+
+    $.ajax({
+        url: "fullPay.php",
+        method: "post",
+        data:{"studId":studId},
+        success:function(data){
+          alert(data);
+          //window.location="addPayment.php?id="+studId;
+        }
+      })
   }
   function addAmount(){
     $("#addAmount").html("");
@@ -857,6 +904,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
       data:{'id':id,'bal_after_payment':bal_after_payment},
       success:function(data){
         //alert(data);
+
         $("#full_payment").html(data);
         $("#fullPayment").modal('show');
       }
@@ -989,7 +1037,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
 </script>
 <script type="text/javascript">
   function savePayment(){
-
+    var remark = $("#remark").val();
     var for_the_month = $("#for_the_month").val()
     var stud_id = $("#stud_id").val();
     var stud_name = $("#stud_name").val();
@@ -1017,6 +1065,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
       url: "savePayment.php",
       method: "POST",
       data:{
+        "remark":remark,
         "for_the_month":for_the_month,
         "stud_id":stud_id,
         "stud_name":stud_name,
