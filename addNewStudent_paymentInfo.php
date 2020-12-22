@@ -340,6 +340,10 @@ if($status == "Regular"){
 	}
 }
 
+$username = $fname.' '.$lname;
+$insert_user = "INSERT INTO user (username,password,position)VALUES('$username','$student_id','Student')";
+mysqli_query($mysqli,$insert_user);
+
 echo $output;
 ?>
 

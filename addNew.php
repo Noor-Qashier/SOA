@@ -742,6 +742,55 @@ $row = mysqli_fetch_array($result);
     </div>
   </div>
 
+  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Are you sure want to remove <large style="color:green;font-style: italic;" id="deleteStudent"></large> from the student list?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger" id="UIDdelete" onclick="finalDelete(this)">Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!--delete-->
+<script type="text/javascript">
+  function deleteUser(button){
+    var UID = button.id;
+      $.ajax({
+      url: 'nameToDelete.php',
+      method: 'post',
+      data:{"UID":UID},
+      dataType: 'json',
+      success:function(data){
+        $("#deleteStudent").html(data.fname+" "+data.lname);
+        document.getElementById("UIDdelete").id = data.student_id;
+        $("#deleteUser").modal("show");    
+      }
+    })
+  }
+  function finalDelete(button){
+    var UIDdelete = button.id;
+    //alert(UIDdelete);
+      $.ajax({
+        url: 'deleteStudent.php',
+        method: 'post',
+        data:{"UIDdelete":UIDdelete},
+        success:function(data){
+          alert(data);
+          window.location="addNew.php";
+        }
+      })
+  }
+</script>
   <!--Fetching data from database-->
 <script type="text/javascript">
     function load_data()

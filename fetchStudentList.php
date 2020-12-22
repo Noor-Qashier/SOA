@@ -56,7 +56,7 @@ if($total_row > 0)
 
                       <a href="history.php?id='.$row["student_id"].'" class="dropdown-item" href="#" id="'.$row["student_id"].'">History <i class="fa fa-history float-right" aria-hidden="true"></i></a></a>
 
-                      <a onclick="delete()" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a>
+                      <a onclick="deleteUser(this)" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a>
 
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
 
