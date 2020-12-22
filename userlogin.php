@@ -5,22 +5,33 @@ session_start();
 $username = $_POST['userName'];
 $password = $_POST['userPassword'];
 
-$searchUser = "SELECT *FROM admin WHERE username ='$username' AND password = '$password'";
+$searchUser = "SELECT *FROM user WHERE username ='$username' OR password = '$password'";
 $result = mysqli_query($mysqli,$searchUser);
 $row = mysqli_fetch_assoc($result);
 
-if (mysqli_num_rows($result)==0){
-	echo "<script>alert('User account does not exist');
-	window.location='index.php';
-	</script>";
-}else{
-	if($row['position'] == "Student"){
 
+	if($username != $row['username']){
+		echo "<script>alert('Incorrect username!');
+		window.location='index.php';
+	</script>";
 	}else{
-	$_SESSION['userName'] = $username;
-	echo '<script>alert("Login Successfull");
-	window.location="home.php";
-	</script>';
+		if($password != $row['password']){
+		echo "<script>alert('Incorrect password!');
+		window.location='index.php';
+		</script>";
+		}else{
+		if($row['position'] == "Student"){
+			$_SESSION['userName'] = $username;
+			echo '<script>alert("Login Successfull");
+			window.location="Student/home.php?id='.$password.'";
+			</script>';
+		}else{
+			$_SESSION['userName'] = $username;
+			echo '<script>alert("Login Successfull");
+			window.location="home.php";
+			</script>';
+		}
 	}
 }
+	
 ?>
