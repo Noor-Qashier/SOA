@@ -26,7 +26,8 @@ $row_montly = mysqli_fetch_array($result_monthly);
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>PVCS | Add Payment</title>
+  <link rel="shortcut icon" type="image/x-icon" href="pvcs.png" />
   <!--toastr-->
   <link href="css/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
 
