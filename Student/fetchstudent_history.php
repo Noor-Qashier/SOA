@@ -6,16 +6,25 @@ $query = "SELECT * FROM monthly_payment_history WHERE num_rec = '$num_rec'";
 $result = mysqli_query($mysqli,$query);
 $row = mysqli_fetch_assoc($result);
 
+$student_id =$row['student_id'];
+
+$query2 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
+$result2 = mysqli_query($mysqli,$query2);
+$row2 = mysqli_fetch_assoc($result2);
+
 $dueDate = $row["due_on"];
 $DUE_ON = date("M d Y", strtotime($dueDate));
 
 $StatementDate = $row["statement_as_of"];
 $stateDate = date("M d Y", strtotime($StatementDate));
 
+$dateFM = $row["for_the_month"];
+$newDate = date("F Y", strtotime($dateFM));
+
 
 echo '
 <div class="form-group">
-<h5 style="text-align:center;background-color:#EAECEE;padding-top:10px;padding-bottom:10px;">STATEMENT OF ACCOUNT<small><p>'.$row['for_the_month'].'</p></small></h5>
+<h5 style="text-align:center;background-color:#EAECEE;padding-top:10px;padding-bottom:10px;">STATEMENT OF ACCOUNT<small><p>'.$newDate.'</p></small></h5>
 </div>
 
 <div class="form-group">
@@ -27,7 +36,7 @@ echo '
 <div class="form-group">
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	  <thead>
-	  	<tr>
+	  	<tr style="background-color:#c8ccc9;">
 	  		<td align="right"><b>Statement as of: </b></td>
 	  		<td width="150" align="right"><b>'.$stateDate.'</b></td>
 	  	</tr>
@@ -101,6 +110,10 @@ echo '
 	  	<tr>
 	  		<td colspan="4" align="right"><b>Balance After Payment:</b></td>
 	  		<td width="150" align="right"><b>&#8369; '.number_format($row["balance_after_payment"],2).'</b></td>
+	  	</tr>
+	  	<tr style="background-color:#246334;color:white;">
+	  		<td colspan="4" align="right"><b>Annual Ending Balance:</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row2["total_wd_add_pay"],2).'</b></td>
 	  	</tr>
 </div>
 
