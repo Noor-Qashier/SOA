@@ -49,7 +49,65 @@ $result = $statement->fetchAll();
 
 $total_row = $statement->rowCount();
 
-$output = '
+if($row1['status'] == "Online Distance Learning"){
+      $output = '
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+          <th colspan="2">'.$name.' | Grade: '.$row1['level'].'</th>
+        </tr>
+        <tr>
+          <th colspan="2">PAYMENT HISTORY</th>
+        </tr>
+          <tr>
+            <th width="600">Month</th>
+            <th >Amount Paid</th>
+          </tr>
+        </thead>
+        <tbody>
+    ';
+    if($total_row > 0)
+    {
+      foreach ($result as $row) 
+      {
+        $dateForTheMonth = $row["due_on"];
+        $newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
+        $output .= '
+          <tr>
+            <td>'.$newDateForTheMonth.'</td>
+            <td align="right">&#8369; '.number_format($row['amount_paid'],2).'</td>
+          </tr>
+        ';
+      }
+    }
+    else
+    {
+      $output .='
+      <tr>
+        <td colspan="3" align="center">Data not found</td>
+      </tr>
+      ';
+    }
+
+    $output .='
+          <tr>
+            <td align="right"><b>TOTAL:</b></td>
+            <td align="right"><b>&#8369; '.number_format($total_paid,2).'</b></td>
+          </tr>
+    </tbody>
+    <tfoot>
+    <tr><th colspan="2"></th></tr>
+    <tr>
+    <td align="right"><b>Balance as of this month:</b></td>
+    <td align="right"><b>&#8369; '.number_format($row2['balance_after_payment'],2).'</b>
+    <input type="hidden" id="bal_after_payment" value="'.$bal_after_payment.'">
+    <input type="hidden" id="student_id_paid" value="'.$student_id.'"></td>
+    </tr>
+    <tfoot>
+    </table>
+    ';
+  }else{
+    $output = '
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
     <thead>
     <tr>
@@ -117,6 +175,7 @@ $output .='
 <tfoot>
 </table>
 ';
+  }
 
 echo $output;
 ?>

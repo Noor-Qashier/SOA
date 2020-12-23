@@ -525,7 +525,7 @@ $row = mysqli_fetch_array($result);
                         <label for="Status">Payment Method:</label>
                         <select onchange="pay()" class="form-control" id="payment">
                           <option selected>Payment method</option>
-                          <option>Partial (For ADL Only)</option>
+                          <option>Partial</option>
                           <option>Cash</option>
                           <option>Installment</option>
                         </select>

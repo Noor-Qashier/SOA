@@ -33,7 +33,11 @@ $rowTotal = mysqli_fetch_assoc($resultTotal);
 
 $remark;
 if($rowTotal['total_wd_add_pay'] <= 0 || $rem == "Paid" || $balance_after_payment == 0){
-	$remark = "Paid";
+	if($rowTotal['status'] == "Online Distance Learning"){
+		$remark = "Partial";
+	}else{
+		$remark = "Paid";
+	}
 }else{
 	if($rowTotal['remark'] == "Partial"){
 		$remark = "Partial";

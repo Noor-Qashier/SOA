@@ -38,6 +38,40 @@ if($yrLevel == "Year Level"){
       </thead>
     </table>
     ';
+  }else if($class_status == "Online Distance Learning"){
+    $query = "SELECT * FROM payment_information_odl WHERE level = '$yrLevel'";
+    $result = mysqli_query($mysqli,$query);
+    $row = mysqli_fetch_assoc($result);
+
+    $total = $row["tuition_fees"] + $row["other_school_fees"] + $row["learning_module"];
+
+    echo '
+
+    <table class="table table-bordered" width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <td align="center"><b>Tuition Fees </b></td>
+          <td align="center"><b>Other School Fees </b></td>
+          <td align="center"><b>Learning Module </b></td>
+          <td align="center"><b>Monthly </b></td>
+        </tr>
+        <tr>
+          <td align="right" id="tuition">&#8369; '.number_format($row["tuition_fees"],2).'</td>
+          <td align="right" id="others">&#8369; '.number_format($row["other_school_fees"],2).'</td>
+          <td align="right" id="l_module">&#8369; '.number_format($row["learning_module"],2).'</td>
+          <td align="right" id="l_module">&#8369; '.number_format($row["monthly"],2).'</td>
+        </tr>
+        <tr>
+        <th colspan="4"></th>
+        </tr>
+        <tr>
+          <td colspan="3" align="right"><b>Total Annual Fee</b></td>
+          <td align="right" id=""><b>&#8369; '.number_format($total,2).'</b></td>
+        </tr>
+        <input type="text" id="Subtotal" value="'.$total.'" hidden/>
+      </thead>
+    </table>
+    ';
   }else{
     $query = "SELECT * FROM payment_information_odl WHERE level = '$yrLevel'";
     $result = mysqli_query($mysqli,$query);

@@ -52,9 +52,9 @@ if($total_row > 0)
                 </button>
                 <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
 
-                      <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a></a>
-
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
+
+                      <a onclick="convertToADL(this)" class="dropdown-item" href="#" id="'.$row["student_id"].'">Covert to ODL <i class="fa fa-exchange-alt float-right" aria-hidden="true"></i></a></a>
                 </div>
 
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
@@ -90,6 +90,23 @@ $output .='
 
 echo $output;
 ?>
+  
+  <script type="text/javascript">
+    function convertToADL(button){
+      var student_id = button.id;
+      //alert(student_id);
+      $.ajax({
+        url: 'convertToADL.php',
+        method: 'post',
+        data:{"student_id":student_id},
+        success:function(data){
+          alert(data);
+          window.location = "partial.php?id"+student_id;
+        }
+      })
+    }
+  </script>
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

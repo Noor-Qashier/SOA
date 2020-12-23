@@ -21,7 +21,7 @@ include('config.php');
 	$payModule1 = $_POST['payModule1'];
 
 	//$amountPayTotal = $amountPay+$payModule;
-	//echo $monthly;
+	echo $amountPay;
 
 if($status == "Regular"){
 	if($payment_m == "Cash"){
@@ -218,7 +218,7 @@ if($status == "Regular"){
 			$output.= mysqli_error($mysqli);
 			$output.= "failed";
 		}
-}else if($payment_m == "Partial (For ADL Only)") {
+}else if($payment_m == "Partial") {
 
 	$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 	$result = mysqli_query($mysqli,$getPaymentInfo);

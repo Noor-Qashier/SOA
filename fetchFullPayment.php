@@ -107,13 +107,14 @@ $output .='
         <td align="right"><b>Total Annual Balanced:</b></td>
         <td align="right" ><b>&#8369; '.number_format($row2['total_annual_balance'],2).'</b>
       </tr>
-      <tr>
-        <td align="right"><b>Amount:</b><span id="addAmount" style="color:red;"></span></td>
-        <td align="right" ><b>&#8369; '.number_format($row2['payment_amount'],2).'</b></td>
-      </tr>
 <tfoot>
 </table>
 ';
 
 echo $output;
 ?>
+<!--
+     <tr>
+        <td align="right"><b>Amount:</b><span id="addAmount" style="color:red;"></span></td>
+        <td align="right" ><b>&#8369; '.number_format($row2['payment_amount'],2).'</b></td>
+      </tr>-->

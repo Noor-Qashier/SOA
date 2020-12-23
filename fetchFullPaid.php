@@ -38,7 +38,7 @@ $output = '
         <td style="background-color:#8ef5b2;" align="right" ><b>'.$row1['or_no'].'</b></td>
       </tr>
     <tr>
-      <th colspan="3"></th>
+      <th colspan="3">TUITION</th>
     </tr>
       <tr>
         <th>Tuition Fee</th>
@@ -80,17 +80,25 @@ $output .='
 <tfoot>
 <tr><th colspan="4"></th></tr>
 <tr>
-
-
+<th colspan="3">PAYMENTS</th>
 <input type="hidden" id="student_id_paid" value="'.$student_id.'"></td>
+<tr>
+  <th colspan="2" >Tuition</th>
+  <td align="right">&#8369; '.number_format($row1['amountPay'],2).'</td>
+</tr>
+<tr>
+  <th colspan="2" >Learning Module</th>
+  <td align="right">&#8369; '.number_format($row1['payModule'],2).'</td>
+</tr>
+<tr>
+  <th colspan="2" >Total</th>
+  <td align="right"><b>&#8369; '.number_format($row1['subtotal'],2).'</b></td>
+</tr>
+<tr><th colspan="3"></th></tr>
 </tr>
       <tr>
         <td colspan="2" align="right"><b>Total Annual Balanced:</b></td>
         <td align="right" ><b>&#8369; '.number_format(0,2).'</b>
-      </tr>
-      <tr>
-        <td colspan="2" align="right"><b>Amount:</b><span id="addAmount" style="color:red;"></span></td>
-        <td align="right" ><b>&#8369; '.number_format($row1['amountPay'],2).'</b></td>
       </tr>
 <tfoot>
 </table>

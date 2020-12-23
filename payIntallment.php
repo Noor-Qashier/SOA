@@ -3,7 +3,7 @@ include 'config.php';
 
 $payment = $_POST['payM'];
 //echo $payment;
-if($payment == "Installment" || $payment == "Partial (For ADL Only)"){
+if($payment == "Installment" || $payment == "Partial"){
 
 echo '
 <table class="table" width="100%" cellspacing="0">
