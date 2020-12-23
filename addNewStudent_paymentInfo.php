@@ -156,7 +156,7 @@ if($status == "Regular"){
 }else{
 	if($payment_m == "Cash"){
 
-	$getPaymentInfo = "SELECT * FROM payment_information_ODL WHERE level = '$level'";
+	$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 	$result = mysqli_query($mysqli,$getPaymentInfo);
 	$row = mysqli_fetch_assoc($result);
 
@@ -220,7 +220,7 @@ if($status == "Regular"){
 		}
 }else if($payment_m == "Partial (For ADL Only)") {
 
-	$getPaymentInfo = "SELECT * FROM payment_information_ODL WHERE level = '$level'";
+	$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 	$result = mysqli_query($mysqli,$getPaymentInfo);
 	$row = mysqli_fetch_assoc($result);
 
@@ -279,7 +279,7 @@ if($status == "Regular"){
 			$output.= "failed";
 		}
 	}else{
-			$getPaymentInfo = "SELECT * FROM payment_information_ODL WHERE level = '$level'";
+			$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 			$result = mysqli_query($mysqli,$getPaymentInfo);
 			$row = mysqli_fetch_assoc($result);
 
