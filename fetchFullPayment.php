@@ -52,7 +52,7 @@ $output = '
     <h4 style="text-align:center;">FULL PAYMENT INFORMATION<br><small>'.$newDateEntry.'</small></h4>
     <tr>
         <td align="right"><b>Status:</b><span id="addAmount" style="color:red;"></span></td>
-        <td style="background-color:#8ef5b2;" align="right" ><b>'.$row1['payment_status'].'</b></td>
+        <td style="background-color:#8ef5b2;" align="right" ><b>'.$row1['remark'].'</b></td>
       </tr>
     <tr>
       <th colspan="2">'.$name.' | Grade: '.$row1['level'].'</th>
