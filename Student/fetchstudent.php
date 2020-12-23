@@ -153,9 +153,9 @@ echo '
 	  		<td>Total Paid</td>
 	  		<td align="right">&#8369; '.number_format($row_sum["sumAllPay"],2).'</td>
 	  	</tr>
-	  	<tr>
-	  		<td align="right"><b>Ending Balance:</b></td>
-	  		<td align="right"><b>&#8369; '.number_format($row2['total_wd_add_pay'],2).'</b></td>
+	  	<tr style="background-color:#246334;color:white;">
+	  		<td align="right"><b>Annual Ending Balance:</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row2["total_wd_add_pay"],2).'</b></td>
 	  	</tr>
 </div>
 </div>
