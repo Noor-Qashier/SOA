@@ -32,7 +32,7 @@ $resultTotal = mysqli_query($mysqli,$evalTotal);
 $rowTotal = mysqli_fetch_assoc($resultTotal);
 
 $remark;
-if($rowTotal['total_wd_add_pay'] <= 0 || $rem == "Paid"){
+if($rowTotal['total_wd_add_pay'] <= 0 || $rem == "Paid" || $balance_after_payment == 0){
 	$remark = "Paid";
 }else{
 	if($rowTotal['remark'] == "Partial"){
