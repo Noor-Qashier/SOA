@@ -1010,30 +1010,58 @@ $row_montly = mysqli_fetch_array($result_monthly);
 
     }
 </script>
+<input type="hidden" id="partial" value="<?php echo $row['remark']?>" name="">
 <script type="text/javascript">
   function date_for_the_month(){
+    var partialPay = $("#partial").val();
+
+    if(partialPay == "Partial"){
+        //var new_past_due = $("#balance_after_payment").val();
+        $("#total_past_due").html("0");
+        var date_for_the_month = $("#for_the_month").val();
+        $("#due_on").val(date_for_the_month);
+        //alert("dawd");
+         //$("#for_the_month").val("")
+        //$("#stud_id").val("");
+        //$("#stud_name").val();
+        $("#as_of").val("");
+        
+        //$("#tuition_fee_cd").val("0");
+        $("#tutorial_cd").val("0");
+        $("#surcharge_cd").val("0");
+        $("#other_description").val("");
+        $("#others_amount").val("0");
+        $("#total_current_dues").val("0");
+        //$("#due_on").val("");
+        $("#total_due").val("0");
+        //$("#or_number").val("");
+        $("#amount_paid").val("0");
+        $("#balance_after_payment").val("0");
+    }else{
+         var new_past_due = $("#balance_after_payment").val();
+        $("#total_past_due").html(new_past_due);
+        var date_for_the_month = $("#for_the_month").val();
+        $("#due_on").val(date_for_the_month);
+        //alert("dawd");
+         //$("#for_the_month").val("")
+        //$("#stud_id").val("");
+        //$("#stud_name").val();
+        $("#as_of").val("");
+        
+        //$("#tuition_fee_cd").val("0");
+        $("#tutorial_cd").val("0");
+        $("#surcharge_cd").val("0");
+        $("#other_description").val("");
+        $("#others_amount").val("0");
+        $("#total_current_dues").val("0");
+        //$("#due_on").val("");
+        $("#total_due").val("0");
+        //$("#or_number").val("");
+        $("#amount_paid").val("0");
+        $("#balance_after_payment").val("0"); 
+    }
     
-    var new_past_due = $("#balance_after_payment").val();
-    $("#total_past_due").html(new_past_due);
-    var date_for_the_month = $("#for_the_month").val();
-    $("#due_on").val(date_for_the_month);
-    //alert("dawd");
-     //$("#for_the_month").val("")
-    //$("#stud_id").val("");
-    //$("#stud_name").val();
-    $("#as_of").val("");
-    
-    //$("#tuition_fee_cd").val("0");
-    $("#tutorial_cd").val("0");
-    $("#surcharge_cd").val("0");
-    $("#other_description").val("");
-    $("#others_amount").val("0");
-    $("#total_current_dues").val("0");
-    //$("#due_on").val("");
-    $("#total_due").val("0");
-    //$("#or_number").val("");
-    $("#amount_paid").val("0");
-    $("#balance_after_payment").val("0");
+
   }
 </script>
 <script type="text/javascript">
