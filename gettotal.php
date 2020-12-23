@@ -12,7 +12,7 @@ $monthly;
 
 if ($h_student == "Gold"){
   $h_student = 0.9;
-}else if ($h_student == "Silver"){
+}if ($h_student == "Silver"){
   $h_student = 0.95;
 }else{
   $h_student = 1;
@@ -24,7 +24,7 @@ if ($sibling == "Yes"){
 }
 if($payment == "Cash"){
   $payment = 0.95;
-}else if($payment == "Partial (For ADL Only)") {
+}if($payment == "Partial (For ADL Only)") {
   $payment = 1;
 }else{
   $payment = 1;
@@ -73,7 +73,7 @@ if($class_status == "Regular"){
   $payment_percentage;
   if ($h_student == 0.95){
     $h_student_percentage = "Silver - 5%";
-  }else if($h_student == 0.9){
+  }if($h_student == 0.9){
     $h_student_percentage = "Gold - 10%";
   }else{
     $h_student_percentage = "None";
@@ -196,7 +196,7 @@ if($class_status == "Regular"){
       ';      
   }
 }else{
-  $query = "SELECT * FROM payment_information_ODL WHERE level = '$yrLevel'";
+  $query = "SELECT * FROM payment_information_odl WHERE level = '$yrLevel'";
   $result = mysqli_query($mysqli,$query);
   $row = mysqli_fetch_assoc($result);
 
