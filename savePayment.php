@@ -35,7 +35,11 @@ $remark;
 if($rowTotal['total_wd_add_pay'] <= 0 || $rem == "Paid"){
 	$remark = "Paid";
 }else{
-	$remark = "Monthly";
+	if($rowTotal['remark'] == "Partial"){
+		$remark = "Partial";
+	}else{
+		$remark = "Monthly";
+	}	
 }
 
 

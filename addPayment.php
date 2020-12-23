@@ -1077,7 +1077,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
         "tutorial_cd":tutorial_cd,
         "surcharge_cd":surcharge_cd,
         "other_description":other_description,
-        "others_amount":others_amount,
+        "others_amount":others_amount, 
         "total_current_dues":total_current_dues,
         "due_on":due_on,
         "total_due":total_due,
