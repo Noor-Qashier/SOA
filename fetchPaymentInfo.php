@@ -39,7 +39,7 @@ if($yrLevel == "Year Level"){
     </table>
     ';
   }else{
-    $query = "SELECT * FROM payment_information_ODL WHERE level = '$yrLevel'";
+    $query = "SELECT * FROM payment_information_odl WHERE level = '$yrLevel'";
     $result = mysqli_query($mysqli,$query);
     $row = mysqli_fetch_assoc($result);
 
