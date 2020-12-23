@@ -21,7 +21,7 @@ include('config.php');
 	$payModule1 = $_POST['payModule1'];
 
 	//$amountPayTotal = $amountPay+$payModule;
-	echo $amountPay;
+	//echo $amountPay;
 
 if($status == "Regular"){
 	if($payment_m == "Cash"){

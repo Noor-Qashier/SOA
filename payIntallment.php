@@ -10,11 +10,11 @@ echo '
   <thead>
     <tr>
     <td align=""><label for="Status">OR Number</label>
-      <input onclick="amount()" type="number" class="form-control text-right" value="0" id="or_no" aria-describedby="emailHelp" placeholder="OR Number"></td>
+      <input onclick="ORN()" type="number" class="form-control text-right" value="0" id="or_no" aria-describedby="emailHelp" placeholder="OR Number"></td>
       <td align=""><label for="Status">Down Payment:</label>
-    <input onclick="amount()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount"></td>
+    <input onclick="DownP()" type="number" class="form-control text-right" value="0" id="downPayment" aria-describedby="emailHelp" placeholder="Amount"></td>
       <td align=""><label for="Status">Learning Module:</label>
-    <input type="number" class="form-control text-right" value="0" id="payModule" aria-describedby="emailHelp" placeholder="Amount"></td>
+    <input onclick="Lmod()" type="number" class="form-control text-right" value="0" id="payModule" aria-describedby="emailHelp" placeholder="Amount"></td>
     </tr>
 
    
@@ -32,3 +32,14 @@ echo '
 }
 
 ?>
+<script type="text/javascript">
+  function ORN(){
+    $("#or_no").val("");
+  }
+  function DownP(){
+    $("#downPayment").val("");
+  }
+  function Lmod(){
+    $("#payModule").val("");
+  }
+</script>

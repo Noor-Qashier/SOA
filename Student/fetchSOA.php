@@ -19,6 +19,8 @@ $stateDate = date("M d Y", strtotime($StatementDate));
 $dateForTheMonth = $row["for_the_month"];
 $newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
 
+$endingBalance = $row["balance_after_payment"]+$row2["total"];
+
 
 echo '
 <div class="form-group">
@@ -38,6 +40,10 @@ echo '
 	  		<td align="right"><b>Statement as of: </b></td>
 	  		<td width="150" align="right"><b>'.$stateDate.'</b></td>
 	  	</tr>
+	  	<tr style="background-color:#c8ccc9;">
+	  		<td align="right"><b>Annual Beginning Balance:</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row2["total"],2).'</b></td>
+	  	</tr>
 	  </thead>
 </div>
 
@@ -48,7 +54,7 @@ echo '
 	  <tbody>
 	  	<tr>
 	  		<td>PAST DUE ACCOUNT:</td>
-	  		<td width="150" align="right">&#8369; '.$row["past_due_amount"].'</td>
+	  		<td width="150" align="right">&#8369; '.number_format($row["past_due_amount"],2).'</td>
 	  	</tr>
 </div>
 <div class="form-group">
@@ -61,23 +67,23 @@ echo '
 	  <tbody>
 	  	<tr>
 	  		<td>Tuition fee:</td>
-	  		<td width="150" align="right">&#8369; '.$row["tuition_fee_lmodule"].'</td>
+	  		<td width="150" align="right">&#8369; '.number_format($row["tuition_fee_lmodule"],2).'</td>
 	  	</tr>
 	  	<tr>
 	  		<td>Remediation/Tutorial:</td>
-	  		<td width="150" align="right">&#8369; '.$row["tutorial"].'</td>
+	  		<td width="150" align="right">&#8369; '.number_format($row["tutorial"],2).'</td>
 	  	</tr>
 	  	<tr>
 	  		<td>Surcharge due to Late Payment:</td>
-	  		<td width="150" align="right">&#8369; '.$row["surcharge"].'</td>
+	  		<td width="150" align="right">&#8369; '.number_format($row["surcharge"],2).'</td>
 	  	</tr>
 	  	<tr>
 	  		<td>'.$row["other_description"].'</td>
-	  		<td width="150" align="right">&#8369; '.$row["other_amount"].'</td>
+	  		<td width="150" align="right">&#8369; '.number_format($row["other_amount"],2).'</td>
 	  	</tr>
 	  	<tr>
 	  		<td align="right"><b>Total Current dues:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.$row["total_current_due"].'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row["total_current_due"],2).'</b></td>
 	  	</tr>
 </div>
 
@@ -88,7 +94,7 @@ echo '
 	  		<th width="150">DUE ON:</th>
 	  		<td align="right"><b>'.$DUE_ON.'</b></td>
 	  		<td width="200" align="right"><b>Total Due:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.$row["total_due"].'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row["total_due"],2).'</b></td>
 	  	</tr>
 	  </thead>
 </div>
@@ -101,13 +107,17 @@ echo '
 	  		<th width="70"> OR #</th>
 	  		<td width="195" align="right">'.$row["or_no"].'</td>
 	  		<td align="right"><b>Amount Paid:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.$row["amount_paid"].'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row["amount_paid"],2).'</b></td>
 	  	</tr>
 	  </thead>
 	  <tbody>
 	  	<tr>
 	  		<td colspan="4" align="right"><b>Balance After Payment:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.$row["balance_after_payment"].'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($row["balance_after_payment"],2).'</b></td>
+	  	</tr>
+	  	<tr style="background-color:#246334;color:white;">
+	  		<td colspan="4" align="right"><b>Annual Ending Balance:</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($endingBalance,2).'</b></td>
 	  	</tr>
 </div>
 

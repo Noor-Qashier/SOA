@@ -11,6 +11,10 @@ $countAllPay = "SELECT COUNT(amount_paid) AS countAll FROM monthly_payment_histo
 $count_result = mysqli_query($mysqli,$countAllPay);
 $row_count = mysqli_fetch_assoc($count_result);
 
+$sumAllPay = "SELECT SUM(amount_paid) AS sumAllPay FROM monthly_payment_history WHERE student_id='$student_id' AND amount_paid != 0";
+$sum_result = mysqli_query($mysqli,$sumAllPay);
+$row_sum = mysqli_fetch_assoc($sum_result);
+
 $query2 = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result2 = mysqli_query($mysqli,$query2);
 $row2 = mysqli_fetch_assoc($result2);
@@ -147,7 +151,7 @@ echo '
 	  	</tr>
 	  	<tr>
 	  		<td>Total Paid</td>
-	  		<td align="right">&#8369; '.number_format($row2["learning_module"],2).'</td>
+	  		<td align="right">&#8369; '.number_format($row_sum["sumAllPay"],2).'</td>
 	  	</tr>
 	  	<tr>
 	  		<td align="right"><b>Ending Balance:</b></td>

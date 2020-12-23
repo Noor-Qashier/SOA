@@ -24,7 +24,7 @@ $row = mysqli_fetch_array($result);
   <meta name="author" content="">
 
   <title>PVCS | History</title>
-  <link rel="shortcut icon" type="image/x-icon" href="pvcs.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="../pvcs.png" />
   <!--toastr-->
   <link href="css/toastr-master/toastr.css" rel="stylesheet" type="text/css" />
 

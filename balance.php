@@ -684,14 +684,6 @@ $row = mysqli_fetch_array($result);
           <div class="row">
             <div class="form-group col-md-12">
               <h1 class="h3 mb-2 text-gray-800">Statement of Account</h1>
-              <div class="float-right">
-                <a href="#" class=" btn btn-success btn-icon-split btn-lg" data-toggle="modal" data-target="#addPVCSstudent" >
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                  <span class="text">New Student</span>
-                </a>
-              </div>
             </div>
           </div>
           <!-- Page Heading -->

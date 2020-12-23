@@ -61,10 +61,16 @@ if($amount_paid == ""){
 }
 //echo $tutorial_cd.' '.$surcharge_cd.' '.$others_amount;
 //
-$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
-$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
-$newTotal = $calTotal - $amount_paid;
 
+if($rowTotal['remark'] == "Partial"){
+	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+	$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment+$tuition_fee_cd;
+	$newTotal = $calTotal - $amount_paid;
+}else{
+	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+	$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
+	$newTotal = $calTotal - $amount_paid;
+}
 
 //echo $calTotal.' '.$newTotal;
 
