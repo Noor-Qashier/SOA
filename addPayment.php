@@ -913,6 +913,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
   }
 </script>
 <input type="hidden" id="partial" value="<?php echo $row['remark']?>" name="">
+<input type="hidden" id="status_mark" value="<?php echo $row['status']?>" name="">
 <input type="hidden" id="endingBalance" value="<?php echo $row['total_wd_add_pay']?>" name="">
 <!--save payment-->
 <script type="text/javascript">
@@ -1031,29 +1032,55 @@ $row_montly = mysqli_fetch_array($result_monthly);
     var partialPay = $("#partial").val();
     var endingBalance = $("#endingBalance").val();
     var endBal =  $("#balance_after_payment").val();
+    var status_mark =$("#status_mark").val();
 
     if(partialPay == "Partial" && endingBalance <= 0){
         //var new_past_due = $("#balance_after_payment").val();
-        $("#total_past_due").html("0");
-        var date_for_the_month = $("#for_the_month").val();
-        $("#due_on").val(date_for_the_month);
-        //alert("dawd");
-         //$("#for_the_month").val("")
-        //$("#stud_id").val("");
-        //$("#stud_name").val();
-        $("#as_of").val("");
-        
-        //$("#tuition_fee_cd").val("0");
-        $("#tutorial_cd").val("0");
-        $("#surcharge_cd").val("0");
-        $("#other_description").val("");
-        $("#others_amount").val("0");
-        $("#total_current_dues").val("0");
-        //$("#due_on").val("");
-        $("#total_due").val("0");
-        //$("#or_number").val("");
-        $("#amount_paid").val("0");
-        $("#balance_after_payment").val("0");
+        if(status_mark == "Online Distance Learning"){
+                var new_past_due = $("#balance_after_payment").val();
+                $("#total_past_due").html(new_past_due);
+                var date_for_the_month = $("#for_the_month").val();
+                $("#due_on").val(date_for_the_month);
+                //alert("dawd");
+                 //$("#for_the_month").val("")
+                //$("#stud_id").val("");
+                //$("#stud_name").val();
+                $("#as_of").val("");
+                
+                //$("#tuition_fee_cd").val("0");
+                $("#tutorial_cd").val("0");
+                $("#surcharge_cd").val("0");
+                $("#other_description").val("");
+                $("#others_amount").val("0");
+                $("#total_current_dues").val("0");
+                //$("#due_on").val("");
+                $("#total_due").val("0");
+                //$("#or_number").val("");
+                $("#amount_paid").val("0");
+                $("#balance_after_payment").val("0"); 
+        }else{
+                $("#total_past_due").html("0");
+                var date_for_the_month = $("#for_the_month").val();
+                $("#due_on").val(date_for_the_month);
+                //alert("dawd");
+                 //$("#for_the_month").val("")
+                //$("#stud_id").val("");
+                //$("#stud_name").val();
+                $("#as_of").val("");
+                
+                //$("#tuition_fee_cd").val("0");
+                $("#tutorial_cd").val("0");
+                $("#surcharge_cd").val("0");
+                $("#other_description").val("");
+                $("#others_amount").val("0");
+                $("#total_current_dues").val("0");
+                //$("#due_on").val("");
+                $("#total_due").val("0");
+                //$("#or_number").val("");
+                $("#amount_paid").val("0");
+                $("#balance_after_payment").val("0");
+        }
+
     }else if(endBal < 0){
         //var new_past_due = $("#balance_after_payment").val();
         $("#total_past_due").html("0");
@@ -1076,9 +1103,7 @@ $row_montly = mysqli_fetch_array($result_monthly);
         //$("#or_number").val("");
         $("#amount_paid").val("0");
         $("#balance_after_payment").val("0");
-    }
-
-    else{
+    }else{
          var new_past_due = $("#balance_after_payment").val();
         $("#total_past_due").html(new_past_due);
         var date_for_the_month = $("#for_the_month").val();
