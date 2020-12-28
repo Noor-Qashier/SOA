@@ -220,7 +220,8 @@ if($status == "Regular"){
 			$output.= "failed";
 		}
 }else if($payment_m == "Partial") {
-
+	$total = $_POST['total'];
+	$monthly = $_POST['monthly'];
 	$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 	$result = mysqli_query($mysqli,$getPaymentInfo);
 	$row = mysqli_fetch_assoc($result);
