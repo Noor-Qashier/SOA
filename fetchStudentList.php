@@ -14,7 +14,7 @@
 <?php
 include 'connect.php';
 
-$query = "SELECT * FROM student_payment_information";
+$query = "SELECT * FROM `student_payment_information` ORDER BY `date_of_entry` DESC";
 
 $statement = $mysqli->prepare($query);
 
@@ -32,6 +32,7 @@ $output = '
 	  		<th >Name</th>
 	  		<th >Year Level</th>
         <th >Remark</th>
+        <th >Date </th>
 	  		<th>Action</th>
 	  	</tr>
 	  </thead>
@@ -41,12 +42,15 @@ if($total_row > 0)
 {
 	foreach ($result as $row) 
 	{
+    $dateEntry = $row["date_of_entry"];
+    $newDateEntry = date("M d, Y", strtotime($dateEntry));
 		$output .= '
 			<tr>
 				<td>'.$row["student_id"].'</td>
 				<td>'.$row["fname"]." ".$row["lname"].'</td>
 				<td>'.$row["level"].'</td>
         <td>'.$row["remark"].'</td>
+        <td>'.$newDateEntry.'</td>
 				<td align="right">
 
 				<button class="dropdown-toggle" style="background-color:transparent;border:none;color:transparent;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,6 +92,7 @@ $output .='
 <th >Name</th>
 <th >Year Level</th>
 <th >Remark</th>
+<th >Date</th>
 <th>Action</th>
 </tr>
 <tfoot>

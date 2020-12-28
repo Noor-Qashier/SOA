@@ -63,6 +63,8 @@ if($class_status == "Regular"){
 
   $net_annual_fee = $total_fees-$total_discount-$totalDiscount;
 
+  $payInput = $net_annual_fee - $l_module;
+
   $new_net_amual_fee = $net_annual_fee - $downPayment - $payModule;
 
   $monthly = $new_net_amual_fee/10;
@@ -117,7 +119,7 @@ if($class_status == "Regular"){
             <td align=""><label for="Status">OR Number</label>
           <input onclick="amount()" type="number" class="form-control text-right" value="0" id="or_no" aria-describedby="emailHelp" placeholder="OR Number"></td>
             <td align=""><label for="Status">Amount</label>
-          <input type="number" class="form-control text-right" value="'.$net_annual_fee.'" id="amountPay" onclick="erasePay()" aria-describedby="emailHelp" placeholder="Amount"></td>
+          <input type="number" class="form-control text-right" value="'.$payInput.'" id="amountPay" onclick="erasePay()" aria-describedby="emailHelp" placeholder="Amount"></td>
           <td align=""><label for="Status">Learning Module:</label>
           <input type="number" onclick="eraseMod()" value="'.$l_module.'" class="form-control text-right payModule" id="payModule1" aria-describedby="emailHelp" placeholder="Amount"></td>
           </tr>

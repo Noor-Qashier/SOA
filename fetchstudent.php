@@ -19,6 +19,17 @@ $query2 = "SELECT * FROM student_payment_information WHERE student_id = '$studen
 $result2 = mysqli_query($mysqli,$query2);
 $row2 = mysqli_fetch_assoc($result2);
 
+if($row2['h_student'] == "Silver" || $row2['sibling'] == "Yes" || $row2['payment_m'] == "Cash"){
+	$discountTuition = $row2['tuition_fees']*0.95;
+	$totalBal = $discountTuition+$row2['learning_module']+$row2['other_school_fees'];
+}else if($row2['h_student'] == "Gold"){
+	$discountTuition = $row2['tuition_fees']*0.90;
+	$totalBal = $discountTuition+$row2['learning_module']+$row2['other_school_fees'];
+}else{
+	$discountTuition = $row2['tuition_fees']*1;
+	$totalBal = $discountTuition+$row2['learning_module']+$row2['other_school_fees'];
+}
+
 $dueDate = $row["due_on"];
 $DUE_ON = date("M d Y", strtotime($dueDate));
 
@@ -111,7 +122,7 @@ echo '
 	  	</tr>
 	  	<tr>
 	  		<td align="right"><b>Total Balance:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.number_format($row2['total'],2).'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($totalBal,2).'</b></td>
 	  	</tr>
 </div>
 
@@ -132,8 +143,8 @@ echo '
 	  		<td align="right">&#8369; '.number_format($row2["learning_module"],2).'</td>
 	  	</tr>
 	  	<tr>
-	  		<td align="right">Total</td>
-	  		<td align="right">&#8369; '.number_format($totalPay,2).'</td>
+	  		<td align="right"><b>Total:</b></td>
+	  		<td align="right"><b>&#8369; '.number_format($totalPay,2).'</b></td>
 	  	</tr>
 </div>
 

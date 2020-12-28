@@ -11,17 +11,25 @@ include('config.php');
 	$sibling = $_POST['sibling'];
 	$payment_m = $_POST['payment_m'];
 	$subtotal = $_POST['subtotal'];
-	$total = $_POST['total'];
+	
 	$downPayment = $_POST['downPayment'];
 	$payModule = $_POST['payModule'];
 	$or_no = $_POST['or_no'];
 	$amountPay = $_POST['amountPay'];
 	$date_of_entry = date('Y-m-d');
-	$monthly = $_POST['monthly'];
+	
 	$payModule1 = $_POST['payModule1'];
+
+	$output ="";
 
 	//$amountPayTotal = $amountPay+$payModule;
 	//echo $amountPay;
+$select = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
+$result = mysqli_query($mysqli,$select);
+
+if(mysqli_num_rows($result) != 0){
+	$output.= "Student already exist!";
+}else{
 
 if($status == "Regular"){
 	if($payment_m == "Cash"){
@@ -31,7 +39,7 @@ if($status == "Regular"){
 	$result = mysqli_query($mysqli,$getPaymentInfo);
 	$row = mysqli_fetch_assoc($result);
 
-	$output ="";
+	
 	$sql = "INSERT INTO student_payment_information (
 	student_id,
 	fname,
@@ -47,9 +55,6 @@ if($status == "Regular"){
 	sibling,
 	payment_m,
 	subtotal,
-	total,
-	total_wd_add_pay,
-	monthly,
 	downPayment,
 	payModule,
 	or_no,
@@ -70,9 +75,6 @@ if($status == "Regular"){
 	'$sibling',
 	'$payment_m',
 	'$subtotal',
-	'$total',
-	'$total',
-	'$monthly',
 	'$downPayment',
 	'$payModule1',
 	'$or_no',
@@ -90,6 +92,9 @@ if($status == "Regular"){
 			$output.= "failed";
 		}
 	}else{
+		$total = $_POST['total'];
+		$monthly = $_POST['monthly'];
+
 		$getPaymentInfo = "SELECT * FROM payment_information_regular WHERE level = '$level'";
 		$result = mysqli_query($mysqli,$getPaymentInfo);
 		$row = mysqli_fetch_assoc($result);
@@ -176,9 +181,7 @@ if($status == "Regular"){
 	sibling,
 	payment_m,
 	subtotal,
-	total,
-	total_wd_add_pay,
-	monthly,
+
 	downPayment,
 	payModule,
 	or_no,
@@ -199,9 +202,7 @@ if($status == "Regular"){
 	'$sibling',
 	'$payment_m',
 	'$subtotal',
-	'$total',
-	'$total',
-	'$monthly',
+
 	'$downPayment',
 	'$payModule1',
 	'$or_no',
@@ -279,6 +280,8 @@ if($status == "Regular"){
 			$output.= "failed";
 		}
 	}else{
+		$total = $_POST['total'];
+		$monthly = $_POST['monthly'];
 			$getPaymentInfo = "SELECT * FROM payment_information_odl WHERE level = '$level'";
 			$result = mysqli_query($mysqli,$getPaymentInfo);
 			$row = mysqli_fetch_assoc($result);
@@ -338,6 +341,7 @@ if($status == "Regular"){
 					$output.= "failed";
 				}
 	}
+}
 }
 
 $username = $fname.' '.$lname;

@@ -583,7 +583,7 @@ $row = mysqli_fetch_array($result);
           </script>
           <script type="text/javascript">
             function yrLevel(){
-              var yrLevel = $("#level").val();
+              var yrLevel = $("#level").val(); 
               var class_status = $("#status").val();
               //alert(class_status);
 
