@@ -1034,14 +1034,16 @@ $row_montly = mysqli_fetch_array($result_monthly);
     var endBal =  $("#balance_after_payment").val();
     var status_mark =$("#status_mark").val();
 
-    if(partialPay == "Partial" && endingBalance <= 0){
+    //alert(partialPay);
+
+    if(partialPay == "Partial"){
         //var new_past_due = $("#balance_after_payment").val();
         if(status_mark == "Online Distance Learning"){
                 var new_past_due = $("#balance_after_payment").val();
                 $("#total_past_due").html(new_past_due);
                 var date_for_the_month = $("#for_the_month").val();
                 $("#due_on").val(date_for_the_month);
-                //alert("dawd");
+                alert("dawd");
                  //$("#for_the_month").val("")
                 //$("#stud_id").val("");
                 //$("#stud_name").val();
