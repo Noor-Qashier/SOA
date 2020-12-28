@@ -63,9 +63,16 @@ if($amount_paid == ""){
 //
 
 if($rowTotal['remark'] == "Partial"){
-	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
-	$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment+$tuition_fee_cd;
-	$newTotal = $calTotal - $amount_paid;
+	if($rowTotal['status'] == "Alternative Distance Learning"){
+		$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+		$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
+		$newTotal = $calTotal - $amount_paid;
+	}else{
+		$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
+		$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment+$tuition_fee_cd;
+		$newTotal = $calTotal - $amount_paid;
+	}
+
 }else{
 	$additionalPayment = $tutorial_cd + $surcharge_cd + $others_amount;
 	$calTotal = $rowTotal['total_wd_add_pay'] + $additionalPayment;
