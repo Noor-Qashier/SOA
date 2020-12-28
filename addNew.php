@@ -786,7 +786,7 @@ $row = mysqli_fetch_array($result);
         method: 'post',
         data:{"UIDdelete":UIDdelete},
         success:function(data){
-          alert(data);
+          //alert(data);
           window.location="addNew.php";
         }
       })

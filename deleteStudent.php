@@ -11,7 +11,7 @@ $deleteUser = "DELETE FROM user WHERE password = '$UIDdelete';";
 $deleteClient = "DELETE FROM monthly_payment WHERE student_id = '$UIDdelete';";
 $deleteHistory = "DELETE FROM monthly_payment_history WHERE student_id = '$UIDdelete';";
 if(mysqli_query($mysqli,$deleteStudent) && mysqli_query($mysqli,$deleteUser) && mysqli_query($mysqli,$deleteClient) && mysqli_query($mysqli,$deleteHistory)){
-	echo $row['fname']." ".$row['lname']." has been removed from the Student list!";
+	//echo $row['fname']." ".$row['lname']." has been removed from the Student list!";
 }else{
 	echo mysqli_error($mysqli);
 	echo "failed to delete Student, ".$row['fname']." ".$row['lname'];
