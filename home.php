@@ -5,22 +5,24 @@ if(!isset($_SESSION['userName'])){
   header("location:index.php");
 }
 
+$year = date('Y');
+$month = date('M');
 
-$sumDownPayment = "SELECT SUM(downPayment) AS DP FROM student_payment_information";
+$sumDownPayment = "SELECT SUM(downPayment+payModule) AS DP FROM student_payment_information WHERE date_of_entry LIKE '%$year%' ";
 $sumDPresult = mysqli_query($mysqli,$sumDownPayment);
 $rowDP = mysqli_fetch_assoc($sumDPresult);
 
-$sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information";
+$sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information WHERE date_of_entry LIKE '%$year%'";
 $sumAPresult = mysqli_query($mysqli,$sumAmountPay);
 $rowAP = mysqli_fetch_assoc($sumAPresult);
 
-$sumAmountPaid = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history";
-$sumAPDresult = mysqli_query($mysqli,$sumAmountPaid);
-$rowAPD = mysqli_fetch_assoc($sumAPDresult);
-
-$sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_information";
+$sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_information WHERE date_of_entry LIKE '%$year%'";
 $sumBalResult = mysqli_query($mysqli,$sumBal);
 $rowBal = mysqli_fetch_assoc($sumBalResult );
+
+$sumAmountPaid = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history WHERE for_the_month LIKE '%$year-$month%'";
+$sumAPDresult = mysqli_query($mysqli,$sumAmountPaid);
+$rowAPD = mysqli_fetch_assoc($sumAPDresult);
 
 $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
 
@@ -339,7 +341,7 @@ $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Income (This Month)</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">&#8369;<?php echo number_format($rowAP['AP'],2)?></div>
                     </div>
                     <div class="col-auto">
@@ -356,7 +358,7 @@ $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Income (This Year)</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">&#8369;<?php echo number_format($totalIncome,2)?></div>
                     </div>
                     <div class="col-auto">
@@ -416,13 +418,29 @@ $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
           <!-- Content Row -->
 
           <div class="row">
+          <?php
+          include 'incomeOverview.php';
+          ?>
+
+          <input type="hidden" id="jan" value="<?php echo $rowJan['income']?>" name="">
+          <input type="hidden" id="feb" value="<?php echo $rowFeb['income']?>" name="">
+          <input type="hidden" id="mar" value="<?php echo $rowMar['income']?>" name="">
+          <input type="hidden" id="apr" value="<?php echo $rowApr['income']?>" name="">
+          <input type="hidden" id="may" value="<?php echo $rowMay['income']?>" name="">
+          <input type="hidden" id="jun" value="<?php echo $rowJun['income']?>" name="">
+          <input type="hidden" id="jul" value="<?php echo $rowJul['income']?>" name="">
+          <input type="hidden" id="aug" value="<?php echo $rowAug['income']?>" name="">
+          <input type="hidden" id="sep" value="<?php echo $rowSep['income']?>" name="">
+          <input type="hidden" id="oct" value="<?php echo $rowOct['income']?>" name="">
+          <input type="hidden" id="nov" value="<?php echo $rowNov['income']?>" name="">
+          <input type="hidden" id="dec" value="<?php echo $rowDec['income']?>" name="">
 
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Income Overview</h6>
                   <div class="dropdown no-arrow">
                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>

@@ -1,3 +1,4 @@
+
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
@@ -28,13 +29,26 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Area Chart Example
+var jan = document.getElementById("jan").value;
+var feb = document.getElementById("feb").value;
+var mar = document.getElementById("mar").value;
+var apr = document.getElementById("apr").value;
+var may = document.getElementById("may").value;
+var jun = document.getElementById("jun").value;
+var jul = document.getElementById("jul").value;
+var aug = document.getElementById("aug").value;
+var sep = document.getElementById("sep").value;
+var oct = document.getElementById("oct").value;
+var nov = document.getElementById("nov").value;
+var dec = document.getElementById("dec").value;
+alert(mar);
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [{
-      label: "Earnings",
+      label: "Income",
       lineTension: 0.3,
       backgroundColor: "rgba(78, 115, 223, 0.05)",
       borderColor: "rgba(78, 115, 223, 1)",
@@ -46,7 +60,7 @@ var myLineChart = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
+      data: [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec],
     }],
   },
   options: {
