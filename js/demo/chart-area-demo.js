@@ -41,7 +41,7 @@ var sep = document.getElementById("sep").value;
 var oct = document.getElementById("oct").value;
 var nov = document.getElementById("nov").value;
 var dec = document.getElementById("dec").value;
-alert(mar);
+//alert(mar);
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
