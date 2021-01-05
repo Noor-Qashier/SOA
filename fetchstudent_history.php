@@ -108,7 +108,7 @@ echo '
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 	  <thead>
 	  	<tr>
-	  		<td style="background-color:#EAECEE;"><b>Note:</b> Please call us in case of any discrepancy. Surcharge of P100 is charged for payment after 15th of every month starting July 15. You could also deposit directly to our BPI Account No. 2141-8891-28.</td>
+	  		<td style="background-color:#EAECEE;"><b>Note:</b> Please call us in case of any discrepancy. Surcharge of P100 is charged for payment after 1st day of everymonth starting Aug 1. You could also deposit directly to our BPI Account No. 0411-0001-21.</td>
 	  	</tr>
 	  </thead>
 </div>';

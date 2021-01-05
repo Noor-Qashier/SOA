@@ -872,8 +872,8 @@ $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
 
     
 
-    var h_student = $("#h_student_p").html();
-    var sibling = $("#sibling_p").html();
+    var h_student = $("#h_student").val();
+    var sibling = $("#sibling").val();
     var subtotal = $("#Subtotal").val();
     var total = $("#new_total_value").val();
     var monthly = $("#monthly").val();
