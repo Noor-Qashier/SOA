@@ -10,7 +10,10 @@ $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
 
 
-$sumDownPayment = "SELECT SUM(downPayment) AS DP FROM student_payment_information";
+$year = date('Y');
+$month = date('M');
+
+$sumDownPayment = "SELECT SUM(downPayment+payModule) AS DP FROM student_payment_information";
 $sumDPresult = mysqli_query($mysqli,$sumDownPayment);
 $rowDP = mysqli_fetch_assoc($sumDPresult);
 
@@ -18,13 +21,13 @@ $sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information";
 $sumAPresult = mysqli_query($mysqli,$sumAmountPay);
 $rowAP = mysqli_fetch_assoc($sumAPresult);
 
-$sumAmountPaid = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history";
-$sumAPDresult = mysqli_query($mysqli,$sumAmountPaid);
-$rowAPD = mysqli_fetch_assoc($sumAPDresult);
-
 $sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_information";
 $sumBalResult = mysqli_query($mysqli,$sumBal);
 $rowBal = mysqli_fetch_assoc($sumBalResult );
+
+$sumAmountPaid = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history WHERE for_the_month LIKE '%$year-$month%'";
+$sumAPDresult = mysqli_query($mysqli,$sumAmountPaid);
+$rowAPD = mysqli_fetch_assoc($sumAPDresult);
 
 $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
 ?>
