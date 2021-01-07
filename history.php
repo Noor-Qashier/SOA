@@ -35,7 +35,7 @@ $rowIncome_M = mysqli_fetch_assoc($sumIncomeresult_M);
 
 $sumAmountPaid_M = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history  WHERE for_the_month LIKE '%$year-$month%'";
 $sumAPDresult_M = mysqli_query($mysqli,$sumAmountPaid_M);
-$rowAPD_M = mysqli_fetch_assoc($sumAPDresult);
+$rowAPD_M = mysqli_fetch_assoc($sumAPDresult_M);
 
 $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 ?>
