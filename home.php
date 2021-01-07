@@ -8,15 +8,15 @@ if(!isset($_SESSION['userName'])){
 $year = date('Y');
 $month = date('M');
 
-$sumDownPayment = "SELECT SUM(downPayment+payModule) AS DP FROM student_payment_information WHERE date_of_entry LIKE '%$year%' ";
+$sumDownPayment = "SELECT SUM(downPayment+payModule) AS DP FROM student_payment_information";
 $sumDPresult = mysqli_query($mysqli,$sumDownPayment);
 $rowDP = mysqli_fetch_assoc($sumDPresult);
 
-$sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information WHERE date_of_entry LIKE '%$year%'";
+$sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information";
 $sumAPresult = mysqli_query($mysqli,$sumAmountPay);
 $rowAP = mysqli_fetch_assoc($sumAPresult);
 
-$sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_information WHERE date_of_entry LIKE '%$year%'";
+$sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_information";
 $sumBalResult = mysqli_query($mysqli,$sumBal);
 $rowBal = mysqli_fetch_assoc($sumBalResult );
 
