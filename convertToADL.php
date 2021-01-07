@@ -14,7 +14,7 @@ $row = mysqli_fetch_assoc($result);
 
 $monthly = $row['monthly']; 
 
-$update ="UPDATE student_payment_information SET status = 'Online Distance Learning', remark = 'Partial', monthly = '$monthly';";
+$update ="UPDATE student_payment_information SET status = 'Online Distance Learning', remark = 'Partial', monthly = '$monthly' WHERE student_id = '$student_id';";
 if(mysqli_query($mysqli,$update)){
 	echo "Convert Successful!";
 }else{
