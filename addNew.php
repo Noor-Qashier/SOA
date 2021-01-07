@@ -368,7 +368,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Income (Monthly)</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Income (This Month)</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">&#8369;<?php echo number_format($totalIncome_M,2)?></div>
                     </div>
                     <div class="col-auto">
