@@ -80,7 +80,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="home.html">
           <i style="font-size:40px;" class="fas fa-fw fa-home"></i>
           <span style="font-size:15px;">HOME</span></a>
       </li>
@@ -112,7 +112,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link" href="paid.html">
+        <a class="nav-link" href="paid.php">
           <i style="font-size:40px;" class="fas fa-fw fa-file-invoice-dollar"></i>
           <span style="font-size:15px;font-weight:bolder">PAID</span>
         </a>
@@ -120,14 +120,14 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="balance.php">
           <i style="font-size:40px;" class="fas fa-fw fa-coins"></i>
           <span style="font-size:15px;font-weight:bolder">BALANCE</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="full.php">
           <i style="font-size:40px;" class="fas fa-fw fa-hand-holding-usd"></i>
           <span style="font-size:15px;font-weight:bolder">FULL</span></a>
       </li> 

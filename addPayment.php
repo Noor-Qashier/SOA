@@ -1,14 +1,21 @@
 <?php
 include 'config.php';
 session_start();
+$identify;
 if(!isset($_SESSION['userName'])){
   header("location:index.php");
+}else{
+  $identify = $_SESSION['userName'];
 }
 
 $student_id = $_GET["id"];
 $student = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
+
+$student_m = "SELECT * FROM monthly_payment WHERE student_id = '$student_id'";
+$result_m = mysqli_query($mysqli,$student_m);
+$row_montly = mysqli_fetch_array($result_m);
 
 $year = date('Y');
 $month = date('M');
@@ -95,7 +102,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="home.php">
           <i style="font-size:40px;" class="fas fa-fw fa-home"></i>
           <span style="font-size:15px;">HOME</span></a>
       </li>
@@ -494,11 +501,12 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                   <div class="row">
                           <div class="form-group col-md-4">
                             <label>Tuition fee/Learning Module:</label>
-                            <input style="text-align: right;" type="number" class="form-control" id="tuition_fee_cd" value="<?php if($row["monthly"] == 0){
+                            <input ondblclick="changeValue()" style="text-align: right;" type="number" class="form-control" id="tuition_fee_cd" value="<?php if($row["monthly"] == 0){
                               echo $row["total_wd_add_pay"];
                             }else{
                               echo $row["monthly"];
-                            }?>" disabled required>
+                            }?>" readonly required>
+                            <span style="font-size: 12px;margin:0;padding:0;font-style: italic;">Double click to change the value.</span>
                           </div>
                           <div class="form-group col-md-4">
                             <label>Remediation/Tutorial:</label>
@@ -850,6 +858,61 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
           <!--end modal viewing-->
 
 <input type="text" value="" id="remark" name="">
+<input type="hidden" value="<?php echo $identify?>" id="identify" name="">
+
+<!--required admin password-->
+  <div class="modal fade" id="adminPass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" >Required!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Admin password is required to complete the action!</label>
+          <input type="password" class="form-control" id="adminpassword" name="">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" onclick="getAdminPass()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  function changeValue(){
+    var identify = $("#identify").val();
+    //alert(identify);
+    if(identify == "Maria Victoria" || identify == "Admin"){
+      document.getElementById("tuition_fee_cd").readOnly=false;
+    }else{
+       $("#adminPass").modal("show");
+    }
+    
+  }
+  function getAdminPass(){
+    //alert("dwda");
+    var adminPass = $("#adminpassword").val();
+    var identify = $("#identify").val();
+    $.ajax({
+      url: 'adminPass.php',
+      method: 'post',
+      data:{'adminPass':adminPass,'identify':identify},
+      success:function(data){
+        //alert(data);
+        if(data=="success"){
+          document.getElementById("tuition_fee_cd").readOnly=false;
+          $("#adminPass").modal("hide");
+        }else{
+          alert("Incorrect Password");
+        }
+      }
+    })
+  }
+</script>
 <script type="text/javascript">
   function addPaid(){
     //var checkContent = $("#amount_full_pay").val();

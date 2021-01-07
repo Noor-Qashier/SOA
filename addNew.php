@@ -94,7 +94,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.php">
+        <a class="nav-link" href="home.php">
           <i style="font-size:40px;" class="fas fa-fw fa-home"></i>
           <span style="font-size:15px;">HOME</span></a>
       </li>
