@@ -27,11 +27,13 @@ $rowBal = mysqli_fetch_assoc($sumBalResult );
 $totalIncome = $rowIncome['income']+$rowAPD['APD'];
 
 //monthly
-$sumIncome_M = "SELECT SUM(downPayment+payModule+amountPay) AS income FROM student_payment_information  WHERE for_the_month LIKE '%$year-$month%'";
+$year = date('Y-m');
+
+$sumIncome_M = "SELECT SUM(downPayment+payModule+amountPay) AS income FROM student_payment_information WHERE date_of_entry LIKE '%$year%'";
 $sumIncomeresult_M = mysqli_query($mysqli,$sumIncome_M);
 $rowIncome_M = mysqli_fetch_assoc($sumIncomeresult_M);
 
-$sumAmountPaid_M = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history  WHERE for_the_month LIKE '%$year-$month%'";
+$sumAmountPaid_M = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history WHERE for_the_month LIKE '%$year%'";
 $sumAPDresult_M = mysqli_query($mysqli,$sumAmountPaid_M);
 $rowAPD_M = mysqli_fetch_assoc($sumAPDresult_M);
 
