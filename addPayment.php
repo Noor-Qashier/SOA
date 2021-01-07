@@ -10,18 +10,12 @@ $student = "SELECT * FROM student_payment_information WHERE student_id = '$stude
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
 
-$monthly = "SELECT * FROM monthly_payment WHERE student_id = '$student_id' ORDER BY statement_as_of DESC";
-$result_monthly = mysqli_query($mysqli,$monthly);
-$row_montly = mysqli_fetch_array($result_monthly);
+$year = date('Y');
+$month = date('M');
 
-
-$sumDownPayment = "SELECT SUM(downPayment) AS DP FROM student_payment_information";
-$sumDPresult = mysqli_query($mysqli,$sumDownPayment);
-$rowDP = mysqli_fetch_assoc($sumDPresult);
-
-$sumAmountPay = "SELECT SUM(amountPay) AS AP FROM student_payment_information";
-$sumAPresult = mysqli_query($mysqli,$sumAmountPay);
-$rowAP = mysqli_fetch_assoc($sumAPresult);
+$sumIncome = "SELECT SUM(downPayment+payModule+amountPay) AS income FROM student_payment_information";
+$sumIncomeresult = mysqli_query($mysqli,$sumIncome);
+$rowIncome = mysqli_fetch_assoc($sumIncomeresult);
 
 $sumAmountPaid = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history";
 $sumAPDresult = mysqli_query($mysqli,$sumAmountPaid);
@@ -31,7 +25,18 @@ $sumBal = "SELECT SUM(total_wd_add_pay) AS balance FROM student_payment_informat
 $sumBalResult = mysqli_query($mysqli,$sumBal);
 $rowBal = mysqli_fetch_assoc($sumBalResult );
 
-$totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
+$totalIncome = $rowIncome['income']+$rowAPD['APD'];
+
+//monthly
+$sumIncome_M = "SELECT SUM(downPayment+payModule+amountPay) AS income FROM student_payment_information  WHERE for_the_month LIKE '%$year-$month%'";
+$sumIncomeresult_M = mysqli_query($mysqli,$sumIncome_M);
+$rowIncome_M = mysqli_fetch_assoc($sumIncomeresult_M);
+
+$sumAmountPaid_M = "SELECT SUM(amount_paid) AS APD FROM monthly_payment_history  WHERE for_the_month LIKE '%$year-$month%'";
+$sumAPDresult_M = mysqli_query($mysqli,$sumAmountPaid_M);
+$rowAPD_M = mysqli_fetch_assoc($sumAPDresult);
+
+$totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 ?>
 
 <!DOCTYPE html>
@@ -363,7 +368,7 @@ $totalIncome = $rowDP['DP']+$rowAP['AP']+$rowAPD['APD'];
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">&#8369;<?php echo number_format($rowAP['AP'],2)?></div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">&#8369;<?php echo number_format($totalIncome_M,2)?></div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
