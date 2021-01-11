@@ -24,7 +24,7 @@ include('config.php');
 
 	//$amountPayTotal = $amountPay+$payModule;
 	//echo $amountPay;
-$select = "SELECT * FROM student_payment_information WHERE student_id = '$student_id'";
+$select = "SELECT * FROM student_payment_information WHERE fname = '$fname' AND lname = '$lname' OR student_id = '$student_id' ";
 $result = mysqli_query($mysqli,$select);
 
 if(mysqli_num_rows($result) != 0){
