@@ -19,7 +19,8 @@ $stateDate = date("M d Y", strtotime($StatementDate));
 $dateForTheMonth = $row["for_the_month"];
 $newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
 
-$endingBalance = $row["balance_after_payment"]+$row2["total"];
+$endingBalance = $row["balance_after_payment"]+$row2["total_wd_add_pay"];
+$begBalance = $row2["total_wd_add_pay"]-$row['amount_paid'];
 
 
 echo '
@@ -42,7 +43,7 @@ echo '
 	  	</tr>
 	  	<tr style="background-color:#c8ccc9;">
 	  		<td align="right"><b>Annual Beginning Balance:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.number_format($row2["total"],2).'</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($begBalance,2).'</b></td>
 	  	</tr>
 	  </thead>
 </div>
