@@ -975,7 +975,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
         method: "post",
         data:{"studId":studId},
         success:function(data){
-          alert(data);
+          alert(data); 
           //window.location="addPayment.php?id="+studId;
         }
       })

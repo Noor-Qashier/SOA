@@ -55,6 +55,8 @@ if($total_row > 0)
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">Delete <i class="fa fa-trash float-right" aria-hidden="true"></i></a></a>
 
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
+
+                      <a onclick="convertToADL(this)" class="dropdown-item" href="#" id="'.$row["student_id"].'">Covert to ODL <i class="fa fa-exchange-alt float-right" aria-hidden="true"></i></a></a>
                 </div>
 
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">

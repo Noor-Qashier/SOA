@@ -97,7 +97,7 @@ $output .='
         <td align="right"><b>Down Payment:</b></td>
         <td align="right"><b>&#8369; '.number_format($payMent,2).'</b></td>
       </tr>
-      <th></th>
+      <th colspan="3"></th>
       <tr>
         <td align="right"><b>TOTAL:</b></td>
         <td align="right"><b>&#8369; '.number_format($total_paid,2).'</b></td>

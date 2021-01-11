@@ -36,7 +36,7 @@ if($bal_after_payment < 0){
 }else{
   $total_balance = $row1['total_wd_add_pay'];
 }
-echo $row2['balance_after_payment'];
+//echo $row2['balance_after_payment'];
 include 'connect.php';
 
 $query = "SELECT * FROM  monthly_payment_history WHERE student_id = '$student_id' AND amount_paid != 0";
