@@ -1200,7 +1200,7 @@
 					for ( i=0, iLen=sorting.length ; i<iLen ; i++ ) {
 						sorting[i][1] = oSettings.aoColumns[ i ].asSorting[0];
 					}
-				}
+				} 
 			
 				/* Do a first pass on the sorting classes (allows any size changes to be taken into
 				 * account, and also will apply sorting disabled classes if disabled

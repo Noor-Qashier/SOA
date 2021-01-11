@@ -9,6 +9,8 @@ $query1 = "SELECT * FROM student_payment_information WHERE student_id = '$studen
 $result1 = mysqli_query($mysqli,$query1);
 $row1 = mysqli_fetch_assoc($result1);
 
+$payMent = $row1['downPayment']+$row1['payModule'];
+
 $query2 = "SELECT * FROM full_payment WHERE student_id = '$student_id'";
 $result2 = mysqli_query($mysqli,$query2);
 $row2 = mysqli_fetch_assoc($result2);
@@ -91,6 +93,11 @@ else
 }
 
 $output .='
+      <tr>
+        <td align="right"><b>Down Payment:</b></td>
+        <td align="right"><b>&#8369; '.number_format($payMent,2).'</b></td>
+      </tr>
+      <th></th>
       <tr>
         <td align="right"><b>TOTAL:</b></td>
         <td align="right"><b>&#8369; '.number_format($total_paid,2).'</b></td>
