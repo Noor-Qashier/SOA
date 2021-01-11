@@ -30,7 +30,7 @@ $date_of_pay = $row_history['for_the_month'];
 $amount_of_pay = $row_history['amount_paid'];
 $balance_after_payment = $row_history['balance_after_payment'];
 
-$total_paid = $row_sum['total_paid'];
+$total_paid = $row_sum['total_paid']+$payMent;
 //$total_balance = $bal_after_payment+$row1['total_wd_add_pay'];
 
 $dateEntry = $row2["date_of_entry"];
