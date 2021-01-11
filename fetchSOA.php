@@ -19,8 +19,8 @@ $stateDate = date("M d Y", strtotime($StatementDate));
 $dateForTheMonth = $row["for_the_month"];
 $newDateForTheMonth = date("F Y", strtotime($dateForTheMonth));
 
-$endingBalance = $row["balance_after_payment"]+$row2["total_wd_add_pay"];
-$begBalance = $row2["total_wd_add_pay"]-$row['amount_paid'];
+$endingBalance = $row["balance_after_payment"]+$row2["total_wd_add_pay"]-$row['amount_paid'];
+$begBalance = $row["balance_after_payment"]+$row2["total_wd_add_pay"];
 
 
 echo '
