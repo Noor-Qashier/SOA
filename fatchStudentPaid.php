@@ -92,6 +92,22 @@ $output .='
 
 echo $output;
 ?>
+
+  <script type="text/javascript">
+    function convertToADL(button){
+      var student_id = button.id;
+      //alert(student_id);
+      $.ajax({
+        url: 'convertToADL.php',
+        method: 'post',
+        data:{"student_id":student_id},
+        success:function(data){
+          alert(data);
+          window.location = "partial.php?id"+student_id;
+        }
+      })
+    }
+  </script>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
