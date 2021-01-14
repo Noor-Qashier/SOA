@@ -19,6 +19,40 @@ $query2 = "SELECT * FROM student_payment_information WHERE student_id = '$studen
 $result2 = mysqli_query($mysqli,$query2);
 $row2 = mysqli_fetch_assoc($result2);
 
+$sibling;
+$honor;
+$paymentMethod;
+
+if($row2['sibling'] =="Yes"){
+	$sibling = 0.95;
+}else{
+	$sibling = 1;
+}
+if($row2['h_student'] == "Silver"){
+	$honor = 0.95;
+}else if($row2['h_student'] == "Gold"){
+	$honor = 0.90;
+}else{
+	$honor = 1;
+}
+if($row2['payment_m'] == "Cash"){
+	$paymentMethod = 0.95;
+}else{
+	$paymentMethod = 1;
+}
+
+$sibling_disc = $row2['tuition_fees']*$sibling;
+$honor_disc = $row2['tuition_fees']*$honor;
+$payment_disc = $row2['tuition_fees']*$paymentMethod;
+
+$sibling_converted = $row2['tuition_fees']-$sibling_disc;
+$honor_converted = $row2['tuition_fees']-$honor_disc;
+$payment_converted = $row2['tuition_fees']-$payment_disc;
+
+$totalDiscount = $sibling_converted+$honor_converted+$payment_converted;
+$totalTuition = $row2['tuition_fees']-$totalDiscount;
+$totalBal = $totalTuition+$row2['other_school_fees']+$row2['learning_module'];
+
 $dueDate = $row["due_on"];
 $DUE_ON = date("M d Y", strtotime($dueDate));
 
@@ -85,11 +119,11 @@ echo '
 	  		<td align="right">&#8369; '.number_format($row2["other_school_fees"],2).'</td>
 	  	</tr>
 	  	<tr>
-	  		<td>Lerning Module</td>
+	  		<td>Learning Module</td>
 	  		<td align="right">&#8369; '.number_format($row2["learning_module"],2).'</td>
 	  	</tr>
 	  	<tr>
-	  		<td align="right"><b>Total:</b></td>
+	  		<td align="right"><b>Total Tuition Fees:</b></td>
 	  		<td align="right"><b>&#8369; '.number_format($row2["subtotal"],2).'</b></td>
 	  	</tr>
 </div>
@@ -110,8 +144,8 @@ echo '
 	  		<td align="right">'.$row2["sibling"].'</td>
 	  	</tr>
 	  	<tr>
-	  		<td align="right"><b>Total Balance:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.number_format($row2['total'],2).'</b></td>
+	  		<td align="right"><b>Net Total:</b></td>
+	  		<td width="150" align="right"><b>&#8369; '.number_format($totalBal,2).'</b></td>
 	  	</tr>
 </div>
 
@@ -132,8 +166,8 @@ echo '
 	  		<td align="right">&#8369; '.number_format($row2["learning_module"],2).'</td>
 	  	</tr>
 	  	<tr>
-	  		<td align="right">Total</td>
-	  		<td align="right">&#8369; '.number_format($totalPay,2).'</td>
+	  		<td align="right"><b>Grand Total:</b></td>
+	  		<td align="right"><b>&#8369; '.number_format($totalPay,2).'</b></td>
 	  	</tr>
 </div>
 
@@ -153,9 +187,9 @@ echo '
 	  		<td>Total Paid</td>
 	  		<td align="right">&#8369; '.number_format($row_sum["sumAllPay"],2).'</td>
 	  	</tr>
-	  	<tr style="background-color:#246334;color:white;">
-	  		<td align="right"><b>Annual Ending Balance:</b></td>
-	  		<td width="150" align="right"><b>&#8369; '.number_format($row2["total_wd_add_pay"],2).'</b></td>
+	  	<tr>
+	  		<td align="right"><b>Ending Balance:</b></td>
+	  		<td align="right"><b>&#8369; '.number_format($row2['total_wd_add_pay'],2).'</b></td>
 	  	</tr>
 </div>
 </div>
@@ -164,7 +198,7 @@ echo '
 <table class="table table-bordered"  width="100%" cellspacing="0">
 	  <thead>
 	  	<tr>
-	  		<td style="background-color:#EAECEE;"><b>Note:</b> Please call us in case of any discrepancy. Surcharge of P100 is charged for payment after 15th of every month starting July 15. You could also deposit directly to our BPI Account No. 2141-8891-28.</td>
+	  		<td style="background-color:#EAECEE;"><b>Note:</b> Please call us in case of any discrepancy. Surcharge of P100 is charged for payment after 1st day of everymonth starting Aug 1. You could also deposit directly to our BPI Account No. 0411-0001-21.</td>
 	  	</tr>
 	  </thead>
 </div>';
