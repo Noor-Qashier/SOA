@@ -31,7 +31,7 @@ $output = '
 	  	<tr>
 	  		<th >Name</th>
 	  		<th >Year Level</th>
-        <th class="d-sm-none d-md-block">Remark</th>
+        <th >Remark</th>
 	  		<th>Action</th>
 	  	</tr>
 	  </thead>
@@ -42,17 +42,17 @@ if($total_row > 0)
 	foreach ($result as $row) 
 	{
 		$output .= '
-			<tr>
-				<td>'.$row["fname"]." ".$row["lname"].'</td>
-				<td>'.$row["level"].'</td>
-        <td class="d-sm-none d-md-block">'.$row["remark"].'</td>
+		<tr>
+				<td >'.$row["fname"]." ".$row["lname"].'</a></td>
+				<td >'.$row["level"].'</td>
+        <td >'.$row["remark"].'</td>
 				<td align="right">
 
-                <a href="history.php?id='.$row["student_id"].'" class="btn btn-success btn-icon-split" id="'.$row["student_id"].'">
+                <a href="history.php?id='.$row["student_id"].'" class=" btn btn-success btn-icon-split" id="'.$row["student_id"].'">
                   <span class="icon text-white-50">
                     <i class="fas fa-history"></i>
                   </span>
-                <span class="text">Statemen of Account <span class="badge badge-warning badge-counter">new</span></span></a>
+                <span class="text">SOA <span class="badge badge-warning badge-counter">new</span></span></a>
 
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
                   <span class="icon text-white-50">
@@ -78,7 +78,7 @@ $output .='
 <tr>
 <th >Name</th>
 <th >Year Level</th>
-<th class="d-sm-none d-md-block">Remark</th>
+<th >Remark</th>
 <th>Action</th>
 </tr>
 <tfoot>
