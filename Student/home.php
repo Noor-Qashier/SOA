@@ -541,12 +541,7 @@ $row = mysqli_fetch_array($result);
                                   
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                  <a href="#" onclick="addPayment()" class="btn btn-success btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-save"></i>
-                  </span>
-                  <span class="text">Add Payment</span></a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
