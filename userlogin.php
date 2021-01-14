@@ -18,7 +18,7 @@ $password = $_POST['userPassword'];
 			</script>';
 		}else{
 			$_SESSION['userName'] = $row['username'];
-			echo '<script>alert("Login Successfull");
+			echo '<script>
 			window.location="Student/home.php?id='.$password.'";
 			</script>';
 			//echo $row['password'];
@@ -35,7 +35,7 @@ $password = $_POST['userPassword'];
 			</script>';
 		}else{
 			$_SESSION['userName'] = $row['username'];
-			echo '<script>alert("Login Successfull");
+			echo '<script>
 			window.location="home.php?id='.$password.'";
 			</script>';
 			//echo $row['password'];
