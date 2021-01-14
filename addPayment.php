@@ -571,11 +571,11 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                     <div class="row">
                        <div class="form-group col-md-4">
                         <label>OR Number:</label>
-                        <input id="or_number" class="form-control" type="number" value="<?php echo $row_montly['or_no']?>" name="">
+                        <input onclick="orRemove()" id="or_number" class="form-control" type="number" value="<?php echo $row_montly['or_no']?>" name="">
                       </div>
                       <div class="form-group col-md-4">
                         <label>Amount Paid:</label>
-                        <input style="text-align: right;" id="amount_paid" class="form-control" type="number" value="<?php echo $row_montly['amount_paid']?>" name="" >
+                        <input onclick="amountRemove()" style="text-align: right;" id="amount_paid" class="form-control" type="number" value="<?php echo $row_montly['amount_paid']?>" name="" >
                       </div>
                       <div class="form-group col-md-4">
                         <label>Balance After Payment:</label>
@@ -876,6 +876,16 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
       </div>
     </div>
   </div>
+
+
+<script type="text/javascript">
+  function orRemove(){
+    $("#or_number").val("");
+  }
+  function amountRemove(){
+    $("#amount_paid").val("");
+  }
+</script>
 
 <script type="text/javascript">
   function changeValue(){
