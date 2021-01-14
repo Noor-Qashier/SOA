@@ -54,7 +54,11 @@ if($total_row > 0)
 
                       <a onclick="newRec()" class="dropdown-item" href="#" id="'.$row["student_id"].'">New Record <i class="fa fa-file float-right" aria-hidden="true"></i></a></a>
 
+                      <a href="history.php?id='.$row["student_id"].'" class="dropdown-item" href="#" id="'.$row["student_id"].'">History <i class="fa fa-history float-right" aria-hidden="true"></i></a></a>
+
                       <a onclick="convertToADL(this)" class="dropdown-item" href="#" id="'.$row["student_id"].'">Covert to ODL <i class="fa fa-exchange-alt float-right" aria-hidden="true"></i></a></a>
+
+                      <a class="dropdown-item" href="addPayment.php?id='.$row["student_id"].'" onclick="addPayment()" >Add payment <i class="fas fa-plus float-right" aria-hidden="true"></i></a></a>
                 </div>
 
                 <a href="#" onclick="view(this)" class="btn btn-primary btn-icon-split" id="'.$row["student_id"].'">
