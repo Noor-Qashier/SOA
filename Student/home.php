@@ -3,7 +3,7 @@ include 'config.php';
 session_start();
 $UID = $_GET['id'];
 if(!isset($_SESSION['userName'])){
-  header("location:index.php");
+  header("location:../index.php");
 }
 
 $student = "SELECT * FROM students_list";
