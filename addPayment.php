@@ -1151,6 +1151,29 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                 //$("#or_number").val("");
                 $("#amount_paid").val("0");
                 $("#balance_after_payment").val("0"); 
+        }else if(endBal < 0){
+        //var new_past_due = $("#balance_after_payment").val();
+        $("#total_past_due").html("0");
+        var date_for_the_month = $("#for_the_month").val();
+        $("#due_on").val(date_for_the_month);
+        //alert("dawd");
+         //$("#for_the_month").val("")
+        //$("#stud_id").val("");
+        //$("#stud_name").val();
+        $("#as_of").val("");
+        
+        //$("#tuition_fee_cd").val("0");
+        $("#tutorial_cd").val("0");
+        $("#surcharge_cd").val("0");
+        $("#other_description").val("");
+        $("#others_amount").val("0");
+        $("#total_current_dues").val("0");
+        //$("#due_on").val("");
+        $("#total_due").val("0");
+        //$("#or_number").val("");
+        $("#amount_paid").val("0");
+        $("#balance_after_payment").val("0");
+
         }else{
                 $("#total_past_due").html("0");
                 var date_for_the_month = $("#for_the_month").val();
@@ -1173,29 +1196,6 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                 $("#amount_paid").val("0");
                 $("#balance_after_payment").val("0");
         }
-
-    }else if(endBal < 0){
-        //var new_past_due = $("#balance_after_payment").val();
-        $("#total_past_due").html("0");
-        var date_for_the_month = $("#for_the_month").val();
-        $("#due_on").val(date_for_the_month);
-        //alert("dawd");
-         //$("#for_the_month").val("")
-        //$("#stud_id").val("");
-        //$("#stud_name").val();
-        $("#as_of").val("");
-        
-        //$("#tuition_fee_cd").val("0");
-        $("#tutorial_cd").val("0");
-        $("#surcharge_cd").val("0");
-        $("#other_description").val("");
-        $("#others_amount").val("0");
-        $("#total_current_dues").val("0");
-        //$("#due_on").val("");
-        $("#total_due").val("0");
-        //$("#or_number").val("");
-        $("#amount_paid").val("0");
-        $("#balance_after_payment").val("0");
     }else{
          var new_past_due = $("#balance_after_payment").val();
         $("#total_past_due").html(new_past_due);
