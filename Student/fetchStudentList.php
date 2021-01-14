@@ -31,7 +31,7 @@ $output = '
 	  	<tr>
 	  		<th >Name</th>
 	  		<th >Year Level</th>
-        <th >Remark</th>
+        <th class="d-sm-none d-md-block">Remark</th>
 	  		<th>Action</th>
 	  	</tr>
 	  </thead>
@@ -45,7 +45,7 @@ if($total_row > 0)
 			<tr>
 				<td>'.$row["fname"]." ".$row["lname"].'</td>
 				<td>'.$row["level"].'</td>
-        <td>'.$row["remark"].'</td>
+        <td class="d-sm-none d-md-block">'.$row["remark"].'</td>
 				<td align="right">
 
                 <a href="history.php?id='.$row["student_id"].'" class="btn btn-success btn-icon-split" id="'.$row["student_id"].'">
@@ -78,7 +78,7 @@ $output .='
 <tr>
 <th >Name</th>
 <th >Year Level</th>
-<th >Remark</th>
+<th class="d-sm-none d-md-block">Remark</th>
 <th>Action</th>
 </tr>
 <tfoot>
