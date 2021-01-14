@@ -1006,6 +1006,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 <input type="hidden" id="partial" value="<?php echo $row['remark']?>" name="">
 <input type="hidden" id="status_mark" value="<?php echo $row['status']?>" name="">
 <input type="hidden" id="endingBalance" value="<?php echo $row['total_wd_add_pay']?>" name="">
+<input type="hidden" id="signClick" value="notClick" name="">
 <!--save payment-->
 <script type="text/javascript">
     function totalPastDues(){
@@ -1046,6 +1047,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
     //alert(totalCurrentDues);
   }
     function totalDues() {
+    $("#signClick").val("hasClick");
     var tuition_fee_cd = $("#tuition_fee_cd").val();
     var tutorial_cd = $("#tutorial_cd").val();
     var surcharge_cd = $("#surcharge_cd").val();
@@ -1225,58 +1227,63 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 </script>
 <script type="text/javascript">
   function savePayment(){
-    var remark = $("#remark").val();
-    var for_the_month = $("#for_the_month").val()
-    var stud_id = $("#stud_id").val();
-    var stud_name = $("#stud_name").val();
-    var level = $("#level").val();
-    var as_of = $("#as_of").val();
-    var total_past_due = $("#total_past_due").html();
-    var tuition_fee_cd = $("#tuition_fee_cd").val();
-    var tutorial_cd = $("#tutorial_cd").val();
-    var surcharge_cd = $("#surcharge_cd").val();
-    var other_description = $("#other_description").val();
-    var others_amount = $("#others_amount").val();
-    var total_current_dues = $("#total_current_dues").val();
-    var due_on = $("#due_on").val();
-    var total_due = $("#total_due").val();
-    var or_number = $("#or_number").val();
-    var amount_paid = $("#amount_paid").val();
-    var balance_after_payment = $("#balance_after_payment").val();
+
+    var click = $("#signClick").val();
+    if(click == "notClick"){
+      alert("Please evaluate first before saving the data.");
+    }else{
+      var remark = $("#remark").val();
+      var for_the_month = $("#for_the_month").val()
+      var stud_id = $("#stud_id").val();
+      var stud_name = $("#stud_name").val();
+      var level = $("#level").val();
+      var as_of = $("#as_of").val();
+      var total_past_due = $("#total_past_due").html();
+      var tuition_fee_cd = $("#tuition_fee_cd").val();
+      var tutorial_cd = $("#tutorial_cd").val();
+      var surcharge_cd = $("#surcharge_cd").val();
+      var other_description = $("#other_description").val();
+      var others_amount = $("#others_amount").val();
+      var total_current_dues = $("#total_current_dues").val();
+      var due_on = $("#due_on").val();
+      var total_due = $("#total_due").val();
+      var or_number = $("#or_number").val();
+      var amount_paid = $("#amount_paid").val();
+      var balance_after_payment = $("#balance_after_payment").val();
 
 
-   //alert(for_the_month);
-   
+     //alert(for_the_month);
+     
 
-    //alert(total_current_dues);
-    $.ajax({
-      url: "savePayment.php",
-      method: "POST",
-      data:{
-        "remark":remark,
-        "for_the_month":for_the_month,
-        "stud_id":stud_id,
-        "stud_name":stud_name,
-        "level":level,
-        "as_of":as_of,
-        "total_past_due":total_past_due,
-        "tuition_fee_cd":tuition_fee_cd,
-        "tutorial_cd":tutorial_cd,
-        "surcharge_cd":surcharge_cd,
-        "other_description":other_description,
-        "others_amount":others_amount, 
-        "total_current_dues":total_current_dues,
-        "due_on":due_on,
-        "total_due":total_due,
-        "or_number":or_number,
-        "amount_paid":amount_paid,
-        "balance_after_payment":balance_after_payment},
-      success:function(data){
-        alert(data);
-        window.location="addPayment.php?id="+stud_id;
-      }
-    })
-
+      //alert(total_current_dues);
+      $.ajax({
+        url: "savePayment.php",
+        method: "POST",
+        data:{
+          "remark":remark,
+          "for_the_month":for_the_month,
+          "stud_id":stud_id,
+          "stud_name":stud_name,
+          "level":level,
+          "as_of":as_of,
+          "total_past_due":total_past_due,
+          "tuition_fee_cd":tuition_fee_cd,
+          "tutorial_cd":tutorial_cd,
+          "surcharge_cd":surcharge_cd,
+          "other_description":other_description,
+          "others_amount":others_amount, 
+          "total_current_dues":total_current_dues,
+          "due_on":due_on,
+          "total_due":total_due,
+          "or_number":or_number,
+          "amount_paid":amount_paid,
+          "balance_after_payment":balance_after_payment},
+        success:function(data){
+          alert(data);
+          window.location="addPayment.php?id="+stud_id;
+        }
+      }) 
+    }
   }
 </script>
 <!--end save payment-->

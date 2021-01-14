@@ -595,6 +595,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
               </div>
             </div>
           </div>
+          <input type="hidden" id="signClick" value="notClick" name="">
           <!--payment stats-->
           <script type="text/javascript">
             function pay(){
@@ -630,6 +631,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
           </script>
           <script type="text/javascript">
             function eval(){
+              $("#signClick").val("hasClick");
               var ESC = $("#ESC").val();
               var voucher = $("#voucher").val();
               var h_student = $("#h_student").val();
@@ -868,43 +870,49 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
 <script type="text/javascript">
   function addStudent(){
     //alert("hi");
-    var student_id = $("#student_id").val();
-    var fname = $("#fname").val();
-    var lname = $("#lname").val();
-    var status = $("#status").val();
-    var level = $("#level").val();
-    var ESC = $("#ESC").val();
-    var voucher = $("#voucher").val();
-    var payment_m = $("#payment").val();
-    var payModule = $("#payModule").val();
-    var downPayment = $("#downPayment").val();
-    var or_no = $("#or_no").val();
-    var amountPay = $("#amountPay").val();
-    var payModule1 = $("#payModule1").val();
+    var click = $("#signClick").val();
+    if(click == "notClick"){
+      alert("Please evaluate first before saving the data.");
+    }else{
+      var student_id = $("#student_id").val();
+      var fname = $("#fname").val();
+      var lname = $("#lname").val();
+      var status = $("#status").val();
+      var level = $("#level").val();
+      var ESC = $("#ESC").val();
+      var voucher = $("#voucher").val();
+      var payment_m = $("#payment").val();
+      var payModule = $("#payModule").val();
+      var downPayment = $("#downPayment").val();
+      var or_no = $("#or_no").val();
+      var amountPay = $("#amountPay").val();
+      var payModule1 = $("#payModule1").val();
 
-    
+      
 
-    var h_student = $("#h_student").val();
-    var sibling = $("#sibling").val();
-    var subtotal = $("#Subtotal").val();
-    var total = $("#new_total_value").val();
-    var monthly = $("#monthly").val();
-    //var or_no = document.getElementById("or_no").value;
-    //var amountPay = document.getElementById("amountPay").value;
+      var h_student = $("#h_student").val();
+      var sibling = $("#sibling").val();
+      var subtotal = $("#Subtotal").val();
+      var total = $("#new_total_value").val();
+      var monthly = $("#monthly").val();
+      //var or_no = document.getElementById("or_no").value;
+      //var amountPay = document.getElementById("amountPay").value;
 
-    //alert(payModule);
-    //alert(payModule1);
-    
+      //alert(payModule);
+      //alert(payModule1);
+      
 
-      $.ajax({
-      url: "addNewStudent_paymentInfo.php",
-      method: "POST",
-      data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule,"or_no":or_no,"amountPay":amountPay,"payModule1":payModule1},
-        success:function(data){
-        alert(data);
-        window.location="addNew.php";
-      }
-    })
+        $.ajax({
+        url: "addNewStudent_paymentInfo.php",
+        method: "POST",
+        data:{"student_id":student_id,"fname":fname,"lname":lname,"status":status,"level":level,"ESC":ESC,"voucher":voucher,"h_student":h_student,"sibling":sibling,"payment_m":payment_m,"downPayment":downPayment,"subtotal":subtotal,"total":total,"monthly":monthly,"payModule":payModule,"or_no":or_no,"amountPay":amountPay,"payModule1":payModule1},
+          success:function(data){
+          alert(data);
+          window.location="addNew.php";
+        }
+      })
+    }
+   
   }  
 </script>
 
