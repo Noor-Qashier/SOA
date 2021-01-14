@@ -584,7 +584,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                     </div>
                     <div class="row">
                       <div class="form-group col-md-6">
-                        <label><b>Apply Full Payment?</b></label>
+                        <label><b>Past payment</b></label>
                         <input onclick="fullPayment(this)" id="<?php echo $row["student_id"]?>" class="form-control btn-danger btn-lg" type="button" value="CLICK HERE">
                       </div>
                       <div class="form-group col-md-6">
@@ -844,13 +844,8 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                                   
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                
-                  <a href="#" onclick="addPaid()" data-dismiss="modal" class="btn btn-danger btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-save"></i>
-                  </span>
-                  <span class="text">Apply</span></a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
                 </div>
               </div>
             </div>
