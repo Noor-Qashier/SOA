@@ -79,7 +79,7 @@ else
 {
 	$output .='
 	<tr>
-		<td colspan="4" align="center">Data not found</td>
+		<td colspan="6" align="center">Data not found</td>
 	</tr>
 	';
 }

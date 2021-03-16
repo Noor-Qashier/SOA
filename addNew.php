@@ -4,7 +4,6 @@ session_start();
 if(!isset($_SESSION['userName'])){
   header("location:index.php");
 }
-
 $student = "SELECT * FROM students_list";
 $result = mysqli_query($mysqli,$student);
 $row = mysqli_fetch_array($result);
@@ -38,6 +37,24 @@ $sumAPDresult_M = mysqli_query($mysqli,$sumAmountPaid_M);
 $rowAPD_M = mysqli_fetch_assoc($sumAPDresult_M);
 
 $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
+
+
+$query = "SELECT * FROM student_payment_information ORDER BY student_id DESC LIMIT 1";
+$send = mysqli_query($mysqli,$query);
+$feed = mysqli_fetch_array($send);
+
+$latest_id = $feed['student_id'];
+
+if($latest_id == "")
+{
+  $new_id = "PVCS-21001";
+}
+else
+{
+  $new_id = substr($latest_id,5);
+  $new_id = intval($new_id);
+  $new_id = "PVCS-".($new_id + 1);
+}
 ?>
 
 <!DOCTYPE html>
@@ -461,7 +478,7 @@ $totalIncome_M = $rowIncome_M['income']+$rowAPD_M['APD'];
                     <div class="row">
                       <div class="form-group col-md-3">
                         <label for="exampleInputEmail1">Student ID:</label>
-                        <input type="text" class="form-control" id="student_id" aria-describedby="emailHelp" placeholder="">
+                        <input type="text" class="form-control" id="student_id" value="<?php echo $new_id?>" aria-describedby="emailHelp" placeholder="" readonly>
                       </div>
                     </div>
                     <div class="row">
